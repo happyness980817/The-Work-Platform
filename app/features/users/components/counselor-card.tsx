@@ -49,18 +49,9 @@ export function CounselorCard({
         <p className="text-sm font-medium text-primary">{languages}</p>
         <p className="text-sm text-muted-foreground line-clamp-3">{bio}</p>
       </CardContent>
-      <CardFooter className="gap-3 border-t pt-4">
-        {online ? (
-          <Button className="flex-1" asChild>
-            <Link to={`/counselors/${id}`}>상담 신청</Link>
-          </Button>
-        ) : (
-          <Button variant="secondary" className="flex-1" asChild>
-            <Link to={`/counselors/${id}`}>예약하기</Link>
-          </Button>
-        )}
-        <Button variant="secondary" asChild>
-          <Link to={`/counselors/${id}`}>더보기</Link>
+      <CardFooter className="border-t pt-4">
+        <Button className="w-full" asChild>
+          <Link to={`/counselors/${id}`}>상담 신청</Link>
         </Button>
       </CardFooter>
     </Card>

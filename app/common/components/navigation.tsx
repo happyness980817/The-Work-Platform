@@ -25,6 +25,7 @@ import {
 } from "~/common/components/ui/avatar";
 import {
   BellIcon,
+  CalendarIcon,
   LogOutIcon,
   MessageCircleIcon,
   SettingsIcon,
@@ -33,56 +34,27 @@ import {
 
 const menus = [
   {
-    name: "'작업'을 시작하세요",
-    to: "/chats",
-    items: [
-      {
-        name: "퍼실리테이터",
-        to: "/",
-        description: "최고의 '네 가지 질문' 퍼실리테이터들을 만나보세요.",
-      },
-      {
-        name: "대화 내역",
-        to: "/",
-        description: "기존에 진행한 퍼실리테이터와의 대화 내역입니다.",
-      },
-    ],
-  },
-  {
-    name: "서비스 소개",
-    to: "/about",
-    items: [
-      {
-        name: "서비스 소개",
-        to: "/about",
-        description:
-          "웹사이트 사용 방법 등의 전반적인 서비스 소개 페이지입니다.",
-      },
-      {
-        name: "'작업' 이란?",
-        to: "/about",
-        description: "'작업' 에 대해 더 자세히 알아보세요.",
-      },
-    ],
-  },
-  {
-    name: "언어",
-    description: "",
+    name: "퍼실리테이터",
     to: "/",
-    items: [
-      {
-        name: "한국어",
-        description: "",
-        to: "/",
-      },
-      {
-        name: "English",
-        description: "",
-        to: "/",
-      },
-    ],
   },
 ];
+
+const languageMenu = {
+  name: "언어",
+  to: "/",
+  items: [
+    {
+      name: "한국어",
+      description: "",
+      to: "/",
+    },
+    {
+      name: "English",
+      description: "",
+      to: "/",
+    },
+  ],
+};
 
 export default function Navigation({
   isLoggedIn,
@@ -119,40 +91,49 @@ export default function Navigation({
           <NavigationMenuList>
             {menus.map((menu) => (
               <NavigationMenuItem key={menu.name}>
-                {menu.items ? (
-                  <>
-                    <Link to={menu.to}>
-                      <NavigationMenuTrigger>{menu.name}</NavigationMenuTrigger>
-                    </Link>
-                    <NavigationMenuContent>
-                      <ul className="grid w-[400px] gap-3 p-4">
-                        {menu.items.map((item) => (
-                          <li key={item.name}>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent"
-                                to={item.to}
-                              >
-                                <span className="text-sm font-medium leading-none">
-                                  {item.name}
-                                </span>
-                                <p className="text-sm leading-snug text-muted-foreground mt-1">
-                                  {item.description}
-                                </p>
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </>
-                ) : (
-                  <Link to={menu.to} className={navigationMenuTriggerStyle()}>
-                    {menu.name}
-                  </Link>
-                )}
+                <Link to={menu.to} className={navigationMenuTriggerStyle()}>
+                  {menu.name}
+                </Link>
               </NavigationMenuItem>
             ))}
+            {isLoggedIn && (
+              <NavigationMenuItem>
+                <Link
+                  to="/my/messages"
+                  className={navigationMenuTriggerStyle()}
+                >
+                  대화 내역
+                </Link>
+              </NavigationMenuItem>
+            )}
+            <NavigationMenuItem>
+              <Link to="/about" className={navigationMenuTriggerStyle()}>
+                서비스 소개
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to={languageMenu.to}>
+                <NavigationMenuTrigger>
+                  {languageMenu.name}
+                </NavigationMenuTrigger>
+              </Link>
+              <NavigationMenuContent>
+                <ul className="grid w-[200px] gap-1 p-2">
+                  {languageMenu.items.map((item) => (
+                    <li key={item.name}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className="block select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent"
+                          to={item.to}
+                        >
+                          {item.name}
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
@@ -192,6 +173,12 @@ export default function Navigation({
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link to="/my/dashboard">
+                    <CalendarIcon className="size-4 mr-2" />
+                    예약
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/profile">
                     <UserIcon className="size-4 mr-2" />
