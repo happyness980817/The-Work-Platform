@@ -2,11 +2,12 @@ import { Link } from "react-router";
 import { Button } from "~/common/components/ui/button";
 import { Card, CardContent, CardFooter } from "~/common/components/ui/card";
 import { Badge } from "~/common/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 interface CounselorCardProps {
   id: number;
   name: string;
-  languages: string;
+  languages: string[];
   bio: string;
   imageUrl: string;
   online: boolean;
@@ -20,6 +21,7 @@ export function CounselorCard({
   imageUrl,
   online,
 }: CounselorCardProps) {
+  const { t } = useTranslation();
   return (
     <Card className="overflow-hidden flex flex-col">
       <div className="relative">
@@ -40,18 +42,20 @@ export function CounselorCard({
               online ? "bg-green-500 animate-pulse" : "bg-muted-foreground"
             }`}
           />
-          {online ? "ONLINE" : "OFFLINE"}
+          {online ? t("counselors.online") : t("counselors.offline")}
         </Badge>
         <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-card to-transparent h-16" />
       </div>
       <CardContent className="flex-1 pt-4 space-y-2">
         <h3 className="text-lg font-bold">{name}</h3>
-        <p className="text-sm font-medium text-primary">{languages}</p>
+        <p className="text-sm font-medium text-primary">
+          {languages.map((l) => t(l)).join(", ")}
+        </p>
         <p className="text-sm text-muted-foreground line-clamp-3">{bio}</p>
       </CardContent>
       <CardFooter className="border-t pt-4">
         <Button className="w-full" asChild>
-          <Link to={`/counselors/${id}`}>상담 신청</Link>
+          <Link to={`/counselors/${id}`}>{t("counselors.book")}</Link>
         </Button>
       </CardFooter>
     </Card>

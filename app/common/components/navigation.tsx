@@ -31,30 +31,14 @@ import {
   SettingsIcon,
   UserIcon,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const menus = [
-  {
-    name: "퍼실리테이터",
-    to: "/",
-  },
+const menus = [{ key: "nav.facilitators", to: "/" }];
+
+const languages = [
+  { label: "한국어", value: "ko" },
+  { label: "English", value: "en" },
 ];
-
-const languageMenu = {
-  name: "언어",
-  to: "/",
-  items: [
-    {
-      name: "한국어",
-      description: "",
-      to: "/",
-    },
-    {
-      name: "English",
-      description: "",
-      to: "/",
-    },
-  ],
-};
 
 export default function Navigation({
   isLoggedIn,
@@ -71,6 +55,7 @@ export default function Navigation({
   name?: string;
   username?: string;
 }) {
+  const { t, i18n } = useTranslation();
   return (
     <nav className="flex px-6 md:px-10 lg:px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50 border-b border-border">
       <div className="flex items-center justify-start">
@@ -87,12 +72,12 @@ export default function Navigation({
         </Link>
       </div>
       <div className="flex-1 hidden md:flex justify-center">
-        <NavigationMenu>
+        <NavigationMenu viewport={false}>
           <NavigationMenuList>
             {menus.map((menu) => (
-              <NavigationMenuItem key={menu.name}>
+              <NavigationMenuItem key={menu.key}>
                 <Link to={menu.to} className={navigationMenuTriggerStyle()}>
-                  {menu.name}
+                  {t(menu.key)}
                 </Link>
               </NavigationMenuItem>
             ))}
@@ -102,33 +87,34 @@ export default function Navigation({
                   to="/my/messages"
                   className={navigationMenuTriggerStyle()}
                 >
-                  대화 내역
+                  {t("nav.messages")}
                 </Link>
               </NavigationMenuItem>
             )}
             <NavigationMenuItem>
               <Link to="/about" className={navigationMenuTriggerStyle()}>
-                서비스 소개
+                {t("nav.about")}
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to={languageMenu.to}>
-                <NavigationMenuTrigger>
-                  {languageMenu.name}
-                </NavigationMenuTrigger>
-              </Link>
+              <NavigationMenuTrigger>{t("nav.language")}</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[200px] gap-1 p-2">
-                  {languageMenu.items.map((item) => (
-                    <li key={item.name}>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className="block select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent"
-                          to={item.to}
-                        >
-                          {item.name}
-                        </Link>
-                      </NavigationMenuLink>
+                  {languages.map((lang) => (
+                    <li key={lang.value}>
+                      <button
+                        className={`w-full text-left select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent ${
+                          i18n.language === lang.value
+                            ? "font-bold bg-accent/50"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          i18n.changeLanguage(lang.value);
+                          localStorage.setItem("locale", lang.value);
+                        }}
+                      >
+                        {lang.label}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -164,7 +150,9 @@ export default function Navigation({
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel className="flex flex-col">
-                <span className="font-medium">{name ?? "사용자"}</span>
+                <span className="font-medium">
+                  {name || t("nav.user_fallback")}
+                </span>
                 {username && (
                   <span className="text-xs text-muted-foreground">
                     @{username}
@@ -176,19 +164,19 @@ export default function Navigation({
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/dashboard">
                     <CalendarIcon className="size-4 mr-2" />
-                    예약
+                    {t("nav.dashboard")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/profile">
                     <UserIcon className="size-4 mr-2" />
-                    프로필
+                    {t("nav.profile")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/settings">
                     <SettingsIcon className="size-4 mr-2" />
-                    설정
+                    {t("nav.settings")}
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
@@ -196,7 +184,7 @@ export default function Navigation({
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link to="/auth/logout">
                   <LogOutIcon className="size-4 mr-2" />
-                  로그아웃
+                  {t("nav.logout")}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -205,10 +193,10 @@ export default function Navigation({
       ) : (
         <div className="flex items-center gap-4">
           <Button asChild variant="outline">
-            <Link to="/auth/login">로그인</Link>
+            <Link to="/auth/login">{t("nav.login")}</Link>
           </Button>
           <Button asChild>
-            <Link to="/auth/join">회원가입</Link>
+            <Link to="/auth/join">{t("nav.join")}</Link>
           </Button>
         </div>
       )}

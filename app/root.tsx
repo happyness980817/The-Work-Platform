@@ -8,6 +8,7 @@ import {
   useLocation,
 } from "react-router";
 import Navigation from "./common/components/navigation";
+import "./common/hooks/use-locale";
 import type { Route } from "./+types/root";
 import "./app.css";
 
