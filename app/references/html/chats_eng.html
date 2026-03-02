@@ -1,0 +1,556 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Counselor AI Copilot Chat</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1754cf",
+              "background-light": "#f6f6f8",
+              "background-dark": "#111621",
+            },
+            fontFamily: {
+              display: ["Manrope", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-hidden"
+  >
+    <div class="flex h-screen w-full flex-col">
+      <!-- Header -->
+      <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-[#181d28] px-6 py-3 shrink-0 z-20"
+      >
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+            <div
+              class="size-8 flex items-center justify-center bg-primary rounded-lg text-white"
+            >
+              <span class="material-symbols-outlined">psychology</span>
+            </div>
+            <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">
+              Counselor AI
+            </h2>
+          </div>
+        </div>
+        <div class="flex flex-1 justify-center max-w-md px-4">
+          <div
+            class="flex w-full items-center rounded-lg h-10 bg-slate-100 dark:bg-[#222838] px-3"
+          >
+            <span class="material-symbols-outlined text-slate-400">search</span>
+            <input
+              class="w-full bg-transparent border-none text-sm px-2 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0"
+              placeholder="Search clients or messages..."
+            />
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <nav class="hidden md:flex items-center gap-6">
+            <a
+              class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors"
+              href="#"
+              >Dashboard</a
+            >
+            <a class="text-primary text-sm font-medium leading-normal" href="#"
+              >Messages</a
+            >
+            <a
+              class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors"
+              href="#"
+              >Clients</a
+            >
+            <a
+              class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors"
+              href="#"
+              >Resources</a
+            >
+          </nav>
+          <button
+            class="relative bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-200 dark:ring-slate-700"
+            data-alt="Counselor profile picture"
+            style="
+              background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuApIXo2M07eNooMxaZaqr8DxlROgbILy4pAaj0iwcrpS8gfsOHQQM2GWEzh9DcoTPSfcf7mcJplvsztWDGjEtTeq7bn5hQR6adzT-LKPcF5m_ZbSTaRO7xqSn9uUZGH4YNUaAB5wEtt3BTBrsOPwg25YPy9SVObbnOSxVbqGEBE0b9uEsXtDI2NgKbAKYZUbPJBiPiDRTdFdpn14HluRoaStZcMX8wKfDFQ9vV-2kGnyXxy1OakR0Tgfd80bc6vcQuSazrdRGZhfvQ&quot;);
+            "
+          >
+            <span
+              class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white dark:ring-[#181d28]"
+            ></span>
+          </button>
+        </div>
+      </header>
+      <div class="flex flex-1 h-[calc(100vh-65px)] overflow-hidden">
+        <!-- Sidebar: Active Clients -->
+        <aside
+          class="w-80 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111621] shrink-0"
+        >
+          <div
+            class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center"
+          >
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">
+              Active Sessions
+            </h2>
+            <span
+              class="bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded-full"
+              >5 Online</span
+            >
+          </div>
+          <div class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
+            <!-- Active Item -->
+            <button
+              class="w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-primary/10 border border-primary/20 cursor-default"
+            >
+              <div class="relative">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-10"
+                  data-alt="Jane Smith portrait"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAr5DPdUsim3L9Kd3llvPH6I8419IVP7m1w2K28cUTt7w4zFdKZnEXScHfN0P-bw6f992O45khAmkw3uKCuIKzVRaDNoA9khVUAGboQKBRJMu-oUi8glutmMNVl0VDeRRkMhzRqOw3QW4-oyziBPA0NbpMoLNRR2R8cUNPcAM-jErc2uJQFIBDEJiTWOwijTlGxvfBwXu7WCrycwKZKGRLV97wvZOU89tYEfXhe2InwTJGfHFsWi4dC4d9Bwr_ToHzzQgsuzGDG0Kk&quot;);
+                  "
+                ></div>
+                <span
+                  class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white dark:ring-[#111621]"
+                ></span>
+              </div>
+              <div class="flex flex-col items-start flex-1 min-w-0">
+                <div class="flex w-full justify-between items-center">
+                  <p
+                    class="text-slate-900 dark:text-white text-sm font-semibold truncate"
+                  >
+                    Jane Smith
+                  </p>
+                  <span class="text-xs text-slate-500 dark:text-slate-400"
+                    >Now</span
+                  >
+                </div>
+                <p
+                  class="text-slate-600 dark:text-slate-300 text-xs truncate w-full text-left"
+                >
+                  The Work Inquiry - Session 4
+                </p>
+              </div>
+            </button>
+            <!-- Inactive Items -->
+            <button
+              class="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-[#1c2230] transition-colors group"
+            >
+              <div class="relative">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-10"
+                  data-alt="Michael Brown portrait"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCwj7VhOVv0ogQu1v9Op6Ozzi1KKDhKNiVxSgvafTAOYkXwG_R7CaWa1iDObfv1plX6sgbdsazipCWXXoBsn9WMIPwQEOrV7vdORzvd8LLv-rOjS4VJlZlfZj-PENOiaLAbiGSu9IWjq0FP5jx3-WrlSesH_YMmMmAzKLQDTuSvdaCRZyWHIW1peFwLovI7wYOGQG9M1jYXqso3-gC-ekbhgkckDtOGW3QQdKYPg7UZ2UeGtWgWfV7aHajuzyfHfj3iaa8Q0LlS7_Q&quot;);
+                  "
+                ></div>
+                <span
+                  class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-gray-400 ring-2 ring-white dark:ring-[#111621]"
+                ></span>
+              </div>
+              <div class="flex flex-col items-start flex-1 min-w-0">
+                <div class="flex w-full justify-between items-center">
+                  <p
+                    class="text-slate-700 dark:text-slate-200 text-sm font-medium group-hover:text-primary transition-colors truncate"
+                  >
+                    Michael Brown
+                  </p>
+                  <span class="text-xs text-slate-400">2h ago</span>
+                </div>
+                <p
+                  class="text-slate-500 dark:text-slate-400 text-xs truncate w-full text-left"
+                >
+                  Rescheduled appointment
+                </p>
+              </div>
+            </button>
+            <button
+              class="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-[#1c2230] transition-colors group"
+            >
+              <div class="relative">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-10"
+                  data-alt="Sarah Wilson portrait"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDwHBxU-0QC9ee-C4NLQHTAuxEXt4LDepI3zFdpOxdeWyCY7RVnkQ0ZFmjm9D6tlXcW2ITHEH3B7QF0svK8-JDHijjA7SkiqzZwxA3-_1RvwM3v6aWoDxJnJYjplauF56h4XEuFWXDa6Xwmd6jmvFVQ4U6at5pgvtZx8dK2zf7wLu8XAF1efmrLya-fhicloj8XClHQ5XPEfV9AB8bRYNt30bF0qLMLUjukuNY7ripDZkk6heng5oHWZUApYZfmInRRBqstSdDVxaE&quot;);
+                  "
+                ></div>
+              </div>
+              <div class="flex flex-col items-start flex-1 min-w-0">
+                <div class="flex w-full justify-between items-center">
+                  <p
+                    class="text-slate-700 dark:text-slate-200 text-sm font-medium group-hover:text-primary transition-colors truncate"
+                  >
+                    Sarah Wilson
+                  </p>
+                  <span class="text-xs text-slate-400">1d ago</span>
+                </div>
+                <p
+                  class="text-slate-500 dark:text-slate-400 text-xs truncate w-full text-left"
+                >
+                  Homework submission: Judge Your Neighbor
+                </p>
+              </div>
+            </button>
+            <button
+              class="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-[#1c2230] transition-colors group"
+            >
+              <div class="relative">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-10"
+                  data-alt="Emily Davis portrait"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBBxCezaT1dvFo82Vbg4k_skl8xk0Q8crY7oUFlyHImMaJFbX_IGOUS_Af_iXtEV4Qc3AjAaLAz3RzijCKOVMlUBq8rygp0S8s1GqizGk7KHz7YHa1oO-QtyQY_RSHGBA-qCyakvZliHqQdBGr3m3KdpyCspQMDUSP0HcrTc8AfW7HtAUaASsZ0rSw3Lo8pQIgaO7pNdgfnSLhBmIoBxPx15mmlAQmilTFAPx318IWeRJ1JmmGDmTYov-7jvnQ3mS-Q-FsjUHPYSBw&quot;);
+                  "
+                ></div>
+              </div>
+              <div class="flex flex-col items-start flex-1 min-w-0">
+                <div class="flex w-full justify-between items-center">
+                  <p
+                    class="text-slate-700 dark:text-slate-200 text-sm font-medium group-hover:text-primary transition-colors truncate"
+                  >
+                    Emily Davis
+                  </p>
+                  <span class="text-xs text-slate-400">3d ago</span>
+                </div>
+                <p
+                  class="text-slate-500 dark:text-slate-400 text-xs truncate w-full text-left"
+                >
+                  Checking in
+                </p>
+              </div>
+            </button>
+          </div>
+          <div
+            class="p-4 mt-auto border-t border-slate-200 dark:border-slate-800"
+          >
+            <button
+              class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary hover:bg-blue-700 transition-colors text-white text-sm font-bold shadow-lg shadow-blue-900/20"
+            >
+              <span class="material-symbols-outlined text-[20px]">add</span>
+              <span class="truncate">New Session</span>
+            </button>
+          </div>
+        </aside>
+        <!-- Main Chat Area -->
+        <main
+          class="flex-1 flex flex-col bg-slate-50 dark:bg-[#0c0f16] relative"
+        >
+          <!-- Chat Header -->
+          <div
+            class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-[#111621]/50 backdrop-blur-md sticky top-0 z-10"
+          >
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white">
+                Jane Smith
+              </h2>
+              <p
+                class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1"
+              >
+                <span
+                  class="w-2 h-2 bg-green-500 rounded-full inline-block"
+                ></span>
+                Online • The Work Inquiry
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <button
+                class="p-2 text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-[#222838] rounded-lg transition-colors"
+                title="Video Call"
+              >
+                <span class="material-symbols-outlined">videocam</span>
+              </button>
+              <button
+                class="p-2 text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-[#222838] rounded-lg transition-colors"
+                title="Client Notes"
+              >
+                <span class="material-symbols-outlined">description</span>
+              </button>
+              <button
+                class="p-2 text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-[#222838] rounded-lg transition-colors"
+                title="Settings"
+              >
+                <span class="material-symbols-outlined">more_vert</span>
+              </button>
+            </div>
+          </div>
+          <!-- Messages -->
+          <div
+            class="flex-1 overflow-y-auto p-6 space-y-6 flex flex-col custom-scrollbar"
+          >
+            <!-- Date Divider -->
+            <div class="flex justify-center">
+              <span
+                class="text-xs font-medium text-slate-400 bg-slate-200 dark:bg-[#1e2430] px-3 py-1 rounded-full"
+                >Today, Oct 24</span
+              >
+            </div>
+            <!-- Message: Counselor -->
+            <div class="flex flex-col items-end gap-1 self-end max-w-[80%]">
+              <div class="flex items-end gap-3 flex-row-reverse">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-8 shrink-0 ring-2 ring-white dark:ring-[#0c0f16]"
+                  data-alt="Counselor small avatar"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBNLBCfija29W8I4Xs3GzCl95XjkA3VY0QU-WTINaDCe3-80OWSE95ge0yUjkYwBBsxv_FVF2Zq6ze2pywJyl4DCRGykPkx-xTECaiSmxOTzqM-Gwo5fecSJRjBagQ1nQBXQIYB7VFF-xjCcd68H6El6x7pBiOu-BhjBFtnY3chaAa5reag2Z9iBLWcJE_hOGjmCA_xlulQ2Ne5w_FfPwpnAtu_uHtISTAjcgH4AV31i2UrKYdT-XvhkstufQhEiO15NhIuY1X2d_0&quot;);
+                  "
+                ></div>
+                <div
+                  class="rounded-2xl rounded-tr-sm px-5 py-3 bg-primary text-white shadow-sm"
+                >
+                  <p class="text-sm leading-relaxed">
+                    Hi Jane, thanks for joining. Let's start with the thought
+                    you wrote down: "My boss doesn't respect me."
+                  </p>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 mr-12">10:02 AM</span>
+            </div>
+            <!-- Message: Client -->
+            <div class="flex flex-col items-start gap-1 self-start max-w-[80%]">
+              <div class="flex items-end gap-3">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-8 shrink-0 ring-2 ring-white dark:ring-[#0c0f16]"
+                  data-alt="Jane Smith small avatar"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuClqZgwApxvO-Xv2WAw7Pm3fDuncgN3Fp1XmX3R4IdYhBqC2bDntn2C_cKitNgjdYrpWPVd3Zd7Nl_OOY5Y9oYZcXGN9JFCwVIofQ9Fk26FJc7CDFHXp-qk9uqkRCGhNmz-KRENVt58IGWeB6aGne2kkw9vRDHs7Jju0gwx8n5Be-1GDmZiB7j8oygJilnwE2YWCGD6bQyy3dcWGQBw-FORi-cLksU0Y4gxlF2LYE8WC9DNyyr2uemp3v22zE8wmimeuXjKhj9aGFo&quot;);
+                  "
+                ></div>
+                <div
+                  class="rounded-2xl rounded-tl-sm px-5 py-3 bg-white dark:bg-[#1e2430] text-slate-800 dark:text-slate-200 shadow-sm border border-slate-200 dark:border-slate-800"
+                >
+                  <p class="text-sm leading-relaxed">
+                    Yes, exactly. He interrupted me three times in the meeting
+                    today. It feels like he just doesn't value my input at all.
+                  </p>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 ml-12">10:04 AM</span>
+            </div>
+            <!-- Message: Counselor -->
+            <div class="flex flex-col items-end gap-1 self-end max-w-[80%]">
+              <div class="flex items-end gap-3 flex-row-reverse">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-8 shrink-0 ring-2 ring-white dark:ring-[#0c0f16]"
+                  data-alt="Counselor small avatar"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAOG0ove0l6X4_n8iD3AHAxUFHyb7IPYW-wr8Fjpg5s5IYHsFlegRVr6GYuPlf15zk9kVSSmXhx4GX5nB7YbVDJT-li9MZ1F3TfVPV-SMrrgiHEvtzjqPUGA-JL5kou-5BqxM2oxTYzoNWQ26HNCM0-bTySoz3opoZ9Md8vig9Gzca_1JhBYmWJTO-ceBkR4xZG4DXyr11SLkJO8RQqSYc-pYDtIFeVcw1yQSxd1p8CvlVKXHCPc1LzrW4ZnpNpEjpnTvyUbxYiMJk&quot;);
+                  "
+                ></div>
+                <div
+                  class="rounded-2xl rounded-tr-sm px-5 py-3 bg-primary text-white shadow-sm"
+                >
+                  <p class="text-sm leading-relaxed">
+                    I hear that it's painful. Let's facilitate The Work on this.
+                    Is it true that your boss doesn't respect you?
+                  </p>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 mr-12">10:05 AM</span>
+            </div>
+            <!-- Message: Client -->
+            <div class="flex flex-col items-start gap-1 self-start max-w-[80%]">
+              <div class="flex items-end gap-3">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-8 shrink-0 ring-2 ring-white dark:ring-[#0c0f16]"
+                  data-alt="Jane Smith small avatar"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCWHne43z4JTFmr5pQpWIp4CSikqRTIatVtBqO6Fjn4oQCnwfIYK0NgfoFUBoY23buPADOBL5aL885mKRQJTT5Jepoei3pTX_NJzYZAWGH1GrhvVmNdg3pJS6p4v_6M2mUNr5uXZELvA5lGptrka05j0N80ilnvZ4GZHJv_pxQDyV_8ZZ698L-7GW1bdtP1H150r9Bsa_4uikeHb-HUZ5AByfTOLGVUzNxsxLQLWMFd3ev4uAPmiWmSB_oFgaTDdM9CB0Gncb4al1k&quot;);
+                  "
+                ></div>
+                <div
+                  class="rounded-2xl rounded-tl-sm px-5 py-3 bg-white dark:bg-[#1e2430] text-slate-800 dark:text-slate-200 shadow-sm border border-slate-200 dark:border-slate-800"
+                >
+                  <p class="text-sm leading-relaxed">
+                    It feels true. Why else would he interrupt me?
+                  </p>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 ml-12">10:06 AM</span>
+            </div>
+            <!-- Message: Counselor -->
+            <div class="flex flex-col items-end gap-1 self-end max-w-[80%]">
+              <div class="flex items-end gap-3 flex-row-reverse">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-8 shrink-0 ring-2 ring-white dark:ring-[#0c0f16]"
+                  data-alt="Counselor small avatar"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAwnRozOmp0UWwm990dCp8VQuEOKGVResZP5FfUiEOwNsNaulbIeEDcn_QwRUrd9OVs-PYBDKFHGdnBVnq0NHoV0AtjUMl-jiQUZWhXNbIq5OhfkBVs_cYFyREzDUo2dhrQDmvm1qX9ktRkKzEgxkTgJGili1iOeeanMNXp5tKLENTd4SXBEZz8BIDnZIDQ_qijUp_m7nRKeE2XYDx04MrjqcUaaS2psyNxLDg0ffMNP5fkX8yg4S-HQ9E354pUxtyoqWiYqwj94Yc&quot;);
+                  "
+                ></div>
+                <div
+                  class="rounded-2xl rounded-tr-sm px-5 py-3 bg-primary text-white shadow-sm"
+                >
+                  <p class="text-sm leading-relaxed">
+                    Can you absolutely know that it's true that he doesn't
+                    respect you?
+                  </p>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 mr-12">10:07 AM</span>
+            </div>
+            <!-- Message: Client -->
+            <div class="flex flex-col items-start gap-1 self-start max-w-[80%]">
+              <div class="flex items-end gap-3">
+                <div
+                  class="bg-center bg-no-repeat bg-cover rounded-full size-8 shrink-0 ring-2 ring-white dark:ring-[#0c0f16]"
+                  data-alt="Jane Smith small avatar"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAavXU1As83GQzTM8f202zDOOi3GH_IBhI1IZt6-xSZ0dYWZSNAfiP5ddgQ3ECkls4nbteTiIyDUFdle-aE_v-7Su8JaSMj-MRV3YfEWhQFTys_atD7m9beN4W9FfKWUp5RErP1QoCUL2BoCtw6E6RDmvh5TLs6NrQ9ktKO2R9qP8EyYP-WMdMYt7q9I4feBzvluocyttLD_eiE0u4IoqYf742-X5YFaEXwZRk05CjOeyONJsnOqV6phkqtKLE_iRAhZjhyxfvxIuk&quot;);
+                  "
+                ></div>
+                <div
+                  class="rounded-2xl rounded-tl-sm px-5 py-3 bg-white dark:bg-[#1e2430] text-slate-800 dark:text-slate-200 shadow-sm border border-slate-200 dark:border-slate-800"
+                >
+                  <p class="text-sm leading-relaxed">
+                    No, I guess I can't know for sure what's in his head. Maybe
+                    he was just stressed about the deadline.
+                  </p>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 ml-12">10:09 AM</span>
+            </div>
+          </div>
+          <!-- Input Area Container -->
+          <div class="p-4 pt-0">
+            <!-- AI Copilot Banner -->
+            <div
+              class="mb-3 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/5 to-purple-500/5 dark:from-primary/10 dark:to-purple-500/10 overflow-hidden shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between px-4 py-2 border-b border-primary/10 bg-white/50 dark:bg-white/5"
+              >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="material-symbols-outlined text-primary text-sm animate-pulse"
+                    >colors_spark</span
+                  >
+                  <span
+                    class="text-xs font-bold text-primary uppercase tracking-wider"
+                    >AI Suggestion - Question 3</span
+                  >
+                </div>
+                <div class="flex gap-1">
+                  <button
+                    class="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                  >
+                    <span class="material-symbols-outlined text-[16px]"
+                      >thumb_up</span
+                    >
+                  </button>
+                  <button
+                    class="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                  >
+                    <span class="material-symbols-outlined text-[16px]"
+                      >thumb_down</span
+                    >
+                  </button>
+                  <button
+                    class="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                    title="Regenerate"
+                  >
+                    <span class="material-symbols-outlined text-[16px]"
+                      >refresh</span
+                    >
+                  </button>
+                </div>
+              </div>
+              <div class="p-4">
+                <p
+                  class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium"
+                >
+                  "How do you react, what happens, when you believe the thought
+                  'He doesn't respect me'?"
+                </p>
+                <div class="mt-3 flex gap-2">
+                  <button
+                    class="bg-primary hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg transition-colors shadow-sm"
+                  >
+                    Use Suggestion
+                  </button>
+                  <button
+                    class="bg-white dark:bg-[#222838] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-white hover:border-primary/50 text-xs font-bold py-1.5 px-3 rounded-lg transition-colors"
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Input Field -->
+            <div
+              class="flex gap-3 items-end bg-white dark:bg-[#181d28] p-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm focus-within:ring-2 focus-within:ring-primary/20 transition-shadow"
+            >
+              <button
+                class="p-2 text-slate-400 hover:text-primary transition-colors rounded-lg"
+              >
+                <span class="material-symbols-outlined">add_circle</span>
+              </button>
+              <textarea
+                class="flex-1 bg-transparent border-none focus:ring-0 text-slate-900 dark:text-white placeholder-slate-400 resize-none max-h-32 py-2 text-sm"
+                placeholder="Type a message..."
+                rows="1"
+              ></textarea>
+              <button
+                class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors self-end mb-0.5"
+              >
+                <span class="material-symbols-outlined text-[24px]">send</span>
+              </button>
+            </div>
+            <div class="text-center mt-2">
+              <p class="text-[10px] text-slate-400">
+                AI assistance is based on The Work methodology. Review before
+                sending.
+              </p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <style>
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.3);
+        border-radius: 20px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(156, 163, 175, 0.5);
+      }
+      /* Hide scrollbar for Firefox */
+      .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+      }
+    </style>
+  </body>
+</html>

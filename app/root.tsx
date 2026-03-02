@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
   useLocation,
 } from "react-router";
-import Navigation from "./components/navigation";
+import Navigation from "./common/components/navigation";
 import type { Route } from "./+types/root";
 import "./app.css";
 
@@ -26,14 +26,14 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="min-h-screen flex flex-col">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -44,17 +44,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const { pathname } = useLocation();
+  const isAuthPage = pathname.startsWith("/auth");
   return (
-    <div className={pathname.includes("/auth") ? "" : "py-28 px-5 xl:px-20"}>
-      {pathname.includes("/auth") ? null : (
+    <div className="flex flex-col min-h-screen">
+      {!isAuthPage && (
         <Navigation
-          loggedInUserType="client"
-          isloggedIn={true}
+          isLoggedIn={true}
           hasNotifications={false}
           hasMessages={false}
         />
       )}
-      <Outlet />
+      <main className="flex-1 pt-16">
+        <Outlet
+          context={{
+            isLoggedIn: true,
+            role: "client" as "client" | "counselor" | "admin",
+            name: "",
+            userId: "",
+            avatar: "",
+          }}
+        />
+      </main>
     </div>
   );
 }

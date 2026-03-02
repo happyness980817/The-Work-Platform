@@ -1,0 +1,688 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Work Counselors - Find Peace</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1754cf",
+              "background-light": "#f6f6f8",
+              "background-dark": "#111318",
+              "surface-dark": "#1c1f26",
+              "surface-highlight": "#292e38",
+              "text-main": "#ffffff",
+              "text-muted": "#9da6b8",
+            },
+            fontFamily: {
+              display: ["Manrope", "sans-serif"],
+              body: ["Manrope", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #111318;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #292e38;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #3a4150;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-text-main font-display antialiased min-h-screen flex flex-col"
+  >
+    <div
+      class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <!-- Navigation -->
+        <header
+          class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-surface-highlight bg-background-dark/95 backdrop-blur-sm px-6 py-4 md:px-10 lg:px-40"
+        >
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-8 text-primary">
+              <span class="material-symbols-outlined text-3xl"
+                >psychology_alt</span
+              >
+            </div>
+            <h2
+              class="text-white text-lg font-bold leading-tight tracking-[-0.015em]"
+            >
+              The Work Counselors
+            </h2>
+          </div>
+          <div class="hidden md:flex items-center gap-8">
+            <nav class="flex items-center gap-6">
+              <a
+                class="text-text-muted hover:text-white transition-colors text-sm font-medium leading-normal"
+                href="#"
+                >Find a Counselor</a
+              >
+              <a
+                class="text-text-muted hover:text-white transition-colors text-sm font-medium leading-normal"
+                href="#"
+                >About The Work</a
+              >
+              <a
+                class="text-text-muted hover:text-white transition-colors text-sm font-medium leading-normal"
+                href="#"
+                >For Counselors</a
+              >
+              <a
+                class="text-text-muted hover:text-white transition-colors text-sm font-medium leading-normal"
+                href="#"
+                >Log In</a
+              >
+            </nav>
+            <button
+              class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"
+            >
+              <span class="truncate">Sign Up</span>
+            </button>
+          </div>
+          <button class="md:hidden text-white">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </header>
+        <main class="flex-1 flex justify-center">
+          <div
+            class="layout-content-container flex flex-col max-w-[1200px] flex-1 px-4 md:px-6 lg:px-8 py-8"
+          >
+            <!-- Hero Section -->
+            <div class="@container mb-12">
+              <div
+                class="flex flex-col gap-6 rounded-2xl bg-surface-dark overflow-hidden p-6 md:p-10 lg:flex-row lg:items-center lg:gap-12 shadow-lg"
+              >
+                <div
+                  class="w-full lg:w-1/2 aspect-video rounded-xl bg-cover bg-center"
+                  data-alt="Serene woman meditating by calm water"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAKKFMRqp5Oy1-4Fhdg711tpGShj6hHGBj2e1XOyH9hK7K9TP5iid0Stwc3Vd1-s3fcEFRuubvwvPPP2QOA1jYdGVs93bk6PFT4lGtrOFJZQhMSNZvaaGHdM0OuQ3CB1qckS20SLQEQ55UB9rAkGvAlX6OZULVScOKXNIRbo2tYjbnwuLF16Fv7etg5wMHzscD4EIcPsN_ob1L_9eJccZ99wGBJarJBzUR8ke_-n7sQbwzLBATKxvCbIU2tREkH44y5WvKWhGqRG5c&quot;);
+                  "
+                ></div>
+                <div class="flex flex-col gap-6 lg:w-1/2 justify-center">
+                  <div class="flex flex-col gap-3 text-left">
+                    <h1
+                      class="text-white text-4xl font-extrabold leading-tight tracking-tight md:text-5xl"
+                    >
+                      Find Peace with <span class="text-primary">The Work</span>
+                    </h1>
+                    <p
+                      class="text-text-muted text-lg font-normal leading-relaxed"
+                    >
+                      Connect with certified facilitators who can guide you
+                      through The Four Questions to question stressful thoughts
+                      and find clarity.
+                    </p>
+                  </div>
+                  <div class="flex flex-wrap gap-4">
+                    <button
+                      class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-primary/90 transition-colors text-white text-base font-bold"
+                    >
+                      Find a Counselor
+                    </button>
+                    <button
+                      class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-surface-highlight hover:bg-surface-highlight/80 transition-colors text-white text-base font-medium"
+                    >
+                      How it Works
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Filters & Controls -->
+            <div
+              class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
+            >
+              <h2
+                class="text-white text-2xl font-bold leading-tight tracking-tight"
+              >
+                Available Counselors
+              </h2>
+              <div class="flex gap-3 flex-wrap">
+                <button
+                  class="group flex h-9 items-center justify-center gap-x-2 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 transition-colors px-4 border border-transparent hover:border-primary/50"
+                >
+                  <p class="text-white text-sm font-medium">Availability</p>
+                  <span
+                    class="material-symbols-outlined text-text-muted group-hover:text-white text-[20px]"
+                    >keyboard_arrow_down</span
+                  >
+                </button>
+                <button
+                  class="group flex h-9 items-center justify-center gap-x-2 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 transition-colors px-4 border border-transparent hover:border-primary/50"
+                >
+                  <p class="text-white text-sm font-medium">Rating</p>
+                  <span
+                    class="material-symbols-outlined text-text-muted group-hover:text-white text-[20px]"
+                    >keyboard_arrow_down</span
+                  >
+                </button>
+                <button
+                  class="group flex h-9 items-center justify-center gap-x-2 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 transition-colors px-4 border border-transparent hover:border-primary/50"
+                >
+                  <p class="text-white text-sm font-medium">Specialty</p>
+                  <span
+                    class="material-symbols-outlined text-text-muted group-hover:text-white text-[20px]"
+                    >keyboard_arrow_down</span
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- Counselors Grid -->
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+            >
+              <!-- Counselor Card 1 (Online) -->
+              <div
+                class="flex flex-col rounded-xl bg-surface-dark border border-surface-highlight overflow-hidden hover:border-primary/30 transition-all duration-300 group"
+              >
+                <div
+                  class="relative h-48 w-full bg-cover bg-center"
+                  data-alt="Professional portrait of Sarah Jenkins"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBXh6AuGuTwRu_SVMeV_O2NOB3mGLJxzoF9XCWWWe5WN8vX2IQao-efhpJ6weRRdkSzqpB_w848n6wlL5_KU_8Q7nxy_1Gtaw4s-HeiUOBj7O2r8V1nqDNoxZOb9j5VLSBOEv1eXZVu84bjfLHSt1RyDc5N4SCVBhvFvDu-sm1Yug1y9qIb2px-nRNtFFUSE6UJ9HdAUGfs8d9yf6o60NUr7b7ekhpcPWit0x20EtmcdaJLOAPLJH5-4soyAyypJGNKx8loua8gAFk&quot;);
+                  "
+                >
+                  <div
+                    class="absolute top-3 left-3 bg-green-500/20 backdrop-blur-md border border-green-500/30 text-green-400 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1"
+                  >
+                    <span
+                      class="w-2 h-2 rounded-full bg-green-500 animate-pulse"
+                    ></span>
+                    ONLINE
+                  </div>
+                  <div
+                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-surface-dark to-transparent h-24"
+                  ></div>
+                </div>
+                <div class="p-5 flex flex-col flex-1 gap-4">
+                  <div>
+                    <div class="flex justify-between items-start mb-1">
+                      <h3 class="text-white text-lg font-bold">
+                        Sarah Jenkins
+                      </h3>
+                      <div
+                        class="flex items-center text-yellow-400 text-sm font-bold gap-1"
+                      >
+                        <span>4.9</span>
+                        <span
+                          class="material-symbols-outlined text-[16px] fill-current"
+                          >star</span
+                        >
+                      </div>
+                    </div>
+                    <p class="text-primary text-sm font-medium mb-2">
+                      Certified Facilitator
+                    </p>
+                    <p class="text-text-muted text-sm line-clamp-3">
+                      Specializing in relationship conflicts and self-worth
+                      inquiries. I help clients apply The Work to dissolve
+                      painful beliefs about family dynamics.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-auto pt-4 border-t border-surface-highlight flex gap-3"
+                  >
+                    <button
+                      class="flex-1 h-10 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-bold transition-colors"
+                    >
+                      Chat Now
+                    </button>
+                    <button
+                      class="h-10 w-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white flex items-center justify-center transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[20px]"
+                        >mail</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Counselor Card 2 (Online) -->
+              <div
+                class="flex flex-col rounded-xl bg-surface-dark border border-surface-highlight overflow-hidden hover:border-primary/30 transition-all duration-300 group"
+              >
+                <div
+                  class="relative h-48 w-full bg-cover bg-center"
+                  data-alt="Portrait of David Chen smiling"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCg99Qg2t1f76JWwizho_6u2fyEx6H3sKvYETKM3qz9tc2ok52lolYs6EhYwpDLUN96wBt331PIMMrOStdrth64EekfMQY55kH8YCuvcXGa2dfUxhapdp5M40uJXEOHHMRmrSA46dUjTTi18vKHDWP5xLtkWcR4ulix_2rqo0yQrjQ966axiBGGyrxNrm_0rbMh7CktgCQFsUQv3DuZXRaqRyPpjOVvKCmlGP3jQG2CW85EuyDbSoudC89b9V3wh8zUcibKjfEVGjQ&quot;);
+                  "
+                >
+                  <div
+                    class="absolute top-3 left-3 bg-green-500/20 backdrop-blur-md border border-green-500/30 text-green-400 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1"
+                  >
+                    <span
+                      class="w-2 h-2 rounded-full bg-green-500 animate-pulse"
+                    ></span>
+                    ONLINE
+                  </div>
+                  <div
+                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-surface-dark to-transparent h-24"
+                  ></div>
+                </div>
+                <div class="p-5 flex flex-col flex-1 gap-4">
+                  <div>
+                    <div class="flex justify-between items-start mb-1">
+                      <h3 class="text-white text-lg font-bold">David Chen</h3>
+                      <div
+                        class="flex items-center text-yellow-400 text-sm font-bold gap-1"
+                      >
+                        <span>5.0</span>
+                        <span
+                          class="material-symbols-outlined text-[16px] fill-current"
+                          >star</span
+                        >
+                      </div>
+                    </div>
+                    <p class="text-primary text-sm font-medium mb-2">
+                      Senior Facilitator
+                    </p>
+                    <p class="text-text-muted text-sm line-clamp-3">
+                      Deep experience with workplace stress and career
+                      transitions. Let's question the thoughts that keep you
+                      stuck in professional anxiety.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-auto pt-4 border-t border-surface-highlight flex gap-3"
+                  >
+                    <button
+                      class="flex-1 h-10 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-bold transition-colors"
+                    >
+                      Chat Now
+                    </button>
+                    <button
+                      class="h-10 w-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white flex items-center justify-center transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[20px]"
+                        >mail</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Counselor Card 3 (Offline) -->
+              <div
+                class="flex flex-col rounded-xl bg-surface-dark border border-surface-highlight overflow-hidden hover:border-primary/30 transition-all duration-300 group"
+              >
+                <div
+                  class="relative h-48 w-full bg-cover bg-center"
+                  data-alt="Warm portrait of Elena Rodriguez"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuA-uOWDUXKLFU-Z3Kud1ZZAHcAG0W44HHmXsiUzCTKeD8LJaJeh1Ee3kRYICqxhmkbGfQyJX8ZuUoreLio9AZIfKgZOn1tzsn6dS9_2drM1D6KrWTMs-jfZyBk7HYcwXA2D59sqAuoRznsX7GU0JP8ejiE5WvOzUjFl2v1xQFEKbL2deioADuXMJW7FoY52hH99Yk7m93A8i9b0oOzrOtbWvStnqoaMV_hNdX_q_N1-YYVP6a171nMYstln8nz2qo93KRaA0ZQ5UFo&quot;);
+                  "
+                >
+                  <div
+                    class="absolute top-3 left-3 bg-slate-500/20 backdrop-blur-md border border-slate-500/30 text-slate-300 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1"
+                  >
+                    <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                    OFFLINE
+                  </div>
+                  <div
+                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-surface-dark to-transparent h-24"
+                  ></div>
+                </div>
+                <div class="p-5 flex flex-col flex-1 gap-4">
+                  <div>
+                    <div class="flex justify-between items-start mb-1">
+                      <h3 class="text-white text-lg font-bold">
+                        Elena Rodriguez
+                      </h3>
+                      <div
+                        class="flex items-center text-yellow-400 text-sm font-bold gap-1"
+                      >
+                        <span>4.8</span>
+                        <span
+                          class="material-symbols-outlined text-[16px] fill-current"
+                          >star</span
+                        >
+                      </div>
+                    </div>
+                    <p class="text-primary text-sm font-medium mb-2">
+                      Trauma Specialist
+                    </p>
+                    <p class="text-text-muted text-sm line-clamp-3">
+                      Gentle guidance for healing past traumas. I offer a safe
+                      space to do The Work on deep-seated beliefs and finding
+                      forgiveness.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-auto pt-4 border-t border-surface-highlight flex gap-3"
+                  >
+                    <button
+                      class="flex-1 h-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white text-sm font-bold transition-colors"
+                    >
+                      Schedule
+                    </button>
+                    <button
+                      class="h-10 w-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white flex items-center justify-center transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[20px]"
+                        >mail</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Counselor Card 4 (Offline) -->
+              <div
+                class="flex flex-col rounded-xl bg-surface-dark border border-surface-highlight overflow-hidden hover:border-primary/30 transition-all duration-300 group"
+              >
+                <div
+                  class="relative h-48 w-full bg-cover bg-center"
+                  data-alt="Portrait of Marcus Johnson"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCEijL7b4QAFlTggev8E_kgqbNEehkNrDCIUKpfXjTZTU7TBscLcQn1rk2P4Nf-fDYheEcFoSHLF0UQjhtf8a2voqYpvJithCg_k0TWUNxCsOUtwfu3P8M6qvVsQ0-6t2KAWEwNEXAxTNlyDZa9s5iqEJ94CEcyWlexF2R3oueH-LfnmIBvlK1e_Yo5wTd5t2kCWy37h6q0M6WakVQ7xFIfuYdh-yx8b9y_CjPHzKi240ZfkH9QgaGPTOFKicxkwsoHOphJJ8dHV5o&quot;);
+                  "
+                >
+                  <div
+                    class="absolute top-3 left-3 bg-slate-500/20 backdrop-blur-md border border-slate-500/30 text-slate-300 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1"
+                  >
+                    <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                    OFFLINE
+                  </div>
+                  <div
+                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-surface-dark to-transparent h-24"
+                  ></div>
+                </div>
+                <div class="p-5 flex flex-col flex-1 gap-4">
+                  <div>
+                    <div class="flex justify-between items-start mb-1">
+                      <h3 class="text-white text-lg font-bold">
+                        Marcus Johnson
+                      </h3>
+                      <div
+                        class="flex items-center text-yellow-400 text-sm font-bold gap-1"
+                      >
+                        <span>4.7</span>
+                        <span
+                          class="material-symbols-outlined text-[16px] fill-current"
+                          >star</span
+                        >
+                      </div>
+                    </div>
+                    <p class="text-primary text-sm font-medium mb-2">
+                      Certified Facilitator
+                    </p>
+                    <p class="text-text-muted text-sm line-clamp-3">
+                      Focusing on addiction and recovery. The Work is a powerful
+                      tool for sobriety and understanding the mind's cravings.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-auto pt-4 border-t border-surface-highlight flex gap-3"
+                  >
+                    <button
+                      class="flex-1 h-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white text-sm font-bold transition-colors"
+                    >
+                      Schedule
+                    </button>
+                    <button
+                      class="h-10 w-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white flex items-center justify-center transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[20px]"
+                        >mail</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Counselor Card 5 (Online) -->
+              <div
+                class="flex flex-col rounded-xl bg-surface-dark border border-surface-highlight overflow-hidden hover:border-primary/30 transition-all duration-300 group"
+              >
+                <div
+                  class="relative h-48 w-full bg-cover bg-center"
+                  data-alt="Portrait of Amara Patel"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBz14KtqC0VKdu6SNx1NofYEJ5DoBkblzUV7uJnq-alSUca5JCfPOM404dslplvRdUw8W1IuUZ3MWjLmmrqYaiNX6J-bx3kdYrE4_TzWlTTxcrDN3WXJybpH17r8LqfHd399mD-NyF2c7nDgvheooQbkvv2ynIx-vijdZ6nOFVpPhgjDOwUwvDZkDePP0ivCMghJfat5FWQHmVzkqNjGPA3zSpTTQu2eSwsD5m9J3xJtWM8dPRMopecAtHBO4GxW16JspHqMWcRSrY&quot;);
+                  "
+                >
+                  <div
+                    class="absolute top-3 left-3 bg-green-500/20 backdrop-blur-md border border-green-500/30 text-green-400 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1"
+                  >
+                    <span
+                      class="w-2 h-2 rounded-full bg-green-500 animate-pulse"
+                    ></span>
+                    ONLINE
+                  </div>
+                  <div
+                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-surface-dark to-transparent h-24"
+                  ></div>
+                </div>
+                <div class="p-5 flex flex-col flex-1 gap-4">
+                  <div>
+                    <div class="flex justify-between items-start mb-1">
+                      <h3 class="text-white text-lg font-bold">Amara Patel</h3>
+                      <div
+                        class="flex items-center text-yellow-400 text-sm font-bold gap-1"
+                      >
+                        <span>5.0</span>
+                        <span
+                          class="material-symbols-outlined text-[16px] fill-current"
+                          >star</span
+                        >
+                      </div>
+                    </div>
+                    <p class="text-primary text-sm font-medium mb-2">
+                      Relationship Coach
+                    </p>
+                    <p class="text-text-muted text-sm line-clamp-3">
+                      Expert in marriage and partnership inquiries. Discover the
+                      love that is already present by questioning your
+                      judgments.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-auto pt-4 border-t border-surface-highlight flex gap-3"
+                  >
+                    <button
+                      class="flex-1 h-10 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-bold transition-colors"
+                    >
+                      Chat Now
+                    </button>
+                    <button
+                      class="h-10 w-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white flex items-center justify-center transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[20px]"
+                        >mail</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Counselor Card 6 (Offline) -->
+              <div
+                class="flex flex-col rounded-xl bg-surface-dark border border-surface-highlight overflow-hidden hover:border-primary/30 transition-all duration-300 group"
+              >
+                <div
+                  class="relative h-48 w-full bg-cover bg-center"
+                  data-alt="Portrait of James Wilson"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDxlZ1Ha0Su0iuokij8dIkuuc5X6XG18Vs846TIY3QPaSVUOfRW8p-RkLxcEnVV7wH-TMZHEe5WCzzksjR_Ew3I2X_y0AGVIoioIjAIvRQD6OyHisER40kKKRIKN8hOvW7q7D8STfJhbVyyzRh5UbIgeHUZkeYj4J0zRj9nOwyVn-gwNgvER-JxOkQ2gsXdcoN_wL4kpPS6x45EYoSbgfOqLdJmxZIKxioFkJ9fgZDp_qkZvdZxQLOfQ0LL4qf6MBtd9TDQGtHZhPg&quot;);
+                  "
+                >
+                  <div
+                    class="absolute top-3 left-3 bg-slate-500/20 backdrop-blur-md border border-slate-500/30 text-slate-300 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1"
+                  >
+                    <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                    OFFLINE
+                  </div>
+                  <div
+                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-surface-dark to-transparent h-24"
+                  ></div>
+                </div>
+                <div class="p-5 flex flex-col flex-1 gap-4">
+                  <div>
+                    <div class="flex justify-between items-start mb-1">
+                      <h3 class="text-white text-lg font-bold">James Wilson</h3>
+                      <div
+                        class="flex items-center text-yellow-400 text-sm font-bold gap-1"
+                      >
+                        <span>4.9</span>
+                        <span
+                          class="material-symbols-outlined text-[16px] fill-current"
+                          >star</span
+                        >
+                      </div>
+                    </div>
+                    <p class="text-primary text-sm font-medium mb-2">
+                      Certified Facilitator
+                    </p>
+                    <p class="text-text-muted text-sm line-clamp-3">
+                      Specializing in anxiety and body image issues. Learn to
+                      love what is, including yourself and your body.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-auto pt-4 border-t border-surface-highlight flex gap-3"
+                  >
+                    <button
+                      class="flex-1 h-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white text-sm font-bold transition-colors"
+                    >
+                      Schedule
+                    </button>
+                    <button
+                      class="h-10 w-10 rounded-lg bg-surface-highlight hover:bg-surface-highlight/80 text-white flex items-center justify-center transition-colors"
+                    >
+                      <span class="material-symbols-outlined text-[20px]"
+                        >mail</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- Footer -->
+        <footer
+          class="border-t border-surface-highlight bg-background-dark px-6 py-10 md:px-10 lg:px-40"
+        >
+          <div class="flex flex-col md:flex-row justify-between gap-10">
+            <div class="flex flex-col gap-4 max-w-sm">
+              <div class="flex items-center gap-2 text-white">
+                <span class="material-symbols-outlined text-2xl text-primary"
+                  >psychology_alt</span
+                >
+                <span class="text-lg font-bold">The Work Counselors</span>
+              </div>
+              <p class="text-text-muted text-sm">
+                A platform dedicated to peace of mind through inquiry. Connect,
+                question, and find freedom.
+              </p>
+            </div>
+            <div class="flex gap-12 flex-wrap">
+              <div class="flex flex-col gap-3">
+                <h4
+                  class="text-white font-bold text-sm uppercase tracking-wider"
+                >
+                  Platform
+                </h4>
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >Browse Counselors</a
+                >
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >How it Works</a
+                >
+              </div>
+              <div class="flex flex-col gap-3">
+                <h4
+                  class="text-white font-bold text-sm uppercase tracking-wider"
+                >
+                  Community
+                </h4>
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >For Counselors</a
+                >
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >Success Stories</a
+                >
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >Blog</a
+                >
+              </div>
+              <div class="flex flex-col gap-3">
+                <h4
+                  class="text-white font-bold text-sm uppercase tracking-wider"
+                >
+                  Support
+                </h4>
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >Help Center</a
+                >
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >Contact Us</a
+                >
+                <a
+                  class="text-text-muted hover:text-white text-sm transition-colors"
+                  href="#"
+                  >Crisis Resources</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-10 pt-6 border-t border-surface-highlight flex flex-col md:flex-row justify-between gap-4 text-xs text-text-muted"
+          >
+            <p>© 2026 The Work Counselors. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
