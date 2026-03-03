@@ -3,6 +3,9 @@ import { Button } from "~/common/components/ui/button";
 import { Card, CardContent, CardFooter } from "~/common/components/ui/card";
 import { Badge } from "~/common/components/ui/badge";
 import { useTranslation } from "react-i18next";
+import { cn } from "~/lib/utils";
+
+type FacilitatorStatus = "online" | "in-session" | "offline";
 
 interface CounselorCardProps {
   id: number;
@@ -10,7 +13,7 @@ interface CounselorCardProps {
   languages: string[];
   bio: string;
   imageUrl: string;
-  online: boolean;
+  status: FacilitatorStatus;
 }
 
 export function CounselorCard({
@@ -19,7 +22,7 @@ export function CounselorCard({
   languages,
   bio,
   imageUrl,
-  online,
+  status,
 }: CounselorCardProps) {
   const { t } = useTranslation();
   return (
@@ -30,19 +33,25 @@ export function CounselorCard({
           style={{ backgroundImage: `url("${imageUrl}")` }}
         />
         <Badge
-          variant={online ? "default" : "secondary"}
-          className={`absolute top-3 left-3 ${
-            online
-              ? "bg-green-500/20 text-green-400 border-green-500/30 backdrop-blur-md hover:bg-green-500/20"
-              : "bg-secondary/80 backdrop-blur-md"
-          }`}
+          variant={status === "offline" ? "secondary" : "default"}
+          className={cn(
+            "absolute top-3 left-3 backdrop-blur-md",
+            status === "online" &&
+              "bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/20",
+            status === "in-session" &&
+              "bg-blue-500/20 text-blue-400 border-blue-500/30 hover:bg-blue-500/20",
+            status === "offline" && "bg-secondary/80",
+          )}
         >
           <span
-            className={`mr-1.5 size-2 rounded-full inline-block ${
-              online ? "bg-green-500 animate-pulse" : "bg-muted-foreground"
-            }`}
+            className={cn(
+              "mr-1.5 size-2 rounded-full inline-block",
+              status === "online" && "bg-green-500 animate-pulse",
+              status === "in-session" && "bg-blue-500",
+              status === "offline" && "bg-muted-foreground",
+            )}
           />
-          {online ? t("counselors.online") : t("counselors.offline")}
+          {t(`counselors.${status}`)}
         </Badge>
         <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-card to-transparent h-16" />
       </div>

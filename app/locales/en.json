@@ -20,6 +20,7 @@
   "counselors.title": "Available Facilitators",
   "counselors.book": "Book a Session",
   "counselors.online": "ONLINE",
+  "counselors.in-session": "IN SESSION",
   "counselors.offline": "OFFLINE",
 
   "lang.ko": "Korean",
@@ -27,6 +28,15 @@
   "lang.zh": "Chinese",
   "lang.es": "Spanish",
   "lang.hi": "Hindi",
+
+  "facilitators.title": "Facilitators",
+  "facilitators.subtitle": "Find the right facilitator for you.",
+  "facilitators.filter.availability": "Availability",
+  "facilitators.filter.language": "Language",
+  "facilitators.filter.all": "All",
+  "facilitators.filter.online": "Online",
+  "facilitators.filter.in-session": "In Session",
+  "facilitators.filter.offline": "Offline",
 
   "footer.tagline": "A platform dedicated to peace of mind through inquiry. Connect, question, and find freedom.",
   "footer.disclaimer": "This service does not replace professional medical diagnosis or treatment. If you are experiencing a serious mental health crisis, please contact emergency services or a licensed mental health professional immediately.",

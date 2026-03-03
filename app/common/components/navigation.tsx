@@ -33,8 +33,6 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const menus = [{ key: "nav.facilitators", to: "/" }];
-
 const languages = [
   { label: "한국어", value: "ko" },
   { label: "English", value: "en" },
@@ -74,13 +72,11 @@ export default function Navigation({
       <div className="flex-1 hidden md:flex justify-center">
         <NavigationMenu viewport={false}>
           <NavigationMenuList>
-            {menus.map((menu) => (
-              <NavigationMenuItem key={menu.key}>
-                <Link to={menu.to} className={navigationMenuTriggerStyle()}>
-                  {t(menu.key)}
-                </Link>
-              </NavigationMenuItem>
-            ))}
+            <NavigationMenuItem>
+              <Link to="/facilitators" className={navigationMenuTriggerStyle()}>
+                {t("nav.facilitators")}
+              </Link>
+            </NavigationMenuItem>
             {isLoggedIn && (
               <NavigationMenuItem>
                 <Link
