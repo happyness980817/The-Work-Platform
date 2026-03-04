@@ -8,6 +8,7 @@ import {
   useLocation,
 } from "react-router";
 import Navigation from "./common/components/navigation";
+import Footer from "./common/components/footer";
 import "./hooks/use-locale";
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -59,13 +60,14 @@ export default function App() {
         <Outlet
           context={{
             isLoggedIn: true,
-            role: "client" as "client" | "counselor" | "admin",
+            role: "client" as "client" | "facilitator" | "admin",
             name: "",
             userId: "",
             avatar: "",
           }}
         />
       </main>
+      {!isAuthPage && <Footer />}
     </div>
   );
 }

@@ -25,6 +25,80 @@ trigger: always_on
 - 상태 관리는 React Router의 데이터 로딩/액션 패턴을 우선한다.
 - UI는 shadcn/ui 컴포넌트를 기반으로 하되, 접근성(키보드 탐색, 포커스)과 일관된 인터랙션을 유지한다.
 - 환경변수/키는 절대 하드코딩하지 않는다.
+- 리액트 컴포넌트 함수는 default export 를 사용한다.
+- loader 및 action 함수는 named export 와 arrow function을 사용한다.
+
+코드 예시:
+
+```import type { Route } from "./+types/category-page";
+import { Hero } from "~/common/components/hero";
+import { ProductCard } from "../components/product-card";
+import ProductPagination from "~/common/components/product-pagination";
+import {
+  getCategory,
+  getProductsByCategory,
+  getCategoryPages,
+} from "../queries";
+import { z } from "zod";
+import { data } from "react-router";
+import { makeSSRClient } from "~/supa-client";
+
+export const meta = ({ params }: Route.MetaArgs) => {
+  return [
+    { title: `Developer Tools | WeMake` },
+    { name: "description", content: `Browse Developer Tools products` },
+  ];
+};
+
+const categoryIdSchema = z.coerce.number().int();
+const pageSchema = z.coerce.number().int().min(1).optional().default(1);
+
+export const loader = async ({ params, request }: Route.LoaderArgs) => {
+  const { client, headers } = makeSSRClient(request);
+  const url = new URL(request.url);
+
+  const { success: isCategoryIdValid, data: categoryId } =
+    categoryIdSchema.safeParse(params.category);
+  if (!isCategoryIdValid) throw new Error("Invalid Category ID");
+
+  const { success: isPageValid, data: page } = pageSchema.safeParse(
+    url.searchParams.get("page") ?? undefined
+  );
+  if (!isPageValid) throw new Error("Invalid page");
+
+  const [category, products, totalPages] = await Promise.all([
+    getCategory(client, categoryId),
+    getProductsByCategory(client, { categoryId, page }),
+    getCategoryPages(client, categoryId),
+  ]);
+  return data({ category, products, totalPages }, { headers });
+};
+
+export default function CategoryPage({ loaderData }: Route.ComponentProps) {
+  return (
+    <div className="space-y-10">
+      <Hero
+        title={loaderData.category.name}
+        subtitle={loaderData.category.description}
+      />
+      <div className="space-y-5 w-full max-w-3xl mx-auto">
+        {loaderData.products.map((product) => (
+          <ProductCard
+            key={product.product_id}
+            id={product.product_id}
+            name={product.name}
+            tagline={product.tagline}
+            reviewsCount={product.reviews}
+            viewsCount={product.views}
+            likesCount={product.likes}
+          />
+        ))}
+      </div>
+      <ProductPagination totalPages={loaderData.totalPages} />
+    </div>
+  );
+}
+```
 
 ## 3. 라우팅 / 서버 구조
 
@@ -105,3 +179,615 @@ trigger: always_on
 - https://platform.openai.com/docs/api-reference/responses
 - https://platform.openai.com/docs/guides/conversation-state?api-mode=responses
 - Responses API 관련 코드는 최신 공식 문서를 근거로 작성하며, 확실하지 않은 내용은 생성하지 않는다.
+
+url 파리미터 등의 데이터 검증을 위해 zod 를 사용한다.
+날짜 작업을 위해 luxon 을 사용한다.
+
+코드 예시:
+
+```
+import type { Route } from "./+types/product-reviews-page";
+import { Button } from "~/common/components/ui/button";
+import { Dialog, DialogTrigger } from "~/common/components/ui/dialog";
+import { ReviewCard } from "~/features/products/components/review-card";
+import CreateReviewDialog from "~/features/products/components/create-review-dialog";
+import { useOutletContext } from "react-router";
+import { getReviews } from "../queries";
+import { makeSSRClient } from "~/supa-client";
+import { getLoggedInUserId } from "~/features/users/queries";
+import z from "zod";
+import { createProductReview } from "../mutations";
+import { useState, useEffect } from "react";
+
+export const meta: Route.MetaFunction = () => {
+  return [
+    { title: "Product Reviews | Wemake" },
+    { name: "description", content: "Product reviews page" },
+  ];
+};
+
+export const loader = async ({ params, request }: Route.LoaderArgs) => {
+  const { client } = makeSSRClient(request);
+  const reviews = await getReviews(client, Number(params.productId));
+  return { reviews };
+};
+
+const formSchema = z.object({
+  rating: z.coerce.number().min(1).max(5),
+  review: z.string().min(1).max(1000),
+});
+
+export const action = async ({ request, params }: Route.ActionArgs) => {
+  const { client } = makeSSRClient(request);
+  const userId = await getLoggedInUserId(client);
+  const formData = await request.formData();
+  const { success, error, data } = formSchema.safeParse(
+    Object.fromEntries(formData),
+  );
+  if (!success) {
+    return {
+      formErrors: z.flattenError(error).fieldErrors,
+    };
+  }
+  await createProductReview(client, {
+    productId: params.productId,
+    rating: data.rating,
+    review: data.review,
+    userId,
+  });
+  return {
+    ok: true,
+  };
+};
+
+export default function ProductReviewsPage({
+  loaderData,
+  actionData,
+}: Route.ComponentProps) {
+  const { review_count } = useOutletContext<{ review_count: string }>();
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (actionData?.ok) {
+      setOpen(false);
+    }
+  }, [actionData]);
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <div className="space-y-10 max-w-xl">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">
+            {review_count} {review_count === "1" ? "Review" : "Reviews"}
+          </h2>
+          <DialogTrigger asChild>
+            <Button variant="secondary">Write a review</Button>
+          </DialogTrigger>
+        </div>
+        <div className="space-y-20">
+          {loaderData.reviews.map((review) => (
+            <ReviewCard
+              key={review.review_id}
+              authorName={review.user.name}
+              username={review.user.username}
+              avatarURL={review.user.avatar}
+              rating={review.rating}
+              content={review.review}
+              timestamp={review.created_at}
+            />
+          ))}
+        </div>
+      </div>
+      <CreateReviewDialog />
+    </Dialog>
+  );
+}
+```
+
+drizzle 스키마 예시:
+
+```
+import { DateTime } from "luxon";
+import { PAGE_SIZE } from "./constants";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "~/supa-client";
+
+export const productColumns = `
+  product_id,
+  name,
+  tagline,
+  likes:stats->>likes,
+  views:stats->>views,
+  reviews:stats->>reviews
+`;
+
+export const getProductsByDateRange = async (
+  client: SupabaseClient<Database>,
+  {
+    startDate,
+    endDate,
+    limit,
+    page = 1,
+  }: {
+    startDate: DateTime;
+    endDate: DateTime;
+    limit: number;
+    page?: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .order("stats->>likes", { ascending: false })
+    .gte("created_at", startDate.toISO())
+    .lte("created_at", endDate.toISO())
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getProductsPagesByDateRange = async (
+  client: SupabaseClient<Database>,
+  {
+    startDate,
+    endDate,
+  }: {
+    startDate: DateTime;
+    endDate: DateTime;
+  },
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true })
+    .gte("created_at", startDate.toISO())
+    .lte("created_at", endDate.toISO());
+  if (error) throw error;
+  if (count) return Math.ceil(count / PAGE_SIZE); // 올림
+  return 1;
+};
+
+export const getAllTimeProducts = async (
+  client: SupabaseClient<Database>,
+  {
+    limit,
+    page = 1,
+  }: {
+    limit: number;
+    page?: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .order("created_at", { ascending: false })
+    .range((page - 1) * limit, page * limit - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getAllTimeProductsPages = async (
+  client: SupabaseClient<Database>,
+  { limit }: { limit: number },
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true });
+  if (error) throw error;
+  if (count) return Math.ceil(count / limit);
+  return 1;
+};
+
+export const getCategories = async (client: SupabaseClient<Database>) => {
+  const { data, error } = await client
+    .from("categories")
+    .select(`category_id, name, description`);
+  if (error) throw error;
+  return data;
+};
+
+export const getCategory = async (
+  client: SupabaseClient<Database>,
+  categoryId: number,
+) => {
+  const { data, error } = await client
+    .from("categories")
+    .select(`category_id, name, description`)
+    .eq("category_id", categoryId)
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+export const getProductsByCategory = async (
+  client: SupabaseClient<Database>,
+  {
+    categoryId,
+    page,
+  }: {
+    categoryId: number;
+    page: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .eq("category_id", categoryId)
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getCategoryPages = async (
+  client: SupabaseClient<Database>,
+  categoryId: number,
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true })
+    .eq("category_id", categoryId);
+  if (error) throw error;
+  if (count) return Math.ceil(count / PAGE_SIZE);
+  return 1;
+};
+
+export const getProductsBySearch = async (
+  client: SupabaseClient<Database>,
+  {
+    query,
+    page,
+  }: {
+    query: string;
+    page: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .or(`name.ilike.%${query}%,tagline.ilike.%${query}%`)
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getPagesBySearch = async (
+  client: SupabaseClient<Database>,
+  { query }: { query: string },
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true })
+    .or(`name.ilike.%${query}%,tagline.ilike.%${query}%`);
+  if (error) throw error;
+  if (count) return Math.ceil(count / PAGE_SIZE);
+  return 1;
+};
+
+export const getProductById = async (
+  client: SupabaseClient<Database>,
+  productId: number,
+) => {
+  const { data, error } = await client
+    .from("product_overview_view")
+    .select(`*`)
+    .eq("product_id", productId)
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+export const getReviews = async (
+  client: SupabaseClient<Database>,
+  productId: number,
+) => {
+  const { data, error } = await client
+    .from("reviews")
+    .select(
+      `
+      review_id,
+      rating,
+      review,
+      created_at,
+      user:profiles!inner(
+      name,username,avatar
+    )
+      `,
+    )
+    .eq("product_id", productId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data;
+};
+
+```
+
+데이터를 불러올 때는 loaderData 와 query 함수를 사용한다.
+
+코드 예시:
+
+queries.ts
+
+```
+import { DateTime } from "luxon";
+import { PAGE_SIZE } from "./constants";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "~/supa-client";
+
+export const productColumns = `
+  product_id,
+  name,
+  tagline,
+  likes:stats->>likes,
+  views:stats->>views,
+  reviews:stats->>reviews
+`;
+
+export const getProductsByDateRange = async (
+  client: SupabaseClient<Database>,
+  {
+    startDate,
+    endDate,
+    limit,
+    page = 1,
+  }: {
+    startDate: DateTime;
+    endDate: DateTime;
+    limit: number;
+    page?: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .order("stats->>likes", { ascending: false })
+    .gte("created_at", startDate.toISO())
+    .lte("created_at", endDate.toISO())
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getProductsPagesByDateRange = async (
+  client: SupabaseClient<Database>,
+  {
+    startDate,
+    endDate,
+  }: {
+    startDate: DateTime;
+    endDate: DateTime;
+  },
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true })
+    .gte("created_at", startDate.toISO())
+    .lte("created_at", endDate.toISO());
+  if (error) throw error;
+  if (count) return Math.ceil(count / PAGE_SIZE); // 올림
+  return 1;
+};
+
+export const getAllTimeProducts = async (
+  client: SupabaseClient<Database>,
+  {
+    limit,
+    page = 1,
+  }: {
+    limit: number;
+    page?: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .order("created_at", { ascending: false })
+    .range((page - 1) * limit, page * limit - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getAllTimeProductsPages = async (
+  client: SupabaseClient<Database>,
+  { limit }: { limit: number },
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true });
+  if (error) throw error;
+  if (count) return Math.ceil(count / limit);
+  return 1;
+};
+
+export const getCategories = async (client: SupabaseClient<Database>) => {
+  const { data, error } = await client
+    .from("categories")
+    .select(`category_id, name, description`);
+  if (error) throw error;
+  return data;
+};
+
+export const getCategory = async (
+  client: SupabaseClient<Database>,
+  categoryId: number,
+) => {
+  const { data, error } = await client
+    .from("categories")
+    .select(`category_id, name, description`)
+    .eq("category_id", categoryId)
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+export const getProductsByCategory = async (
+  client: SupabaseClient<Database>,
+  {
+    categoryId,
+    page,
+  }: {
+    categoryId: number;
+    page: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .eq("category_id", categoryId)
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getCategoryPages = async (
+  client: SupabaseClient<Database>,
+  categoryId: number,
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true })
+    .eq("category_id", categoryId);
+  if (error) throw error;
+  if (count) return Math.ceil(count / PAGE_SIZE);
+  return 1;
+};
+
+export const getProductsBySearch = async (
+  client: SupabaseClient<Database>,
+  {
+    query,
+    page,
+  }: {
+    query: string;
+    page: number;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .select(productColumns)
+    .or(`name.ilike.%${query}%,tagline.ilike.%${query}%`)
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+  if (error) throw error;
+  return data;
+};
+
+export const getPagesBySearch = async (
+  client: SupabaseClient<Database>,
+  { query }: { query: string },
+) => {
+  const { count, error } = await client
+    .from("products")
+    .select(`product_id`, { count: "exact", head: true })
+    .or(`name.ilike.%${query}%,tagline.ilike.%${query}%`);
+  if (error) throw error;
+  if (count) return Math.ceil(count / PAGE_SIZE);
+  return 1;
+};
+
+export const getProductById = async (
+  client: SupabaseClient<Database>,
+  productId: number,
+) => {
+  const { data, error } = await client
+    .from("product_overview_view")
+    .select(`*`)
+    .eq("product_id", productId)
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+export const getReviews = async (
+  client: SupabaseClient<Database>,
+  productId: number,
+) => {
+  const { data, error } = await client
+    .from("reviews")
+    .select(
+      `
+      review_id,
+      rating,
+      review,
+      created_at,
+      user:profiles!inner(
+      name,username,avatar
+    )
+      `,
+    )
+    .eq("product_id", productId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data;
+};
+```
+
+데이터 수정 및 삽입 등의 변형은 mutations.ts 파일에 작성한다.
+
+코드 예시:
+
+mutations.ts
+
+```
+import { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "~/supa-client";
+
+export const createProductReview = async (
+  client: SupabaseClient<Database>,
+  {
+    productId,
+    rating,
+    review,
+    userId,
+  }: {
+    productId: string;
+    rating: number;
+    review: string;
+    userId: string;
+  },
+) => {
+  const { error } = await client.from("reviews").insert({
+    product_id: Number(productId),
+    rating,
+    review,
+    profile_id: userId,
+  });
+  if (error) throw error;
+};
+
+export const createProduct = async (
+  client: SupabaseClient<Database>,
+  {
+    name,
+    tagline,
+    description,
+    howItWorks,
+    icon,
+    url,
+    categoryId,
+    userId,
+  }: {
+    name: string;
+    tagline: string;
+    description: string;
+    howItWorks: string;
+    icon: string;
+    url: string;
+    categoryId: number;
+    userId: string;
+  },
+) => {
+  const { data, error } = await client
+    .from("products")
+    .insert({
+      name,
+      tagline,
+      description,
+      how_it_works: howItWorks,
+      icon,
+      url,
+      category_id: categoryId,
+      profile_id: userId,
+    })
+    .select("product_id")
+    .single();
+  if (error) throw error;
+  return data.product_id;
+};
+
+```

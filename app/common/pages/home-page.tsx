@@ -1,11 +1,11 @@
 import { Button } from "~/common/components/ui/button";
 import { Card } from "~/common/components/ui/card";
-import { CounselorCard } from "~/features/users/components/counselor-card";
+import FacilitatorCard from "~/features/users/components/facilitator-card";
 import { useTranslation } from "react-i18next";
 
 const heroImageUrl =
   "https://thework.com/wp-content/uploads/2019/03/byron-katie-founder-thework@2x.jpg";
-const counselors = [
+const facilitators = [
   {
     id: 1,
     name: "Sarah Jenkins",
@@ -89,87 +89,17 @@ export default function HomePage() {
         </div>
       </Card>
 
-      {/* Counselors Section */}
+      {/* Facilitators Section */}
       <div className="space-y-6">
         <h2 className="text-2xl font-bold tracking-tight">
-          {t("counselors.title")}
+          {t("facilitators.title")}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {counselors.map((counselor) => (
-            <CounselorCard key={counselor.id} {...counselor} />
+          {facilitators.map((facilitator) => (
+            <FacilitatorCard key={facilitator.id} {...facilitator} />
           ))}
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="border-t pt-10 pb-6">
-        <div className="flex flex-col md:flex-row justify-between gap-10">
-          <div className="flex flex-col gap-4 max-w-sm">
-            <div className="flex items-center gap-2">
-              <img
-                src="https://thework.com/wp-content/uploads/2019/03/The-Work-app.jpg"
-                alt="The Work"
-                className="size-6 rounded"
-              />
-              <span className="text-lg font-bold">
-                The Work{" "}
-                <span className="text-primary font-normal italic">
-                  Platform
-                </span>
-              </span>
-            </div>
-            <p className="text-muted-foreground text-sm">
-              {t("footer.tagline")}
-            </p>
-          </div>
-          {/* <div className="flex gap-12 flex-wrap">
-            <div className="flex flex-col gap-3">
-              <h4 className="font-bold text-sm uppercase tracking-wider">
-                Platform
-              </h4>
-              <a
-                href="/"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                Browse Counselors
-              </a>
-              <a
-                href="/"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                How it Works
-              </a>
-            </div>
-            <div className="flex flex-col gap-3">
-              <h4 className="font-bold text-sm uppercase tracking-wider">
-                Support
-              </h4>
-              <a
-                href="/"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                Help Center
-              </a>
-              <a
-                href="/"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                Contact Us
-              </a>
-              <a
-                href="/"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                Crisis Resources
-              </a>
-            </div>
-          </div> */}
-        </div>
-        <div className="mt-8 pt-6 border-t text-xs text-muted-foreground space-y-3">
-          <p>{t("footer.disclaimer")}</p>
-          <p>{t("footer.copyright")}</p>
-        </div>
-      </footer>
     </div>
   );
 }

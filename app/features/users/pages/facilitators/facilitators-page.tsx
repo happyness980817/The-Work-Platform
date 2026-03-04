@@ -7,7 +7,8 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
-import { CounselorCard } from "~/features/users/components/counselor-card";
+import FacilitatorCard from "~/features/users/components/facilitator-card";
+import type { Route } from "./+types/facilitators-page";
 
 type FacilitatorStatus = "online" | "in-session" | "offline";
 
@@ -82,7 +83,7 @@ const facilitators = [
   },
 ];
 
-export default function FacilitatorsPage() {
+export default function FacilitatorsPage({}) {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const availability = searchParams.get("availability");
@@ -149,9 +150,7 @@ export default function FacilitatorsPage() {
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-1 text-sm">
             <span>
-              {language
-                ? t(language)
-                : t("facilitators.filter.language")}
+              {language ? t(language) : t("facilitators.filter.language")}
             </span>
             <ChevronDownIcon className="size-4" />
           </DropdownMenuTrigger>
@@ -189,7 +188,7 @@ export default function FacilitatorsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map((facilitator) => (
-          <CounselorCard key={facilitator.id} {...facilitator} />
+          <FacilitatorCard key={facilitator.id} {...facilitator} />
         ))}
       </div>
 
