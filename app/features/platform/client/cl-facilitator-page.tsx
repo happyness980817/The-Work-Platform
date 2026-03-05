@@ -132,13 +132,13 @@ export default function ClFacilitatorPage() {
               {t("facilitator.booking.timezoneHint")}
             </p>
           </div>
-          <Separator className="mb-4" />
+          <Separator />
           <ToggleGroup
             type="single"
             value={selectedTime}
             onValueChange={setSelectedTime}
             spacing={1}
-            className="flex flex-col gap-2.5 w-full"
+            className="mt-4 flex flex-col gap-2.5 w-full"
           >
             {mockTimeSlots.map((slot) => (
               <ToggleGroupItem

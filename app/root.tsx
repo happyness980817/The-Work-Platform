@@ -5,10 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLocation,
 } from "react-router";
-import Navigation from "./common/components/navigation";
-import Footer from "./common/components/footer";
 import "./hooks/use-locale";
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -46,32 +43,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { pathname } = useLocation();
-  const isAuthPage = pathname.startsWith("/auth");
   return (
-    <div className="flex flex-col min-h-screen">
-      {!isAuthPage && (
-        <Navigation
-          isLoggedIn={true}
-          hasNotifications={false}
-          hasMessages={false}
-        />
-      )}
-      <main className="flex-1 pt-16">
-        <Outlet
-          context={
-            {
-              isLoggedIn: true,
-              role: "client",
-              name: "",
-              userId: "",
-              avatar: "",
-            } satisfies AppContext
-          }
-        />
-      </main>
-      {!isAuthPage && <Footer />}
-    </div>
+    <Outlet
+      context={
+        {
+          isLoggedIn: true,
+          role: "facilitator",
+          name: "",
+          userId: "",
+          avatar: "",
+        } satisfies AppContext
+      }
+    />
   );
 }
 

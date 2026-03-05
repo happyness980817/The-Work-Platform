@@ -6,8 +6,8 @@ export default function Footer() {
   const taglineLines = t("footer.tagline").split("\n");
   return (
     <footer className="pb-6 max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8 w-full">
-      <Separator className="mb-10" />
-      <div className="flex flex-col md:flex-row justify-between gap-10">
+      <Separator />
+      <div className="pt-10 mb-8 flex flex-col md:flex-row justify-between gap-10">
         <div className="flex flex-col gap-4 max-w-2xl">
           <div className="flex items-center gap-2">
             <img
@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <Separator className="mt-8" />
+      <Separator />
       <div className="pt-6 text-xs text-muted-foreground space-y-3">
         <p>{t("footer.disclaimer")}</p>
         <p>{t("footer.copyright")}</p>

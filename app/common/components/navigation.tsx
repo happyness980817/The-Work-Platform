@@ -81,10 +81,7 @@ export default function Navigation({
             </NavigationMenuItem>
             {isLoggedIn && (
               <NavigationMenuItem>
-                <Link
-                  to="/my/messages"
-                  className={navigationMenuTriggerStyle()}
-                >
+                <Link to="/chats" className={navigationMenuTriggerStyle()}>
                   {t("nav.messages")}
                 </Link>
               </NavigationMenuItem>

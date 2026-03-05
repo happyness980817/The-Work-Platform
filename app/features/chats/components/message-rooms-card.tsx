@@ -1,0 +1,83 @@
+import { Link, useLocation } from "react-router";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "~/common/components/ui/avatar";
+import { cn } from "~/lib/utils";
+
+interface MessageRoomsCardProps {
+  id: number;
+  name: string;
+  subtitle: string;
+  avatarUrl?: string;
+  status?: "online" | "offline";
+  isSessionActive?: boolean;
+  badge?: string;
+}
+
+export function MessageRoomsCard({
+  id,
+  name,
+  subtitle,
+  avatarUrl,
+  status = "offline",
+  isSessionActive = false,
+  badge,
+}: MessageRoomsCardProps) {
+  const location = useLocation();
+  const isSelected = location.pathname.includes(id.toString());
+  return (
+    <Link
+      to={`/chats/sessions/${id}`}
+      className={cn(
+        "w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-colors relative overflow-hidden",
+        isSelected
+          ? "bg-accent border border-transparent"
+          : "hover:bg-accent/50",
+      )}
+    >
+      {isSelected && isSessionActive && (
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+      )}
+      <div className="relative">
+        <Avatar className="size-10">
+          <AvatarImage src={avatarUrl} />
+          <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
+        </Avatar>
+        {status === "online" && (
+          <span className="absolute bottom-0 right-0 block size-2.5 rounded-full bg-green-500 ring-2 ring-background" />
+        )}
+      </div>
+      <div className="flex flex-col items-start flex-1 min-w-0">
+        <div className="flex w-full justify-between items-center">
+          <p
+            className={cn(
+              "text-sm truncate",
+              isSelected
+                ? "font-semibold text-foreground"
+                : "font-medium text-foreground/80",
+            )}
+          >
+            {name}
+          </p>
+          {badge && (
+            <span
+              className={cn(
+                "text-[10px] font-medium px-1.5 py-0.5 rounded",
+                isSessionActive
+                  ? "bg-primary/20 text-primary border border-primary/30"
+                  : "text-muted-foreground",
+              )}
+            >
+              {badge}
+            </span>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground truncate w-full text-left">
+          {subtitle}
+        </p>
+      </div>
+    </Link>
+  );
+}
