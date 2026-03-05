@@ -12,6 +12,7 @@ import Footer from "./common/components/footer";
 import "./hooks/use-locale";
 import type { Route } from "./+types/root";
 import "./app.css";
+import type { AppContext } from "./types";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -58,13 +59,15 @@ export default function App() {
       )}
       <main className="flex-1 pt-16">
         <Outlet
-          context={{
-            isLoggedIn: true,
-            role: "client" as "client" | "facilitator" | "admin",
-            name: "",
-            userId: "",
-            avatar: "",
-          }}
+          context={
+            {
+              isLoggedIn: true,
+              role: "client",
+              name: "",
+              userId: "",
+              avatar: "",
+            } satisfies AppContext
+          }
         />
       </main>
       {!isAuthPage && <Footer />}

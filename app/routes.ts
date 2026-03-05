@@ -8,10 +8,10 @@ import {
 export default [
   index("common/pages/home-page.tsx"),
   ...prefix("/facilitators", [
-    index("features/users/pages/facilitators/facilitators-page.tsx"),
+    index("common/pages/facilitators-page.tsx"),
     route(
       "/:facilitatorId",
-      "features/users/pages/facilitators/facilitator-page.tsx",
+      "features/platform/layouts/facilitator-page-layout.tsx",
     ),
   ]),
   ...prefix("/auth", [

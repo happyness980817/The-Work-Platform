@@ -37,7 +37,7 @@ export default function FacilitatorProfileCard({
           </Avatar>
           <div
             className={cn(
-              "absolute bottom-1 right-1 size-4 rounded-full border-2 border-background",
+              "absolute bottom-3 right-3 size-4 rounded-full border-2 border-background",
               status === "online" && "bg-green-500",
               status === "in-session" && "bg-blue-500",
               status === "offline" && "bg-muted-foreground",

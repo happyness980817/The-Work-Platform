@@ -44,6 +44,8 @@
   "facilitator.booking.timezoneHint": "Your local time",
   "facilitator.booking.selectDate": "Select a date",
   "facilitator.booking.request": "Confirm Booking",
+  "facilitator.preview.title": "Profile Preview",
+  "facilitator.preview.description": "This is how your profile appears to clients. Booking is only available for client accounts.",
 
   "footer.tagline": "A platform dedicated to peace of mind through inquiry.\nConnect, question, and find freedom.",
   "footer.disclaimer": "This service does not replace professional medical diagnosis or treatment. If you are experiencing a serious mental health crisis, please contact emergency services or a licensed mental health professional immediately.",
