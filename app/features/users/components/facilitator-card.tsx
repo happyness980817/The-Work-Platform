@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter } from "~/common/components/ui/card";
 import { Badge } from "~/common/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { cn } from "~/lib/utils";
+import { Separator } from "~/common/components/ui/separator";
 
 type FacilitatorStatus = "online" | "in-session" | "offline";
 
@@ -63,7 +64,8 @@ export default function FacilitatorCard({
           </p>
           <p className="text-sm text-muted-foreground line-clamp-3">{bio}</p>
         </CardContent>
-        <CardFooter className="border-t pt-4">
+        <Separator />
+        <CardFooter className="pt-4">
           <Button className="w-full cursor-pointer">
             <span>{t("facilitators.book")}</span>
           </Button>

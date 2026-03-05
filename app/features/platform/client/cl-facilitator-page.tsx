@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
 import { cn } from "~/lib/utils";
+import { Separator } from "~/common/components/ui/separator";
 
 const mockTimeSlots = [
   "09:00 AM",
@@ -76,15 +77,16 @@ export default function ClFacilitatorPage() {
 
   return (
     <Card className="overflow-hidden h-full flex flex-col">
-      <div className="p-6 border-b">
+      <div className="p-6">
         <h2 className="text-xl font-bold">{t("facilitator.booking.title")}</h2>
         <p className="text-sm text-muted-foreground mt-1">
           {t("facilitator.booking.subtitle")}
         </p>
       </div>
+      <Separator />
 
       <div className="grow flex flex-col md:flex-row">
-        <div className="w-full md:w-auto p-6 border-b md:border-b-0 md:border-r flex flex-col items-center">
+        <div className="w-full md:w-auto p-6 flex flex-col items-center">
           <Calendar
             mode="single"
             selected={selectedDate}
@@ -92,6 +94,8 @@ export default function ClFacilitatorPage() {
             disabled={{ before: new Date() }}
           />
         </div>
+        <Separator className="md:hidden" />
+        <Separator orientation="vertical" className="hidden md:block" />
 
         <div className="grow p-6 flex flex-col max-h-[500px] overflow-y-auto">
           <h3 className="font-semibold mb-4">
@@ -99,7 +103,7 @@ export default function ClFacilitatorPage() {
               ? formatSelectedDate(selectedDate)
               : t("facilitator.booking.selectDate")}
           </h3>
-          <div className="mb-4 pb-4 border-b">
+          <div className="pb-4">
             <p className="text-xs font-medium mb-1.5">
               {t("facilitator.booking.timezone")}
             </p>
@@ -128,6 +132,7 @@ export default function ClFacilitatorPage() {
               {t("facilitator.booking.timezoneHint")}
             </p>
           </div>
+          <Separator className="mb-4" />
           <ToggleGroup
             type="single"
             value={selectedTime}
@@ -157,25 +162,28 @@ export default function ClFacilitatorPage() {
       </div>
 
       {selectedDate && selectedTime && (
-        <div className="p-4 bg-muted/50 border-t flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-background p-2 rounded-lg border">
-              <CalendarIcon className="size-5 text-muted-foreground" />
+        <>
+          <Separator />
+          <div className="p-4 bg-muted/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-background p-2 rounded-lg border">
+                <CalendarIcon className="size-5 text-muted-foreground" />
+              </div>
+              <div className="flex flex-col">
+                <p className="text-sm font-bold">
+                  {formatSelectedDate(selectedDate)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {formatTimeRange(selectedTime)}
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <p className="text-sm font-bold">
-                {formatSelectedDate(selectedDate)}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {formatTimeRange(selectedTime)}
-              </p>
-            </div>
+            <Button className="w-full sm:w-auto gap-2">
+              {t("facilitator.booking.request")}
+              <ArrowRightIcon className="size-4" />
+            </Button>
           </div>
-          <Button className="w-full sm:w-auto gap-2">
-            {t("facilitator.booking.request")}
-            <ArrowRightIcon className="size-4" />
-          </Button>
-        </div>
+        </>
       )}
     </Card>
   );

@@ -32,6 +32,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Separator } from "~/common/components/ui/separator";
 
 const languages = [
   { label: "한국어", value: "ko" },
@@ -55,7 +56,8 @@ export default function Navigation({
 }) {
   const { t, i18n } = useTranslation();
   return (
-    <nav className="flex px-6 md:px-10 lg:px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50 border-b border-border">
+    <nav className="flex px-6 md:px-10 lg:px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50">
+      <Separator className="absolute bottom-0 inset-x-0" />
       <div className="flex items-center justify-start">
         <Link to="/" className="flex items-center gap-2">
           <img
