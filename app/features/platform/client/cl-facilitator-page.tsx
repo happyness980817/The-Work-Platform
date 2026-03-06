@@ -22,6 +22,7 @@ import {
 } from "~/common/components/ui/dropdown-menu";
 import { cn } from "~/lib/utils";
 import { Separator } from "~/common/components/ui/separator";
+import { DateTime } from "luxon";
 
 const mockTimeSlots = [
   "09:00 AM",
@@ -66,13 +67,12 @@ export default function ClFacilitatorPage() {
 
   const formatTimeRange = (time: string) => {
     if (!time) return "";
-    const [hourStr, period] = time.split(" ");
-    const [h, m] = hourStr.split(":").map(Number);
-    const endMin = m + 55;
-    const endH = endMin >= 60 ? h + 1 : h;
-    const endM = endMin >= 60 ? endMin - 60 : endMin;
-    const endPeriod = endH >= 12 && period === "AM" ? "PM" : period;
-    return `${time} - ${String(endH).padStart(2, "0")}:${String(endM).padStart(2, "0")} ${endPeriod}`;
+    const start = DateTime.fromFormat(time, "hh:mm a");
+
+    if (!start.isValid) return time;
+
+    const end = start.plus({ minutes: 55 });
+    return `${start.toFormat("hh:mm a")} - ${end.toFormat("hh:mm a")}`;
   };
 
   return (

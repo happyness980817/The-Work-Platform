@@ -58,6 +58,7 @@
   "chat.session_started": "— Session #{{number}} started at {{time}} —",
   "chat.date_today": "Today",
   "chat.type_message": "Type a message...",
+  "chat.select_conversation": "Select a conversation to start messaging",
   "chat.ai_disclaimer": "AI assistance is based on The Work methodology. Review before sending.",
   "chat.ai_copilot": "AI COPILOT",
   "chat.regenerate": "Regenerate",

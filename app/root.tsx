@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import "./hooks/use-locale";
+import "./lib/i18n";
 import type { Route } from "./+types/root";
 import "./app.css";
 import type { AppContext } from "./types";
@@ -43,19 +43,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <Outlet
-      context={
-        {
-          isLoggedIn: true,
-          role: "facilitator",
-          name: "",
-          userId: "",
-          avatar: "",
-        } satisfies AppContext
-      }
-    />
-  );
+  const appContext: AppContext = {
+    isLoggedIn: true,
+    role: "client",
+    name: "",
+    userId: "",
+    avatar: "",
+  };
+
+  return <Outlet context={appContext} />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

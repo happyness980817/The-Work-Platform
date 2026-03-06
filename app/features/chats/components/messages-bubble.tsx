@@ -45,8 +45,8 @@ export function MessageBubble({
           className={cn(
             "rounded-2xl px-5 py-3 text-sm leading-relaxed",
             isFromMe
-              ? "rounded-tr-sm bg-primary text-primary-foreground shadow-sm"
-              : "rounded-tl-sm bg-card text-card-foreground shadow-sm border",
+              ? "rounded-tr-none bg-primary text-primary-foreground shadow-sm"
+              : "rounded-tl-none bg-card text-card-foreground shadow-sm border",
           )}
         >
           <p>{message}</p>

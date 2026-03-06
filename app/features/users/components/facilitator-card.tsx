@@ -5,8 +5,7 @@ import { Badge } from "~/common/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { cn } from "~/lib/utils";
 import { Separator } from "~/common/components/ui/separator";
-
-type FacilitatorStatus = "online" | "in-session" | "offline";
+import type { FacilitatorStatus } from "~/features/users/data/facilitators";
 
 interface FacilitatorCardProps {
   id: number;

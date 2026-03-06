@@ -6,8 +6,7 @@ import {
 } from "~/common/components/ui/avatar";
 import { Card, CardContent } from "~/common/components/ui/card";
 import { cn } from "~/lib/utils";
-
-type FacilitatorStatus = "online" | "in-session" | "offline";
+import type { FacilitatorStatus } from "~/features/users/data/facilitators";
 
 interface FacilitatorProfileCardProps {
   name: string;
