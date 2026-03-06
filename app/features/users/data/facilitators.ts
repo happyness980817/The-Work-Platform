@@ -1,15 +1,6 @@
 export type FacilitatorStatus = "online" | "in-session" | "offline";
 
-export interface FacilitatorSummary {
-  id: number;
-  name: string;
-  languages: string[];
-  bio: string;
-  imageUrl: string;
-  status: FacilitatorStatus;
-}
-
-export const facilitators: FacilitatorSummary[] = [
+export const facilitators = [
   {
     id: 1,
     name: "Sarah Jenkins",

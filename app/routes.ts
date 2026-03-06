@@ -28,8 +28,9 @@ export default [
       route("/chats", "features/chats/pages/chats-index-page.tsx"),
       route(
         "/chats/sessions/:sessionId",
-        "features/chats/pages/facilitator-chat-page.tsx",
+        "features/chats/pages/facilitator-session-page.tsx",
       ),
+      route("/chats/dms/:dmId", "features/chats/pages/facilitator-dm-page.tsx"),
     ]),
   ]),
 ] satisfies RouteConfig;

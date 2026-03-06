@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Outlet, useLocation, useOutletContext } from "react-router";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useOutletContext,
+} from "react-router";
 import { useTranslation } from "react-i18next";
 import { ScrollArea } from "~/common/components/ui/scroll-area";
 import { Button } from "~/common/components/ui/button";
@@ -156,6 +161,7 @@ export default function ChatLayout() {
   const appContext = useOutletContext<AppContext>();
   const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"dms" | "sessions">("sessions");
   const [messageInput, setMessageInput] = useState("");
   const isFacilitator = appContext.role === "facilitator";
@@ -176,7 +182,10 @@ export default function ChatLayout() {
             type="single"
             value={activeTab}
             onValueChange={(value) => {
-              if (value) setActiveTab(value as "dms" | "sessions");
+              if (value) {
+                setActiveTab(value as "dms" | "sessions");
+                navigate("/chats");
+              }
             }}
             variant="outline"
             size="sm"
