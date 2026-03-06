@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "~/common/components/ui/button";
 import { Card } from "~/common/components/ui/card";
+import { Input } from "~/common/components/ui/input";
 import { Textarea } from "~/common/components/ui/textarea";
 import { Separator } from "~/common/components/ui/separator";
 import {
@@ -8,12 +10,14 @@ import {
   SparklesIcon,
   ArrowUpIcon,
   PenLineIcon,
+  SquareIcon,
 } from "lucide-react";
 
 interface AiSuggestionCardProps {
   suggestion: string;
   onUse?: (text: string) => void;
   onRegenerate?: () => void;
+  onStop?: () => void;
   onRefine?: (instruction: string) => void;
 }
 
@@ -21,8 +25,10 @@ export function AiSuggestionCard({
   suggestion,
   onUse,
   onRegenerate,
+  onStop,
   onRefine,
 }: AiSuggestionCardProps) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(suggestion);
   const [refineText, setRefineText] = useState("");
@@ -51,23 +57,33 @@ export function AiSuggestionCard({
   };
 
   return (
-    <Card className="overflow-hidden shadow-sm py-0 gap-0">
+    <Card className="overflow-hidden shadow-sm p-0 gap-0">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-2">
           <div className="text-primary font-bold text-sm flex items-center gap-1">
             <SparklesIcon className="size-4" />
-            <span>AI COPILOT</span>
+            <span>{t("chat.ai_copilot")}</span>
           </div>
         </div>
-        <div className="flex gap-3 items-center">
-          <button
-            onClick={onRegenerate}
-            className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs"
-            title="Regenerate"
+        <div className="flex gap-1 items-center">
+          <Button
+            variant="ghost"
+            size="xs"
+            onClick={onStop}
+            className="text-muted-foreground"
           >
-            <RefreshCwIcon className="size-3.5" />
-            <span>Regenerate</span>
-          </button>
+            <SquareIcon className="size-3" />
+            {t("chat.stop")}
+          </Button>
+          <Button
+            variant="ghost"
+            size="xs"
+            onClick={onRegenerate}
+            className="text-muted-foreground"
+          >
+            <RefreshCwIcon className="size-3" />
+            {t("chat.regenerate")}
+          </Button>
         </div>
       </div>
       <Separator />
@@ -98,10 +114,10 @@ export function AiSuggestionCard({
                     setIsEditing(false);
                   }}
                 >
-                  Cancel
+                  {t("chat.cancel")}
                 </Button>
                 <Button size="sm" onClick={() => setIsEditing(false)}>
-                  Save
+                  {t("chat.save")}
                 </Button>
               </>
             ) : (
@@ -111,10 +127,10 @@ export function AiSuggestionCard({
                   size="sm"
                   onClick={() => setIsEditing(true)}
                 >
-                  Edit
+                  {t("chat.edit")}
                 </Button>
                 <Button size="sm" onClick={() => onUse?.(editedText)}>
-                  Use
+                  {t("chat.use")}
                 </Button>
               </>
             )}
@@ -123,22 +139,23 @@ export function AiSuggestionCard({
         <div className="flex items-center gap-2">
           <div className="flex-1 flex items-center bg-accent/30 rounded-md border px-3 py-2 transition-all focus-within:ring-1 focus-within:ring-ring">
             <PenLineIcon className="size-4 text-muted-foreground mr-2 shrink-0" />
-            <input
-              className="w-full bg-transparent border-none p-0 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0"
-              placeholder="Refine suggestion (e.g., 'Make it more empathetic')"
-              type="text"
+            <Input
+              className="flex-1 border-0 shadow-none focus-visible:ring-0 bg-transparent h-auto p-0"
+              placeholder={t("chat.refine_placeholder")}
               value={refineText}
               onChange={(e) => setRefineText(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleRefineSubmit();
               }}
             />
-            <button
+            <Button
+              variant="ghost"
+              size="icon-xs"
               onClick={handleRefineSubmit}
-              className="text-primary hover:text-primary/80 p-0.5 ml-1 rounded"
+              className="text-primary ml-1"
             >
               <ArrowUpIcon className="size-4" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>

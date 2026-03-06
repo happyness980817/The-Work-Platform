@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router";
+import { useTranslation } from "react-i18next";
 import { ScrollArea } from "~/common/components/ui/scroll-area";
+import { Button } from "~/common/components/ui/button";
+import { Input } from "~/common/components/ui/input";
 import { PlusCircleIcon, SendIcon, TimerIcon } from "lucide-react";
 import { MessageBubble } from "../components/messages-bubble";
 import { AiSuggestionCard } from "../components/ai-suggestion-card";
@@ -25,7 +28,6 @@ const mockMessages = [
     sender: "client" as const,
     message: "I'm here, ready to start whenever you are.",
     timestamp: "10:00 AM",
-    isDm: true,
   },
   {
     id: 2,
@@ -33,7 +35,6 @@ const mockMessages = [
     message:
       "Hi Jane, thanks for joining. Let's start with the thought you wrote down: \"My boss doesn't respect me.\"",
     timestamp: "10:02 AM",
-    isDm: false,
   },
   {
     id: 3,
@@ -41,7 +42,6 @@ const mockMessages = [
     message:
       "Yes, exactly. He interrupted me three times in the meeting today. It feels like he just doesn't value my input at all.",
     timestamp: "10:04 AM",
-    isDm: false,
   },
   {
     id: 4,
@@ -49,14 +49,12 @@ const mockMessages = [
     message:
       "I hear that it's painful. Let's facilitate The Work on this. Is it true that your boss doesn't respect you?",
     timestamp: "10:05 AM",
-    isDm: false,
   },
   {
     id: 5,
     sender: "client" as const,
     message: "It feels true. Why else would he interrupt me?",
     timestamp: "10:07 AM",
-    isDm: false,
   },
   {
     id: 6,
@@ -64,7 +62,6 @@ const mockMessages = [
     message:
       "Can you absolutely know that it's true — that he doesn't respect you?",
     timestamp: "10:08 AM",
-    isDm: false,
   },
   {
     id: 7,
@@ -72,7 +69,6 @@ const mockMessages = [
     message:
       "I guess I can't know for sure... Maybe he was just excited about the project. But it still hurt.",
     timestamp: "10:10 AM",
-    isDm: false,
   },
   {
     id: 8,
@@ -80,7 +76,6 @@ const mockMessages = [
     message:
       "That's a beautiful noticing. How do you react, what happens, when you believe the thought 'My boss doesn't respect me'?",
     timestamp: "10:12 AM",
-    isDm: false,
   },
   {
     id: 9,
@@ -88,7 +83,6 @@ const mockMessages = [
     message:
       "I shut down. I stop contributing in meetings. I feel resentful and I go home and complain to my partner about it. It's exhausting.",
     timestamp: "10:14 AM",
-    isDm: false,
   },
   {
     id: 10,
@@ -96,7 +90,6 @@ const mockMessages = [
     message:
       "Who would you be without the thought 'My boss doesn't respect me'?",
     timestamp: "10:16 AM",
-    isDm: false,
   },
   {
     id: 11,
@@ -104,7 +97,6 @@ const mockMessages = [
     message:
       "I think I'd feel more free. I'd speak up without worrying about how he reacts. I might even enjoy the meetings more.",
     timestamp: "10:18 AM",
-    isDm: false,
   },
 ];
 
@@ -113,6 +105,7 @@ const mockSuggestion =
 
 export default function FacilitatorChatPage() {
   const appContext = useOutletContext<AppContext>();
+  const { t } = useTranslation();
   const [messageInput, setMessageInput] = useState("");
 
   return (
@@ -125,7 +118,8 @@ export default function FacilitatorChatPage() {
               {mockClient.isOnline && (
                 <span className="size-2 bg-green-500 rounded-full inline-block" />
               )}
-              {mockClient.isOnline ? "Online" : "Offline"} • Session #4
+              {mockClient.isOnline ? t("chat.online") : t("chat.offline")} •{" "}
+              {t("chat.session", { number: 4 })}
             </p>
           </div>
         </div>
@@ -135,7 +129,7 @@ export default function FacilitatorChatPage() {
         <div className="p-6 space-y-6 flex flex-col">
           <div className="flex justify-center">
             <span className="text-xs font-medium text-muted-foreground bg-muted px-3 py-1 rounded-full">
-              Today, Oct 24
+              {t("chat.date_today")}, Oct 24
             </span>
           </div>
 
@@ -153,8 +147,8 @@ export default function FacilitatorChatPage() {
                     <div className="w-full border-t border-primary/20" />
                   </div>
                   <span className="relative text-xs font-bold text-primary bg-background px-4 py-1.5 rounded-full flex items-center gap-2 border border-primary/30">
-                    <TimerIcon className="size-3.5" />— Session #4 started at
-                    10:02 AM —
+                    <TimerIcon className="size-3.5" />
+                    {t("chat.session_started", { number: 4, time: "10:02 AM" })}
                   </span>
                 </div>,
               );
@@ -170,7 +164,7 @@ export default function FacilitatorChatPage() {
                 message={msg.message}
                 isFromMe={isFromMe}
                 timestamp={msg.timestamp}
-                isDm={msg.isDm}
+                onGenerateAi={!isFromMe ? () => {} : undefined}
               />,
             );
 
@@ -179,22 +173,24 @@ export default function FacilitatorChatPage() {
         </div>
       </ScrollArea>
 
-      <div className="shrink-0 border-t bg-background p-4 space-y-3">
+      <div className="shrink-0 bg-background p-4 space-y-3">
         <AiSuggestionCard
           suggestion={mockSuggestion}
           onUse={(text) => setMessageInput(text)}
           onRegenerate={() => {}}
           onRefine={() => {}}
         />
-
         <div className="flex gap-3 items-center bg-card px-3 py-2.5 rounded-xl border shadow-sm transition-shadow">
-          <button className="text-muted-foreground hover:text-primary transition-colors rounded-full flex items-center justify-center">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="text-muted-foreground"
+          >
             <PlusCircleIcon className="size-5" />
-          </button>
-          <input
-            className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none text-foreground placeholder:text-muted-foreground py-1 text-sm"
-            placeholder="Type a message..."
-            type="text"
+          </Button>
+          <Input
+            className="flex-1 border-0 shadow-none focus-visible:ring-0 bg-transparent h-auto p-0"
+            placeholder={t("chat.type_message")}
             value={messageInput}
             onChange={(e) => setMessageInput(e.target.value)}
             onKeyDown={(e) => {
@@ -203,15 +199,14 @@ export default function FacilitatorChatPage() {
               }
             }}
           />
-          <button className="text-primary hover:text-primary/80 transition-colors flex items-center justify-center">
+          <Button variant="ghost" size="icon-sm" className="text-primary">
             <SendIcon className="size-5" />
-          </button>
+          </Button>
         </div>
 
         <div className="text-center">
           <p className="text-[10px] text-muted-foreground">
-            AI assistance is based on The Work methodology. Review before
-            sending.
+            {t("chat.ai_disclaimer")}
           </p>
         </div>
       </div>

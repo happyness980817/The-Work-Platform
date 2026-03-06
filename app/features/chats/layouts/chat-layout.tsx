@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Outlet, useOutletContext } from "react-router";
+import { useTranslation } from "react-i18next";
 import { ScrollArea } from "~/common/components/ui/scroll-area";
 import { Button } from "~/common/components/ui/button";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "~/common/components/ui/toggle-group";
 import { StopCircleIcon } from "lucide-react";
 import { MessageRoomsCard } from "../components/message-rooms-card";
 import type { AppContext } from "~/types";
@@ -15,7 +20,7 @@ const mockRooms = [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAr5DPdUsim3L9Kd3llvPH6I8419IVP7m1w2K28cUTt7w4zFdKZnEXScHfN0P-bw6f992O45khAmkw3uKCuIKzVRaDNoA9khVUAGboQKBRJMu-oUi8glutmMNVl0VDeRRkMhzRqOw3QW4-oyziBPA0NbpMoLNRR2R8cUNPcAM-jErc2uJQFIBDEJiTWOwijTlGxvfBwXu7WCrycwKZKGRLV97wvZOU89tYEfXhe2InwTJGfHFsWi4dC4d9Bwr_ToHzzQgsuzGDG0Kk",
     status: "online" as const,
     isSessionActive: true,
-    badge: "Active",
+    badge: "chat.active",
   },
   {
     id: 2,
@@ -51,6 +56,7 @@ const mockRooms = [
 
 export default function ChatLayout() {
   const appContext = useOutletContext<AppContext>();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<"dms" | "sessions">("sessions");
   const isFacilitator = appContext.role === "facilitator";
   const hasActiveSession = mockRooms.some((r) => r.isSessionActive);
@@ -59,29 +65,28 @@ export default function ChatLayout() {
     <div className="flex h-[calc(100vh-4rem)] overflow-hidden">
       <aside className="w-80 flex flex-col border-r bg-card shrink-0">
         <div className="p-4 flex flex-col gap-4">
-          <h2 className="text-base font-bold">Unified Inbox</h2>
-          <div className="flex rounded-lg bg-muted p-1">
-            <button
-              onClick={() => setActiveTab("dms")}
-              className={`flex-1 rounded-md py-1.5 text-xs font-medium transition-all ${
-                activeTab === "dms"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-background/50"
-              }`}
+          <h2 className="text-base font-bold">{t("chat.unified_inbox")}</h2>
+          <ToggleGroup
+            type="single"
+            value={activeTab}
+            onValueChange={(value) => {
+              if (value) setActiveTab(value as "dms" | "sessions");
+            }}
+            className="w-full rounded-lg bg-muted p-1"
+          >
+            <ToggleGroupItem
+              value="dms"
+              className="flex-1 text-xs data-[state=on]:bg-background data-[state=on]:shadow-sm"
             >
-              DMs
-            </button>
-            <button
-              onClick={() => setActiveTab("sessions")}
-              className={`flex-1 rounded-md py-1.5 text-xs font-medium transition-all ${
-                activeTab === "sessions"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-background/50"
-              }`}
+              {t("chat.dms")}
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="sessions"
+              className="flex-1 text-xs data-[state=on]:bg-background data-[state=on]:shadow-sm"
             >
-              Sessions
-            </button>
-          </div>
+              {t("chat.sessions")}
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
         <ScrollArea className="flex-1 px-2">
           <div className="space-y-1">
@@ -94,19 +99,20 @@ export default function ChatLayout() {
                 avatarUrl={room.avatarUrl}
                 status={room.status}
                 isSessionActive={room.isSessionActive}
-                badge={room.badge}
+                badge={
+                  room.isSessionActive && room.badge
+                    ? t(room.badge)
+                    : room.badge
+                }
               />
             ))}
           </div>
         </ScrollArea>
         {isFacilitator && hasActiveSession && (
           <div className="p-4 border-t shrink-0 mt-auto">
-            <Button
-              variant="outline"
-              className="w-full border-primary/30 text-primary hover:bg-primary/10 hover:text-primary"
-            >
+            <Button variant="outline" className="w-full text-primary">
               <StopCircleIcon className="size-5 mr-2" />
-              End Session
+              {t("chat.end_session")}
             </Button>
           </div>
         )}

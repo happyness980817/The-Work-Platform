@@ -4,6 +4,9 @@ import {
   AvatarImage,
 } from "~/common/components/ui/avatar";
 import { cn } from "~/lib/utils";
+import { SparklesIcon } from "lucide-react";
+import { Button } from "~/common/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface MessageBubbleProps {
   avatarUrl?: string;
@@ -11,7 +14,7 @@ interface MessageBubbleProps {
   message: string;
   isFromMe: boolean;
   timestamp?: string;
-  isDm?: boolean;
+  onGenerateAi?: () => void;
 }
 
 export function MessageBubble({
@@ -20,8 +23,9 @@ export function MessageBubble({
   message,
   isFromMe,
   timestamp,
-  isDm,
+  onGenerateAi,
 }: MessageBubbleProps) {
+  const { t } = useTranslation();
   return (
     <div
       className={cn(
@@ -31,7 +35,7 @@ export function MessageBubble({
       )}
     >
       <div
-        className={cn("flex items-end gap-3", isFromMe && "flex-row-reverse")}
+        className={cn("flex items-start gap-3", isFromMe && "flex-row-reverse")}
       >
         <Avatar className="size-8 shrink-0 ring-2 ring-background">
           <AvatarImage src={avatarUrl} />
@@ -48,17 +52,23 @@ export function MessageBubble({
           <p>{message}</p>
         </div>
       </div>
-      {timestamp && (
-        <span
-          className={cn(
-            "text-[11px] text-muted-foreground",
-            isFromMe ? "mr-12" : "ml-12",
-          )}
-        >
-          {timestamp}
-          {isDm && " (DM)"}
-        </span>
-      )}
+      <div
+        className={cn("flex items-center gap-2", isFromMe ? "mr-12" : "ml-12")}
+      >
+        {timestamp && (
+          <span className="text-[11px] text-muted-foreground">{timestamp}</span>
+        )}
+        {onGenerateAi && (
+          <Button
+            variant="ghost"
+            onClick={onGenerateAi}
+            className="text-[11px] text-muted-foreground hover:text-primary h-auto p-0"
+          >
+            <SparklesIcon className="size-3" />
+            {t("chat.generate_ai")}
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

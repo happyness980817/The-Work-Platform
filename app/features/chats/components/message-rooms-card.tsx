@@ -4,6 +4,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "~/common/components/ui/avatar";
+import { Badge } from "~/common/components/ui/badge";
 import { cn } from "~/lib/utils";
 
 interface MessageRoomsCardProps {
@@ -37,9 +38,6 @@ export function MessageRoomsCard({
           : "hover:bg-accent/50",
       )}
     >
-      {isSelected && isSessionActive && (
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
-      )}
       <div className="relative">
         <Avatar className="size-10">
           <AvatarImage src={avatarUrl} />
@@ -61,18 +59,12 @@ export function MessageRoomsCard({
           >
             {name}
           </p>
-          {badge && (
-            <span
-              className={cn(
-                "text-[10px] font-medium px-1.5 py-0.5 rounded",
-                isSessionActive
-                  ? "bg-primary/20 text-primary border border-primary/30"
-                  : "text-muted-foreground",
-              )}
-            >
-              {badge}
-            </span>
-          )}
+          {badge &&
+            (isSessionActive ? (
+              <Badge className="text-[10px]">{badge}</Badge>
+            ) : (
+              <span className="text-[10px] text-muted-foreground">{badge}</span>
+            ))}
         </div>
         <p className="text-xs text-muted-foreground truncate w-full text-left">
           {subtitle}
