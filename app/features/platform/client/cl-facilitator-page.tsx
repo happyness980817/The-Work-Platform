@@ -58,11 +58,7 @@ export default function ClFacilitatorPage() {
 
   const formatSelectedDate = (date: Date | undefined) => {
     if (!date) return "";
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "short",
-      day: "numeric",
-    });
+    return DateTime.fromJSDate(date).toFormat("EEEE, MMM d");
   };
 
   const formatTimeRange = (time: string) => {
