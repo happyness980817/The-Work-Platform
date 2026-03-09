@@ -12,6 +12,7 @@ export default function ChatShellLayout() {
         hasMessages={false}
         avatar={appContext.avatar}
         name={appContext.name}
+        username={appContext.username}
       />
       <main className="flex-1 pt-16 min-h-0">
         <Outlet context={appContext} />

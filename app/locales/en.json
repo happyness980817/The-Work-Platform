@@ -36,6 +36,7 @@
   "facilitators.filter.online": "Online",
   "facilitators.filter.in-session": "In Session",
   "facilitators.filter.offline": "Offline",
+  "facilitators.filter.no_results": "No results found",
 
   "facilitator.certified": "Certified Facilitator",
   "facilitator.booking.title": "Book a Session",
@@ -59,7 +60,7 @@
   "chat.date_today": "Today",
   "chat.type_message": "Type a message...",
   "chat.select_conversation": "Select a conversation to start messaging",
-  "chat.ai_disclaimer": "AI assistance is based on The Work methodology. Review before sending.",
+  "chat.ai_disclaimer": "Copilot suggestions are based on 'The Work' of Byron Katie. Copilot can make mistakes. Review before sending.",
   "chat.ai_copilot": "AI COPILOT",
   "chat.regenerate": "Regenerate",
   "chat.stop": "Stop",

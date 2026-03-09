@@ -139,7 +139,7 @@ export default function FacilitatorsPage({}) {
 
       {filtered.length === 0 && (
         <p className="text-center text-muted-foreground py-12">
-          {t("facilitators.filter.all")}
+          {t("facilitators.filter.no_results")}
         </p>
       )}
     </div>

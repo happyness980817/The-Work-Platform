@@ -46,8 +46,9 @@ export default function App() {
   const appContext: AppContext = {
     isLoggedIn: true,
     role: "facilitator",
-    name: "",
-    userId: "",
+    name: "fakename",
+    username: "fakeusername",
+    userId: "fakeuserid",
     avatar: "",
   };
 

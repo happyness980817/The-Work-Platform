@@ -1,6 +1,6 @@
 {
   "nav.facilitators": "퍼실리테이터",
-  "nav.messages": "대화 내역",
+  "nav.messages": "메시지",
   "nav.about": "서비스 소개",
   "nav.language": "언어",
   "nav.login": "로그인",
@@ -36,6 +36,7 @@
   "facilitators.filter.online": "온라인",
   "facilitators.filter.in-session": "상담중",
   "facilitators.filter.offline": "오프라인",
+  "facilitators.filter.no_results": "검색 결과 없음",
 
   "facilitator.certified": "인증된 퍼실리테이터",
   "facilitator.booking.title": "세션 예약",
@@ -58,8 +59,8 @@
   "chat.session_started": "— 세션 #{{number}} {{time}}에 시작됨 —",
   "chat.date_today": "오늘",
   "chat.type_message": "메시지를 입력하세요...",
-  "chat.select_conversation": "대화를 선택하면 메시지를 시작할 수 있습니다.",
-  "chat.ai_disclaimer": "AI 지원은 The Work 방법론을 기반으로 합니다. 보내기 전에 반드시 검토하세요.",
+  "chat.select_conversation": "대화를 시작하면 메시지가 표시됩니다.",
+  "chat.ai_disclaimer": "Copilot 추천 메시지는 Byron Katie 의 'The Work' 을 기반으로 합니다. Copilot 은 실수를 할 수 있습니다. 전송하기 전에 검토하세요.",
   "chat.ai_copilot": "AI COPILOT",
   "chat.regenerate": "다시 생성",
   "chat.stop": "중지",

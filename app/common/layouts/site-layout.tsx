@@ -13,6 +13,7 @@ export default function SiteLayout() {
         hasMessages={false}
         avatar={appContext.avatar}
         name={appContext.name}
+        username={appContext.username}
       />
       <main className="flex-1 pt-16">
         <Outlet context={appContext} />
