@@ -8,8 +8,6 @@ export default function ChatShellLayout() {
     <div className="flex flex-col h-screen">
       <Navigation
         isLoggedIn={appContext.isLoggedIn}
-        hasNotifications={false}
-        hasMessages={false}
         avatar={appContext.avatar}
         name={appContext.name}
         username={appContext.username}

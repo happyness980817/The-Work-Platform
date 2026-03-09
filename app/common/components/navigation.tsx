@@ -23,14 +23,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "~/common/components/ui/avatar";
-import {
-  BellIcon,
-  CalendarIcon,
-  LogOutIcon,
-  MessageCircleIcon,
-  SettingsIcon,
-  UserIcon,
-} from "lucide-react";
+import { CalendarIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Separator } from "~/common/components/ui/separator";
 
@@ -41,15 +34,11 @@ const languages = [
 
 export default function Navigation({
   isLoggedIn,
-  hasNotifications,
-  hasMessages,
   avatar,
   name,
   username,
 }: {
   isLoggedIn: boolean;
-  hasNotifications: boolean;
-  hasMessages: boolean;
   avatar?: string | null;
   name?: string;
   username?: string;
@@ -120,22 +109,6 @@ export default function Navigation({
       </div>
       {isLoggedIn ? (
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild className="relative">
-            <Link to="/notifications">
-              <BellIcon className="size-4" />
-              {hasNotifications && (
-                <span className="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full" />
-              )}
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon" asChild className="relative">
-            <Link to="/chats">
-              <MessageCircleIcon className="size-4" />
-              {hasMessages && (
-                <span className="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full" />
-              )}
-            </Link>
-          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="size-8 cursor-pointer">

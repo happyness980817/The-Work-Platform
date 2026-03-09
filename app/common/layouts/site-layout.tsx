@@ -9,8 +9,6 @@ export default function SiteLayout() {
     <div className="flex flex-col min-h-screen">
       <Navigation
         isLoggedIn={appContext.isLoggedIn}
-        hasNotifications={false}
-        hasMessages={false}
         avatar={appContext.avatar}
         name={appContext.name}
         username={appContext.username}
