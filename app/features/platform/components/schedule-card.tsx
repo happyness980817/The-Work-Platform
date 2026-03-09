@@ -7,6 +7,7 @@ import {
   ChevronDownIcon,
   GlobeIcon,
 } from "lucide-react";
+import { DateTime } from "luxon";
 import { Calendar } from "~/common/components/ui/calendar";
 import { Card } from "~/common/components/ui/card";
 import { Button } from "~/common/components/ui/button";
@@ -20,9 +21,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
-import { cn } from "~/lib/utils";
 import { Separator } from "~/common/components/ui/separator";
-import { DateTime } from "luxon";
+import { cn } from "~/lib/utils";
 
 const mockTimeSlots = [
   "09:00 AM",
@@ -48,11 +48,9 @@ const timezones = [
   },
 ];
 
-export default function ClFacilitatorPage() {
+export default function ScheduleCard() {
   const { t } = useTranslation();
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date(),
-  );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedTimezone, setSelectedTimezone] = useState("Asia/Seoul");
 
@@ -166,9 +164,7 @@ export default function ClFacilitatorPage() {
                 <CalendarIcon className="size-5 text-muted-foreground" />
               </div>
               <div className="flex flex-col">
-                <p className="text-sm font-bold">
-                  {formatSelectedDate(selectedDate)}
-                </p>
+                <p className="text-sm font-bold">{formatSelectedDate(selectedDate)}</p>
                 <p className="text-xs text-muted-foreground">
                   {formatTimeRange(selectedTime)}
                 </p>

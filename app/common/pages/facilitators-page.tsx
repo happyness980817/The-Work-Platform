@@ -7,7 +7,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
-import FacilitatorCard from "~/features/users/components/facilitator-card";
+import FacilitatorCard from "~/features/platform/components/facilitator-card";
 import {
   facilitators,
   type FacilitatorStatus,

@@ -11,10 +11,7 @@ export default [
     index("common/pages/home-page.tsx"),
     ...prefix("/facilitators", [
       index("common/pages/facilitators-page.tsx"),
-      route(
-        "/:facilitatorId",
-        "features/platform/layouts/facilitator-page-layout.tsx",
-      ),
+      route("/:facilitatorId", "features/platform/pages/facilitator-page.tsx"),
     ]),
   ]),
   layout("features/auth/layouts/auth-layout.tsx", [

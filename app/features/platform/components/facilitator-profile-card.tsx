@@ -12,7 +12,7 @@ interface FacilitatorProfileCardProps {
   name: string;
   imageUrl: string;
   status: FacilitatorStatus;
-  bio: string;
+  introduction: string;
   languages: string[];
 }
 
@@ -20,7 +20,7 @@ export default function FacilitatorProfileCard({
   name,
   imageUrl,
   status,
-  bio,
+  introduction,
   languages,
 }: FacilitatorProfileCardProps) {
   const { t } = useTranslation();
@@ -58,7 +58,9 @@ export default function FacilitatorProfileCard({
             </Badge>
           ))}
         </div> */}
-        <p className="text-muted-foreground text-sm leading-relaxed">{bio}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed">
+          {introduction}
+        </p>
       </CardContent>
     </Card>
   );

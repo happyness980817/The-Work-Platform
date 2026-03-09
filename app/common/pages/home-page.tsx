@@ -1,6 +1,6 @@
 import { Button } from "~/common/components/ui/button";
 import { Card } from "~/common/components/ui/card";
-import FacilitatorCard from "~/features/users/components/facilitator-card";
+import FacilitatorCard from "~/features/platform/components/facilitator-card";
 import { useTranslation } from "react-i18next";
 import { facilitators } from "~/features/users/data/facilitators";
 

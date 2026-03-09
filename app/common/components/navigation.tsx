@@ -113,7 +113,9 @@ export default function Navigation({
             <DropdownMenuTrigger asChild>
               <Avatar className="size-8 cursor-pointer">
                 {avatar ? <AvatarImage src={avatar} /> : null}
-                <AvatarFallback>{name?.[0] ?? "U"}</AvatarFallback>
+                <AvatarFallback>
+                  {name?.[0].toUpperCase() ?? "U"}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
