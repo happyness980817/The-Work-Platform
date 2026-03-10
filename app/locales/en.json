@@ -5,7 +5,7 @@
   "nav.language": "Language",
   "nav.login": "Log In",
   "nav.join": "Sign Up",
-  "nav.dashboard": "Bookings",
+  "nav.bookings": "Bookings",
   "nav.profile": "Profile",
   "nav.settings": "Settings",
   "nav.logout": "Log Out",

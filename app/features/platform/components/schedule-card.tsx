@@ -48,9 +48,14 @@ const timezones = [
   },
 ];
 
+// ScheduleCard props 추가 예정
+// { title: string; subtitle: string; }
+
 export default function ScheduleCard() {
   const { t } = useTranslation();
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date(),
+  );
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedTimezone, setSelectedTimezone] = useState("Asia/Seoul");
 
@@ -164,7 +169,9 @@ export default function ScheduleCard() {
                 <CalendarIcon className="size-5 text-muted-foreground" />
               </div>
               <div className="flex flex-col">
-                <p className="text-sm font-bold">{formatSelectedDate(selectedDate)}</p>
+                <p className="text-sm font-bold">
+                  {formatSelectedDate(selectedDate)}
+                </p>
                 <p className="text-xs text-muted-foreground">
                   {formatTimeRange(selectedTime)}
                 </p>

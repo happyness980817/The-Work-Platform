@@ -18,7 +18,6 @@ client login:
 ├── "/facilitators" : facilitators-page.tsx
 │         └── "/:facilitatorId" : facilitator-profile-page.tsx (프로필 + 캘린더 예약)
 ├── "/my"
-│         ├── "/dashboard" : dashboard-page.tsx
 │         ├── "/bookings" : client-bookings-page.tsx
 │         ├── "/profile" : profile-page.tsx
 │         ├── "/settings" : settings-page.tsx
@@ -29,7 +28,6 @@ facilitator login:
 
 ├── "/facilitators/:facilitatorId" : 본인 ID → /my/profile 리다이렉트, 타인 → 읽기 전용 (예약 버튼 숨김)
 ├── "/my"
-│         ├── "/dashboard" : facilitator-dashboard-page.tsx
 │         ├── "/bookings" : facilitator-bookings-page.tsx
 │         ├── "/profile" : profile-page.tsx
 │         ├── "/settings" : settings-page.tsx

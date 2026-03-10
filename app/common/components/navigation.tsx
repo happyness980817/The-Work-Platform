@@ -1,9 +1,8 @@
-import { Link } from "react-router";
+import { Link, useOutletContext } from "react-router";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
@@ -37,11 +36,13 @@ export default function Navigation({
   avatar,
   name,
   username,
+  role,
 }: {
   isLoggedIn: boolean;
   avatar?: string | null;
   name?: string;
   username?: string;
+  role?: string;
 }) {
   const { t, i18n } = useTranslation();
   return (
@@ -120,9 +121,12 @@ export default function Navigation({
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel className="flex flex-col">
-                <span className="font-medium">
-                  {name || t("nav.user_fallback")}
-                </span>
+                <div>
+                  <span className="font-medium">
+                    {name || t("nav.user_fallback")}
+                  </span>
+                  <span className="capitalize">{` (${role})`}</span>
+                </div>
                 {username && (
                   <span className="text-xs text-muted-foreground">
                     @{username}
@@ -132,9 +136,9 @@ export default function Navigation({
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/my/dashboard">
+                  <Link to="/my/bookings">
                     <CalendarIcon className="size-4 mr-2" />
-                    {t("nav.dashboard")}
+                    {t("nav.bookings")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
