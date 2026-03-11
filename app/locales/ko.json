@@ -38,6 +38,14 @@
   "facilitators.filter.offline": "오프라인",
   "facilitators.filter.no_results": "검색 결과 없음",
 
+  "days.mon": "월",
+  "days.tue": "화",
+  "days.wed": "수",
+  "days.thu": "목",
+  "days.fri": "금",
+  "days.sat": "토",
+  "days.sun": "일",
+
   "facilitator.certified": "인증된 퍼실리테이터",
   "facilitator.booking.title": "세션 예약",
   "facilitator.booking.subtitle": "가능한 시간을 확인하고 예약하세요.",

@@ -38,6 +38,14 @@
   "facilitators.filter.offline": "Offline",
   "facilitators.filter.no_results": "No results found",
 
+  "days.mon": "Mon",
+  "days.tue": "Tue",
+  "days.wed": "Wed",
+  "days.thu": "Thu",
+  "days.fri": "Fri",
+  "days.sat": "Sat",
+  "days.sun": "Sun",
+
   "facilitator.certified": "Certified Facilitator",
   "facilitator.booking.title": "Book a Session",
   "facilitator.booking.subtitle": "Check availability and schedule your time.",
