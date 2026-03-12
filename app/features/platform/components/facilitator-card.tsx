@@ -3,6 +3,7 @@ import { Button } from "~/common/components/ui/button";
 import { Card, CardContent, CardFooter } from "~/common/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { Separator } from "~/common/components/ui/separator";
+import { MailIcon } from "lucide-react";
 
 interface FacilitatorCardProps {
   id: number;
@@ -38,9 +39,26 @@ export default function FacilitatorCard({
           <p className="text-sm text-muted-foreground line-clamp-3">{bio}</p>
         </CardContent>
         <Separator />
-        <CardFooter className="pt-4">
-          <Button className="w-full cursor-pointer">
+        <CardFooter className="pt-4 flex gap-3">
+          <Button
+            variant="secondary"
+            className="flex-1 cursor-pointer"
+            onClick={(e) => {
+              // TODO: Handle booking
+            }}
+          >
             <span>{t("facilitators.book")}</span>
+          </Button>
+          <Button
+            size="icon"
+            className="shrink-0 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              // TODO: Handle DM
+            }}
+          >
+            <MailIcon className="size-5" />
           </Button>
         </CardFooter>
       </Card>
