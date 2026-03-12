@@ -8,17 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
 import FacilitatorCard from "~/features/platform/components/facilitator-card";
-import {
-  facilitators,
-  type FacilitatorStatus,
-} from "~/features/users/data/facilitators";
+import { facilitators } from "~/features/users/data/facilitators";
 import type { Route } from "./+types/facilitators-page";
-
-const AVAILABILITY_OPTIONS: FacilitatorStatus[] = [
-  "online",
-  "in-session",
-  "offline",
-];
 
 const LANGUAGE_OPTIONS = [
   "lang.ko",
@@ -31,11 +22,9 @@ const LANGUAGE_OPTIONS = [
 export default function FacilitatorsPage({}) {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const availability = searchParams.get("availability");
   const language = searchParams.get("language");
 
   const filtered = facilitators.filter((f) => {
-    if (availability && f.status !== availability) return false;
     if (language && !f.languages.includes(language)) return false;
     return true;
   });
@@ -52,46 +41,6 @@ export default function FacilitatorsPage({}) {
       </div>
 
       <div className="flex items-center gap-5">
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-1 text-sm">
-            <span>
-              {availability
-                ? t(`facilitators.filter.${availability}`)
-                : t("facilitators.filter.availability")}
-            </span>
-            <ChevronDownIcon className="size-4" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuCheckboxItem
-              className="cursor-pointer"
-              checked={!availability}
-              onCheckedChange={() => {
-                searchParams.delete("availability");
-                setSearchParams(searchParams);
-              }}
-            >
-              {t("facilitators.filter.all")}
-            </DropdownMenuCheckboxItem>
-            {AVAILABILITY_OPTIONS.map((option) => (
-              <DropdownMenuCheckboxItem
-                className="cursor-pointer"
-                key={option}
-                checked={availability === option}
-                onCheckedChange={(checked: boolean) => {
-                  if (checked) {
-                    searchParams.set("availability", option);
-                  } else {
-                    searchParams.delete("availability");
-                  }
-                  setSearchParams(searchParams);
-                }}
-              >
-                {t(`facilitators.filter.${option}`)}
-              </DropdownMenuCheckboxItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-1 text-sm">
             <span>

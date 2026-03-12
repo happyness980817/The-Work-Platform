@@ -12,7 +12,6 @@ interface MessageRoomsCardProps {
   name: string;
   subtitle: string;
   avatarUrl?: string;
-  status?: "online" | "offline";
   isSessionActive?: boolean;
   badge?: string;
 }
@@ -22,7 +21,6 @@ export function MessageRoomsCard({
   name,
   subtitle,
   avatarUrl,
-  status = "offline",
   isSessionActive = false,
   badge,
 }: MessageRoomsCardProps) {
@@ -38,15 +36,10 @@ export function MessageRoomsCard({
           : "hover:bg-accent/50",
       )}
     >
-      <div className="relative">
-        <Avatar className="size-10">
-          <AvatarImage src={avatarUrl} />
-          <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
-        </Avatar>
-        {status === "online" && (
-          <span className="absolute bottom-0 right-0 block size-2.5 rounded-full bg-green-500 ring-2 ring-background" />
-        )}
-      </div>
+      <Avatar className="size-10">
+        <AvatarImage src={avatarUrl} />
+        <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
+      </Avatar>
       <div className="flex flex-col items-start flex-1 min-w-0">
         <div className="flex w-full justify-between items-center">
           <p

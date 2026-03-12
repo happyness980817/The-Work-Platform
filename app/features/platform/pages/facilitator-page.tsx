@@ -83,7 +83,6 @@ export default function FacilitatorPage({ params }: Route.ComponentProps) {
           <FacilitatorProfileCard
             name={facilitator.name}
             imageUrl={facilitator.imageUrl}
-            status={facilitator.status}
             introduction={facilitator.introduction}
             languages={facilitator.languages}
           />

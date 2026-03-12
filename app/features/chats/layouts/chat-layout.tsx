@@ -31,7 +31,6 @@ const mockRooms = [
     subtitle: "Session #4",
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAr5DPdUsim3L9Kd3llvPH6I8419IVP7m1w2K28cUTt7w4zFdKZnEXScHfN0P-bw6f992O45khAmkw3uKCuIKzVRaDNoA9khVUAGboQKBRJMu-oUi8glutmMNVl0VDeRRkMhzRqOw3QW4-oyziBPA0NbpMoLNRR2R8cUNPcAM-jErc2uJQFIBDEJiTWOwijTlGxvfBwXu7WCrycwKZKGRLV97wvZOU89tYEfXhe2InwTJGfHFsWi4dC4d9Bwr_ToHzzQgsuzGDG0Kk",
-    status: "online" as const,
     isSessionActive: true,
     badge: "chat.active",
   },
@@ -41,7 +40,6 @@ const mockRooms = [
     subtitle: "Session #12",
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCwj7VhOVv0ogQu1v9Op6Ozzi1KKDhKNiVxSgvafTAOYkXwG_R7CaWa1iDObfv1plX6sgbdsazipCWXXoBsn9WMIPwQEOrV7vdORzvd8LLv-rOjS4VJlZlfZj-PENOiaLAbiGSu9IWjq0FP5jx3-WrlSesH_YMmMmAzKLQDTuSvdaCRZyWHIW1peFwLovI7wYOGQG9M1jYXqso3-gC-ekbhgkckDtOGW3QQdKYPg7UZ2UeGtWgWfV7aHajuzyfHfj3iaa8Q0LlS7_Q",
-    status: "offline" as const,
     isSessionActive: false,
     badge: "2:00 PM",
   },
@@ -51,7 +49,6 @@ const mockRooms = [
     subtitle: "Session #3",
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDwHBxU-0QC9ee-C4NLQHTAuxEXt4LDepI3zFdpOxdeWyCY7RVnkQ0ZFmjm9D6tlXcW2ITHEH3B7QF0svK8-JDHijjA7SkiqzZwxA3-_1RvwM3v6aWoDxJnJYjplauF56h4XEuFWXDa6Xwmd6jmvFVQ4U6at5pgvtZx8dK2zf7wLu8XAF1efmrLya-fhicloj8XClHQ5XPEfV9AB8bRYNt30bF0qLMLUjukuNY7ripDZkk6heng5oHWZUApYZfmInRRBqstSdDVxaE",
-    status: "offline" as const,
     isSessionActive: false,
     badge: "Oct 23",
   },
@@ -61,7 +58,6 @@ const mockRooms = [
     subtitle: "Session #8",
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBBxCezaT1dvFo82Vbg4k_skl8xk0Q8crY7oUFlyHImMaJFbX_IGOUS_Af_iXtEV4Qc3AjAaLAz3RzijCKOVMlUBq8rygp0S8s1GqizGk7KHz7YHa1oO-QtyQY_RSHGBA-qCyakvZliHqQdBGr3m3KdpyCspQMDUSP0HcrTc8AfW7HtAUaASsZ0rSw3Lo8pQIgaO7pNdgfnSLhBmIoBxPx15mmlAQmilTFAPx318IWeRJ1JmmGDmTYov-7jvnQ3mS-Q-FsjUHPYSBw",
-    status: "offline" as const,
     isSessionActive: false,
     badge: "Oct 21",
   },
@@ -71,7 +67,6 @@ const mockClient = {
   name: "Jane Smith",
   avatarUrl:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAr5DPdUsim3L9Kd3llvPH6I8419IVP7m1w2K28cUTt7w4zFdKZnEXScHfN0P-bw6f992O45khAmkw3uKCuIKzVRaDNoA9khVUAGboQKBRJMu-oUi8glutmMNVl0VDeRRkMhzRqOw3QW4-oyziBPA0NbpMoLNRR2R8cUNPcAM-jErc2uJQFIBDEJiTWOwijTlGxvfBwXu7WCrycwKZKGRLV97wvZOU89tYEfXhe2InwTJGfHFsWi4dC4d9Bwr_ToHzzQgsuzGDG0Kk",
-  isOnline: true,
 };
 
 const mockFacilitator = {
@@ -206,7 +201,6 @@ export default function ChatLayout() {
                 name={room.name}
                 subtitle={room.subtitle}
                 avatarUrl={room.avatarUrl}
-                status={room.status}
                 isSessionActive={room.isSessionActive}
                 badge={
                   room.isSessionActive && room.badge
@@ -237,11 +231,7 @@ export default function ChatLayout() {
                 <div>
                   <h2 className="text-lg font-bold">{mockClient.name}</h2>
                   <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    {mockClient.isOnline && (
-                      <span className="size-2 bg-green-500 rounded-full inline-block" />
-                    )}
-                    {mockClient.isOnline ? t("chat.online") : t("chat.offline")}{" "}
-                    • {t("chat.session", { number: 4 })}
+                    {t("chat.session", { number: 4 })}
                   </p>
                 </div>
               </div>
