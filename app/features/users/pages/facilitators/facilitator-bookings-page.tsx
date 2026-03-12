@@ -32,6 +32,7 @@ import {
   CalendarOffIcon,
   CheckIcon,
   XIcon,
+  PencilIcon,
 } from "lucide-react";
 import { DateTime } from "luxon";
 import { cn } from "~/lib/utils";
@@ -87,6 +88,7 @@ export default function FacilitatorBookingsPage() {
 
   const [activeTab, setActiveTab] = useState("upcoming");
   const [weekly, setWeekly] = useState(buildInitialWeekly);
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedTimezone, setSelectedTimezone] = useState("Asia/Seoul");
 
   const [overrideDate, setOverrideDate] = useState<Date | undefined>(undefined);
@@ -241,15 +243,30 @@ export default function FacilitatorBookingsPage() {
             <section>
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold mb-1">Weekly Schedule</h2>
+                  <h2 className="text-2xl font-bold mb-1">
+                    Set Available Hours (Weekly)
+                  </h2>
                   <p className="text-muted-foreground text-sm">
                     Define your recurring working hours for each day of the
                     week.
                   </p>
                 </div>
-                <Button className="gap-2 shadow-lg shadow-primary/20">
-                  <SaveIcon className="size-4" />
-                  Save Changes
+                <Button
+                  variant={isEditing ? "default" : "outline"}
+                  className="gap-2"
+                  onClick={() => setIsEditing((v) => !v)}
+                >
+                  {isEditing ? (
+                    <>
+                      <SaveIcon className="size-4" />
+                      Save Changes
+                    </>
+                  ) : (
+                    <>
+                      <PencilIcon className="size-4" />
+                      Edit Schedule
+                    </>
+                  )}
                 </Button>
               </div>
 
@@ -274,6 +291,7 @@ export default function FacilitatorBookingsPage() {
                           onCheckedChange={() => handleToggleDay(day)}
                           id={`day-${day}`}
                           className="h-5 w-5"
+                          disabled={!isEditing}
                         />
                         <label
                           htmlFor={`day-${day}`}
@@ -295,6 +313,7 @@ export default function FacilitatorBookingsPage() {
                             >
                               <NativeSelect
                                 value={range.start}
+                                disabled={!isEditing}
                                 onChange={(e) =>
                                   handleRangeChange(
                                     day,
@@ -313,6 +332,7 @@ export default function FacilitatorBookingsPage() {
                               <span className="text-muted-foreground">—</span>
                               <NativeSelect
                                 value={range.end}
+                                disabled={!isEditing}
                                 onChange={(e) =>
                                   handleRangeChange(
                                     day,
@@ -332,6 +352,7 @@ export default function FacilitatorBookingsPage() {
                                 variant="ghost"
                                 size="icon"
                                 className="ml-auto text-muted-foreground hover:text-destructive shrink-0"
+                                disabled={!isEditing}
                                 onClick={() => handleRemoveRange(day, ri)}
                               >
                                 <Trash2Icon className="size-4" />
@@ -342,6 +363,7 @@ export default function FacilitatorBookingsPage() {
                             variant="ghost"
                             size="sm"
                             className="text-muted-foreground hover:text-primary h-8 px-2 w-fit"
+                            disabled={!isEditing}
                             onClick={() => handleAddRange(day)}
                           >
                             <PlusIcon className="size-4 mr-1.5" />
@@ -390,8 +412,8 @@ export default function FacilitatorBookingsPage() {
                         {formatOverrideDate(overrideDate)}
                       </h3>
                       <p className="text-xs text-muted-foreground mb-4">
-                        Click a time slot to mark it as an exception for
-                        this date.
+                        Click a time slot to mark it as an exception for this
+                        date.
                       </p>
                       {weeklyDefaultSlots.length > 0 ? (
                         <TimeSlotPicker
@@ -402,16 +424,16 @@ export default function FacilitatorBookingsPage() {
                         />
                       ) : (
                         <p className="text-sm text-muted-foreground text-center py-8">
-                          No available slots — this day is marked as
-                          unavailable in your weekly schedule.
+                          No available slots — this day is marked as unavailable
+                          in your weekly schedule.
                         </p>
                       )}
                     </>
                   ) : (
                     <div className="h-full min-h-[250px] flex items-center justify-center text-center text-muted-foreground">
                       <p className="text-sm">
-                        Select a date from the calendar to view its
-                        available time slots.
+                        Select a date from the calendar to view its available
+                        time slots.
                       </p>
                     </div>
                   )}
@@ -431,8 +453,7 @@ export default function FacilitatorBookingsPage() {
                           {formatOverrideDate(overrideDate)} — Exception
                         </h4>
                         <p className="text-xs text-muted-foreground">
-                          {exceptionSlots.length} time slot(s) will be
-                          blocked
+                          {exceptionSlots.length} time slot(s) will be blocked
                         </p>
                       </div>
                     </div>
@@ -475,7 +496,9 @@ export default function FacilitatorBookingsPage() {
               {/* 확정된 예외 목록 */}
               {Object.keys(confirmedExceptions).length > 0 && (
                 <div className="mt-6 space-y-3">
-                  <h4 className="font-bold text-sm text-muted-foreground">Confirmed Exceptions</h4>
+                  <h4 className="font-bold text-sm text-muted-foreground">
+                    Confirmed Exceptions
+                  </h4>
                   {Object.entries(confirmedExceptions).map(
                     ([dateKey, slots]) => (
                       <div
