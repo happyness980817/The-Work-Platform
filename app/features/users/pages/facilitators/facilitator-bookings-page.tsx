@@ -396,7 +396,6 @@ export default function FacilitatorBookingsPage() {
                       {weeklyDefaultSlots.length > 0 ? (
                         <TimeSlotPicker
                           type="multiple"
-                          variant="destructive"
                           slots={weeklyDefaultSlots}
                           selectedSlots={exceptionSlots}
                           onSelectMultiple={setExceptionSlots}

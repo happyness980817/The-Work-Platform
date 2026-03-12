@@ -11,9 +11,10 @@ import { Button } from "~/common/components/ui/button";
 import { Input } from "~/common/components/ui/input";
 import { Badge } from "~/common/components/ui/badge";
 import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "~/common/components/ui/toggle-group";
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "~/common/components/ui/tabs";
 import { SendIcon, StopCircleIcon, TimerIcon } from "lucide-react";
 import { MessageRoomsCard } from "../components/message-rooms-card";
 import { MessageBubble } from "../components/messages-bubble";
@@ -178,8 +179,7 @@ export default function ChatLayout() {
       <aside className="w-80 flex flex-col border-r bg-card shrink-0">
         <div className="p-4 flex flex-col gap-4">
           <h2 className="text-base font-bold">{t("chat.unified_inbox")}</h2>
-          <ToggleGroup
-            type="single"
+          <Tabs
             value={activeTab}
             onValueChange={(value) => {
               if (value) {
@@ -187,17 +187,15 @@ export default function ChatLayout() {
                 navigate("/chats");
               }
             }}
-            variant="outline"
-            size="sm"
             className="w-full"
           >
-            <ToggleGroupItem value="dms" className="flex-1">
-              {t("chat.dms")}
-            </ToggleGroupItem>
-            <ToggleGroupItem value="sessions" className="flex-1">
-              {t("chat.sessions")}
-            </ToggleGroupItem>
-          </ToggleGroup>
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="dms">{t("chat.dms")}</TabsTrigger>
+              <TabsTrigger value="sessions">
+                {t("chat.sessions")}
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
         <ScrollArea className="flex-1 px-2">
           <div className="space-y-1">
