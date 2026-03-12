@@ -1,6 +1,6 @@
 {
   "nav.facilitators": "Facilitators",
-  "nav.messages": "Messages",
+  "nav.conversations": "Conversations",
   "nav.about": "About",
   "nav.language": "Language",
   "nav.login": "Log In",
@@ -49,7 +49,7 @@
   "facilitator.certified": "Certified Facilitator",
   "facilitator.booking.title": "Book a Session",
   "facilitator.booking.subtitle": "Check availability and schedule your time.",
-  "facilitator.booking.timezone": "Time Zone",
+  "facilitator.booking.timezone": "Select Time-Zone",
   "facilitator.booking.timezoneHint": "Your local time",
   "facilitator.booking.selectDate": "Select a date",
   "facilitator.booking.request": "Confirm Booking",

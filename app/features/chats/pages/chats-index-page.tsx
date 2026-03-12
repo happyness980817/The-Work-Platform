@@ -11,7 +11,7 @@ export default function ChatsIndexPage() {
       </div>
       <div className="text-center space-y-1">
         <h3 className="text-lg font-semibold text-foreground">
-          {t("nav.messages")}
+          {t("nav.conversations")}
         </h3>
         <p className="text-sm">{t("chat.select_conversation")}</p>
       </div>

@@ -45,7 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   const appContext: AppContext = {
     isLoggedIn: true,
-    role: "facilitator",
+    role: "client",
     name: "fakename",
     username: "fakeusername",
     userId: "fakeuserid",

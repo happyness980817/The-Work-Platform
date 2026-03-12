@@ -72,7 +72,7 @@ export default function Navigation({
             {isLoggedIn && (
               <NavigationMenuItem>
                 <Link to="/chats" className={navigationMenuTriggerStyle()}>
-                  {t("nav.messages")}
+                  {t("nav.conversations")}
                 </Link>
               </NavigationMenuItem>
             )}

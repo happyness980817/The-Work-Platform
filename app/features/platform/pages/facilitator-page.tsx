@@ -1,13 +1,7 @@
 import { useState, useCallback } from "react";
 import { Link, useOutletContext } from "react-router";
 import { useTranslation } from "react-i18next";
-import {
-  EyeIcon,
-  CalendarIcon,
-  ArrowRightIcon,
-  GlobeIcon,
-  ChevronDownIcon,
-} from "lucide-react";
+import { EyeIcon, CalendarIcon, ArrowRightIcon } from "lucide-react";
 import { DateTime } from "luxon";
 import type { Route } from "./+types/facilitator-page";
 import type { AppContext } from "~/types";
@@ -24,13 +18,8 @@ import { Card, CardContent } from "~/common/components/ui/card";
 import { Button } from "~/common/components/ui/button";
 import { Calendar } from "~/common/components/ui/calendar";
 import { Separator } from "~/common/components/ui/separator";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/common/components/ui/dropdown-menu";
 import TimeSlotPicker from "~/features/platform/components/time-slot-picker";
+import TimezoneSelector from "~/common/components/timezone-selector";
 import { facilitators } from "~/features/users/data/facilitators";
 
 const MOCK_AVAILABLE_SLOTS = [
@@ -41,16 +30,6 @@ const MOCK_AVAILABLE_SLOTS = [
   "02:00 PM",
   "03:30 PM",
   "04:30 PM",
-];
-
-const timezones = [
-  { value: "Asia/Seoul", label: "Korea Standard Time (KST)", offset: "UTC+9" },
-  { value: "America/New_York", label: "Eastern Time (ET)", offset: "UTC-5" },
-  {
-    value: "America/Los_Angeles",
-    label: "Pacific Time (PT)",
-    offset: "UTC-8",
-  },
 ];
 
 export default function FacilitatorPage({ params }: Route.ComponentProps) {
@@ -134,34 +113,10 @@ export default function FacilitatorPage({ params }: Route.ComponentProps) {
                     />
                     {/* Timezone selector */}
                     <div className="mt-4 w-full">
-                      <p className="text-xs font-medium mb-1.5">
-                        {t("facilitator.booking.timezone")}
-                      </p>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger className="flex items-center gap-1.5 text-xs font-medium hover:text-primary transition-colors">
-                          <GlobeIcon className="size-3.5" />
-                          {
-                            timezones.find(
-                              (tz) => tz.value === selectedTimezone,
-                            )?.label
-                          }
-                          <ChevronDownIcon className="size-3.5 text-muted-foreground" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start">
-                          {timezones.map((tz) => (
-                            <DropdownMenuItem
-                              key={tz.value}
-                              onClick={() => setSelectedTimezone(tz.value)}
-                              className="flex items-center justify-between gap-4"
-                            >
-                              <span>{tz.label}</span>
-                              <span className="text-muted-foreground text-xs">
-                                {tz.offset}
-                              </span>
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <TimezoneSelector
+                        value={selectedTimezone}
+                        onChange={setSelectedTimezone}
+                      />
                     </div>
                   </div>
                   {/* Time Slots */}
