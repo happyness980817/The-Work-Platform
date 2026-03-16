@@ -34,7 +34,7 @@ export default function TimezoneSelector({
         {t("facilitator.booking.timezone")}
       </p>
       <DropdownMenu>
-        <DropdownMenuTrigger className="text-muted-foreground flex items-center gap-1.5 text-xs font-medium transition-colors hover:text-primary">
+        <DropdownMenuTrigger className="text-muted-foreground flex items-center gap-1.5 text-xs font-medium transition-colors">
           <GlobeIcon className="size-3.5" />
           {selectedTz?.label || "Select Timezone"}
           <ChevronDownIcon className="size-3.5 text-muted-foreground" />

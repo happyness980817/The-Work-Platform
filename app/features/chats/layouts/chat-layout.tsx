@@ -207,6 +207,7 @@ export default function ChatLayout() {
                     ? t(room.badge)
                     : room.badge
                 }
+                type={activeTab === "dms" ? "dm" : "session"}
               />
             ))}
           </div>
@@ -235,6 +236,19 @@ export default function ChatLayout() {
                   </p>
                 </div>
               </div>
+              {activeTab === "dms" && isFacilitator && (
+                <Button
+                  onClick={() => {
+                    // Navigate to a new session (e.g., ID 1 or a newly created ID)
+                    navigate("/chats/sessions/1");
+                    setActiveTab("sessions");
+                  }}
+                  className="font-semibold"
+                >
+                  <TimerIcon className="size-4 mr-2" />
+                  {t("chat.start_session", "Start Session")}
+                </Button>
+              )}
             </div>
 
             <ScrollArea className="flex-1 min-h-0">
@@ -285,7 +299,9 @@ export default function ChatLayout() {
                       isFromMe={isFromMe}
                       timestamp={msg.timestamp}
                       onGenerateAi={
-                        isFacilitator && !isFromMe ? () => {} : undefined
+                        isFacilitator && !isFromMe && activeTab === "sessions"
+                          ? () => {}
+                          : undefined
                       }
                     />,
                   );

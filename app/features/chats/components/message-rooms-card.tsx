@@ -14,6 +14,7 @@ interface MessageRoomsCardProps {
   avatarUrl?: string;
   isSessionActive?: boolean;
   badge?: string;
+  type?: "session" | "dm";
 }
 
 export function MessageRoomsCard({
@@ -23,12 +24,13 @@ export function MessageRoomsCard({
   avatarUrl,
   isSessionActive = false,
   badge,
+  type = "session",
 }: MessageRoomsCardProps) {
   const location = useLocation();
   const isSelected = location.pathname.includes(id.toString());
   return (
     <Link
-      to={`/chats/sessions/${id}`}
+      to={type === "dm" ? `/chats/dms/${id}` : `/chats/sessions/${id}`}
       className={cn(
         "w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-colors relative overflow-hidden",
         isSelected
