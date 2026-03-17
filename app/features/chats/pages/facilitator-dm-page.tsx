@@ -59,13 +59,6 @@ export default function FacilitatorDmPage() {
         {isFacilitator && (
           <div className="flex items-center gap-1">
             <Button
-              onClick={() => navigate("/my/bookings")}
-              className="font-semibold"
-              variant="link"
-            >
-              Sessions List &rarr;
-            </Button>
-            <Button
               onClick={() => navigate("/chats/sessions/1")}
               className="font-semibold"
             >

@@ -6,6 +6,10 @@
   "nav.login": "Log In",
   "nav.join": "Sign Up",
   "nav.bookings": "Bookings",
+  "nav.sessions": "Sessions",
+  "nav.manage_bookings": "Manage Bookings",
+  "nav.availability": "Availability",
+  "nav.bookings_description": "Manage your bookings",
   "nav.profile": "Profile",
   "nav.settings": "Settings",
   "nav.logout": "Log Out",
@@ -79,6 +83,11 @@
   "chat.edit": "Edit",
   "chat.use": "Use",
   "chat.refine_placeholder": "Refine suggestion (e.g., 'Make it more empathetic')",
+  "chat.in_session": "In Session",
+  "chat.current": "Current Session",
+
+  "bookings.edit_schedule": "Edit Schedule",
+  "bookings.save_changes": "Save Changes",
 
   "footer.tagline": "A platform dedicated to peace of mind through inquiry.\nConnect, question, and find freedom.",
   "footer.disclaimer": "This service does not replace professional medical diagnosis or treatment. If you are experiencing a serious mental health crisis, please contact emergency services or a licensed mental health professional immediately.",
