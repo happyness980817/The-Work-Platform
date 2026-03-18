@@ -1,31 +1,347 @@
+import { DateTime } from "luxon";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CalendarCheckIcon } from "lucide-react";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "~/common/components/ui/avatar";
+import { Badge } from "~/common/components/ui/badge";
+import { Button } from "~/common/components/ui/button";
+import { Calendar } from "~/common/components/ui/calendar";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "~/common/components/ui/card";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "~/common/components/ui/tabs";
+import {
+  CalendarIcon,
+  ClockIcon,
+  VideoIcon,
+  DoorOpenIcon,
+  NotebookPenIcon,
+} from "lucide-react";
+
+/* ── Mock: calendar events ── */
+interface CalendarEvent {
+  id: number;
+  date: Date;
+  time: string;
+  clientName: string;
+  type: "session" | "intro";
+  isLive?: boolean;
+}
+
+const today = new Date();
+
+const mockEvents: CalendarEvent[] = [
+  {
+    id: 1,
+    date: new Date(today.getFullYear(), today.getMonth(), 3),
+    time: "09:00",
+    clientName: "James W.",
+    type: "session",
+  },
+  {
+    id: 2,
+    date: new Date(today.getFullYear(), today.getMonth(), 5),
+    time: "14:30",
+    clientName: "Sarah K.",
+    type: "session",
+    isLive: true,
+  },
+  {
+    id: 3,
+    date: new Date(today.getFullYear(), today.getMonth(), 5),
+    time: "17:00",
+    clientName: "Group Session",
+    type: "session",
+  },
+  {
+    id: 4,
+    date: new Date(today.getFullYear(), today.getMonth(), 11),
+    time: "11:00",
+    clientName: "Intro Call",
+    type: "intro",
+  },
+];
+
+/* ── Mock: selected session detail ── */
+const mockSelectedSession = {
+  clientName: "Sarah K. Jenkins",
+  clientAvatar:
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuDLoHwlZoQxJBoGJF2rQgrIooSLQ70kUzXy0SqoqMZiS-iONApgTWqyYgS4JEfOUojlY1fOg4KdKmWPppb7JLcdJ7vOO6i8PsB6I5nvotmgtsqXLuoLai-oRfw5ko0C62F2qXjxc1FJkq9fzBYKRLtozcYbe8TLIMwed2ClHZv8sUeKqLoRDroGqiHA7Ik1FTVwKVHWQu1RQh0uGdfmRJxQyaZqCinpBk4R0iXcNtQmjSqQ38W4l3zKlkFCn0Z46sNMu2UroFfV_Dk",
+  subtitle: "Individual Therapy - Phase 2",
+  time: "Today, 14:30 - 15:30",
+  duration: "60 Minute Session",
+  format: "Virtual Video Call",
+  isLive: true,
+};
+
+/* ── Mock: pending requests ── */
+interface PendingRequest {
+  id: number;
+  clientName: string;
+  clientAvatar: string;
+  requestedDate: string;
+  requestedTime: string;
+  duration: string;
+  message: string;
+  tag: string;
+  tagVariant: "default" | "secondary";
+}
+
+const mockPendingRequests: PendingRequest[] = [
+  {
+    id: 1,
+    clientName: "Michael Chen",
+    clientAvatar:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuD4Vm8vfDm6QbOdAEItKBElAHASxCYHcpkGrO3OZ9DoNMk7AMSDFxmghjsrR2YhYnLNsKdeBb0EIGta0cTwmTKBGP7hiGW4YSFwFdS3kX91M5oJxwM7w1MmGzPENJnkM7YVB0zIUGFWjWFoXxkqkVAqtTluCOdAMSK5Wc8bBi152unlSYSuvbviUjYC41EYw7i7Z341aAlnNvdQwC6RI33-EPHEPeW-IWIH_81AX_KS0DgAUVLLtXNTrSWmLyhlJ7cF1M4tpFiuG7E",
+    requestedDate: "Oct 18, 2023",
+    requestedTime: "Wednesday, 09:00 AM",
+    duration: "60m",
+    message:
+      "Looking to start our first deep-dive session after the intake last week. Specifically want to focus on workplace boundaries...",
+    tag: "New Client",
+    tagVariant: "default",
+  },
+  {
+    id: 2,
+    clientName: "Emily Watson",
+    clientAvatar:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCbeAXVw7hW4xeyh-CcQ39Gwu_c3OYKQ_hy7R0Df9DgTubv2Ge_crbgeIwSiQrCoG_EGGU4E3Bef7FxFnDejOP7OXwgrFuG1isnAMapYIeRUs266G50x-hSu4vuK7unphQhSDItRQ6V5Tm35EBiXR5QG_3M-SlJEY47NQpIgr1LLfWbS5vLEhJaV24V2GFgZLa9PEG-7Ayy7uiOJjNwVyOy-TWllKHxyAvIu1LaWnAwxrx6JnvFbtMnLCrRynPyx1kJDzGma81xFrM",
+    requestedDate: "Oct 19, 2023",
+    requestedTime: "Thursday, 02:30 PM",
+    duration: "45m",
+    message:
+      "Urgent follow up regarding the negotiation we discussed. Let me know if this slot works.",
+    tag: "Returning",
+    tagVariant: "secondary",
+  },
+  {
+    id: 3,
+    clientName: "Mark Thompson",
+    clientAvatar:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDGMa8PzsrJnwbHiSTO1xSGvWYjELr7YfYO3ULLDdzMpA8HIVy51CUhwSmOMbBHwNB2PQizZyp4V82AhUcrkwZ-bD5zbkWGLs1IjOj-u32zs2CXwORDiGTG884ScvEXDFkNGr99zGR4BmRNIcFdDpLoa3HehYjjI8voDa6p0AU3TAImg4fmBrzVd3RRPsYCJ4c3KBld-XhMFdlL2gmrcUjS_P5wJirtrYSMhkkwMPOSGxmeSncQhaA2LyuP2hoLG2FuvkdMcAqNCEE",
+    requestedDate: "Oct 20, 2023",
+    requestedTime: "Friday, 10:00 AM",
+    duration: "60m",
+    message:
+      "I'd like to schedule a follow-up session to discuss progress on the action items we set last time.",
+    tag: "Returning",
+    tagVariant: "secondary",
+  },
+];
+
+/* ── helpers ── */
+function eventsForDate(date: Date) {
+  return mockEvents.filter(
+    (e) =>
+      e.date.getDate() === date.getDate() &&
+      e.date.getMonth() === date.getMonth(),
+  );
+}
 
 export default function FacilitatorManagePage() {
   const { t } = useTranslation();
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(today);
+
+  const eventDates = mockEvents.map((e) => e.date);
 
   return (
-    <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-1">
-          {t("nav.manage_bookings")}
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          {t("bookings.manage_description")}
-        </p>
-      </div>
-
-      <div className="flex h-[400px] items-center justify-center rounded-lg border border-dashed border-border bg-card">
-        <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-          <div className="flex items-center justify-center size-16 rounded-full bg-muted mb-4">
-            <CalendarCheckIcon className="size-8 text-muted-foreground" />
-          </div>
-          <h3 className="text-lg font-semibold">{t("bookings.no_upcoming")}</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t("bookings.no_upcoming_description")}
+    <div className="flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {t("nav.manage_bookings")}
+          </h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            {t("bookings.manage_description")}
           </p>
         </div>
       </div>
+
+      {/* Tabs */}
+      <Tabs defaultValue="calendar" className="flex flex-col gap-6">
+        <TabsList className="w-fit">
+          <TabsTrigger value="calendar">
+            {t("bookings.schedule_calendar")}
+          </TabsTrigger>
+          <TabsTrigger value="pending" className="gap-2">
+            {t("bookings.pending_requests")}
+            <Badge className="text-[10px] px-1.5 py-0">
+              {mockPendingRequests.length}
+            </Badge>
+          </TabsTrigger>
+        </TabsList>
+
+        {/* ── Schedule Calendar tab ── */}
+        <TabsContent value="calendar">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Calendar */}
+            <Card className="lg:col-span-2">
+              <CardContent className="p-6">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  modifiers={{ event: eventDates }}
+                  modifiersClassNames={{
+                    event:
+                      "bg-primary/10 text-primary font-bold border border-primary/20",
+                  }}
+                  className="w-full"
+                />
+                {/* Events for selected date */}
+                {selectedDate && eventsForDate(selectedDate).length > 0 && (
+                  <div className="mt-6 space-y-2 border-t pt-4">
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">
+                      {DateTime.fromJSDate(selectedDate).toFormat("MMM d")}
+                    </p>
+                    {eventsForDate(selectedDate).map((ev) => (
+                      <div
+                        key={ev.id}
+                        className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 border"
+                      >
+                        <div className="text-xs font-bold text-primary w-12">
+                          {ev.time}
+                        </div>
+                        <div className="flex-1 text-sm font-medium">
+                          {ev.clientName}
+                        </div>
+                        {ev.isLive && (
+                          <Badge className="text-[10px]">
+                            {t("bookings.live_now")}
+                          </Badge>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Selected Session Detail */}
+            <Card className="relative overflow-hidden">
+              {mockSelectedSession.isLive && (
+                <div className="absolute top-4 right-4">
+                  <Badge className="text-[10px] uppercase tracking-wider">
+                    {t("bookings.live_now")}
+                  </Badge>
+                </div>
+              )}
+              <CardHeader>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  {t("bookings.selected_session")}
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Client info */}
+                <div className="flex items-center gap-4">
+                  <Avatar className="size-14 rounded-xl">
+                    <AvatarImage src={mockSelectedSession.clientAvatar} />
+                    <AvatarFallback>
+                      {mockSelectedSession.clientName.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-lg font-bold">
+                      {mockSelectedSession.clientName}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {mockSelectedSession.subtitle}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-sm">
+                    <ClockIcon className="size-4 text-muted-foreground" />
+                    <div>
+                      <p className="font-semibold">
+                        {mockSelectedSession.time}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {mockSelectedSession.duration}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <VideoIcon className="size-4 text-muted-foreground" />
+                    <div>
+                      <p className="font-semibold">
+                        {mockSelectedSession.format}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="grid grid-cols-2 gap-3">
+                  <Button className="gap-2">
+                    <DoorOpenIcon className="size-4" />
+                    {t("bookings.enter_session")}
+                  </Button>
+                  <Button variant="secondary" className="gap-2">
+                    <NotebookPenIcon className="size-4" />
+                    {t("bookings.notes")}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* ── Pending Requests tab ── */}
+        <TabsContent value="pending">
+          <div className="space-y-4">
+            {mockPendingRequests.map((req) => (
+              <Card key={req.id}>
+                <CardContent className="flex items-center gap-6 p-6">
+                  {/* Avatar + info */}
+                  <Avatar className="size-12 shrink-0">
+                    <AvatarImage src={req.clientAvatar} />
+                    <AvatarFallback>{req.clientName.charAt(0)}</AvatarFallback>
+                  </Avatar>
+
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-bold text-sm">{req.clientName}</h4>
+                      <Badge variant={req.tagVariant} className="text-[10px]">
+                        {req.tag}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <CalendarIcon className="size-3" />
+                      <span>
+                        {req.requestedDate} - {req.requestedTime} (
+                        {req.duration})
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Button size="sm">{t("bookings.accept")}</Button>
+                    <Button size="sm" variant="outline">
+                      {t("bookings.decline")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

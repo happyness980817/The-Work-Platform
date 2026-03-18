@@ -3,6 +3,7 @@ import { Card } from "~/common/components/ui/card";
 import FacilitatorCard from "~/features/platform/components/facilitator-card";
 import { useTranslation } from "react-i18next";
 import { facilitators } from "~/features/users/data/facilitators";
+import { Link } from "react-router";
 
 const heroImageUrl =
   "https://thework.com/wp-content/uploads/2019/03/byron-katie-founder-thework@2x.jpg";
@@ -36,9 +37,14 @@ export default function HomePage() {
 
       {/* Facilitators Section */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tight">
-          {t("facilitators.title")}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold tracking-tight">
+            {t("facilitators.title")}
+          </h2>
+          <Button variant="link" asChild>
+            <Link to="/facilitators">{t("facilitators.see_more")} &rarr;</Link>
+          </Button>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {facilitators.map((facilitator) => (
             <FacilitatorCard key={facilitator.id} {...facilitator} />

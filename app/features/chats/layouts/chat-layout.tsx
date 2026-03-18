@@ -37,7 +37,6 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
-  SidebarMenuBadge,
 } from "~/common/components/ui/sidebar";
 
 export type ChatContext = AppContext;
