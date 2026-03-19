@@ -9,25 +9,15 @@ import {
 import { Badge } from "~/common/components/ui/badge";
 import { Button } from "~/common/components/ui/button";
 import { Calendar } from "~/common/components/ui/calendar";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "~/common/components/ui/card";
+import { Card, CardContent } from "~/common/components/ui/card";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "~/common/components/ui/tabs";
-import {
-  CalendarIcon,
-  ClockIcon,
-  VideoIcon,
-  DoorOpenIcon,
-  NotebookPenIcon,
-} from "lucide-react";
+import { CalendarIcon } from "lucide-react";
+import { SessionInfoCard } from "~/features/users/components/session-info-card";
 
 /* ── Mock: calendar events ── */
 interface CalendarEvent {
@@ -72,18 +62,6 @@ const mockEvents: CalendarEvent[] = [
     type: "intro",
   },
 ];
-
-/* ── Mock: selected session detail ── */
-const mockSelectedSession = {
-  clientName: "Sarah K. Jenkins",
-  clientAvatar:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDLoHwlZoQxJBoGJF2rQgrIooSLQ70kUzXy0SqoqMZiS-iONApgTWqyYgS4JEfOUojlY1fOg4KdKmWPppb7JLcdJ7vOO6i8PsB6I5nvotmgtsqXLuoLai-oRfw5ko0C62F2qXjxc1FJkq9fzBYKRLtozcYbe8TLIMwed2ClHZv8sUeKqLoRDroGqiHA7Ik1FTVwKVHWQu1RQh0uGdfmRJxQyaZqCinpBk4R0iXcNtQmjSqQ38W4l3zKlkFCn0Z46sNMu2UroFfV_Dk",
-  subtitle: "Individual Therapy - Phase 2",
-  time: "Today, 14:30 - 15:30",
-  duration: "60 Minute Session",
-  format: "Virtual Video Call",
-  isLive: true,
-};
 
 /* ── Mock: pending requests ── */
 interface PendingRequest {
@@ -229,75 +207,23 @@ export default function FacilitatorManagePage() {
               </CardContent>
             </Card>
 
-            {/* Selected Session Detail */}
-            <Card className="relative overflow-hidden">
-              {mockSelectedSession.isLive && (
-                <div className="absolute top-4 right-4">
-                  <Badge className="text-[10px] uppercase tracking-wider">
-                    {t("bookings.live_now")}
-                  </Badge>
-                </div>
-              )}
-              <CardHeader>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                  {t("bookings.selected_session")}
+            {/* Selected Session Details */}
+            <div className="flex flex-col gap-4">
+              {selectedDate && eventsForDate(selectedDate).length > 0 ? (
+                eventsForDate(selectedDate).map((ev) => (
+                  <SessionInfoCard
+                    key={ev.id}
+                    clientName={ev.clientName}
+                    time={ev.time}
+                    isLive={ev.isLive}
+                  />
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-8">
+                  {t("bookings.no_sessions")}
                 </p>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Client info */}
-                <div className="flex items-center gap-4">
-                  <Avatar className="size-14 rounded-xl">
-                    <AvatarImage src={mockSelectedSession.clientAvatar} />
-                    <AvatarFallback>
-                      {mockSelectedSession.clientName.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="text-lg font-bold">
-                      {mockSelectedSession.clientName}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {mockSelectedSession.subtitle}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Details */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-sm">
-                    <ClockIcon className="size-4 text-muted-foreground" />
-                    <div>
-                      <p className="font-semibold">
-                        {mockSelectedSession.time}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {mockSelectedSession.duration}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <VideoIcon className="size-4 text-muted-foreground" />
-                    <div>
-                      <p className="font-semibold">
-                        {mockSelectedSession.format}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="grid grid-cols-2 gap-3">
-                  <Button className="gap-2">
-                    <DoorOpenIcon className="size-4" />
-                    {t("bookings.enter_session")}
-                  </Button>
-                  <Button variant="secondary" className="gap-2">
-                    <NotebookPenIcon className="size-4" />
-                    {t("bookings.notes")}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              )}
+            </div>
           </div>
         </TabsContent>
 
