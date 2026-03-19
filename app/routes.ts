@@ -30,6 +30,7 @@ export default [
         ),
       ]),
     ]),
+    route("/about", "common/pages/about-page.tsx"),
     route("/my/profile", "features/users/pages/profile-page.tsx"),
     route("/my/settings", "features/users/pages/settings-page.tsx"),
   ]),
