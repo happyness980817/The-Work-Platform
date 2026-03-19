@@ -119,6 +119,9 @@
   "bookings.cancel_session_title": "Cancel this session?",
   "bookings.cancel_session_description": "This action cannot be undone. The session will be cancelled and the client will be notified.",
   "bookings.cancel_session_confirm": "Yes, cancel session",
+  "bookings.new_session": "New Session",
+  "bookings.session_number": "Session #{{number}}",
+  "bookings.active_client": "Active Client",
 
   "footer.tagline": "A platform dedicated to peace of mind through inquiry.\nConnect, question, and find freedom.",
   "footer.disclaimer": "This service does not replace professional medical diagnosis or treatment. If you are experiencing a serious mental health crisis, please contact emergency services or a licensed mental health professional immediately.",
