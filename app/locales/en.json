@@ -93,7 +93,6 @@
   "bookings.live_now": "Live Now",
   "bookings.selected_session": "Selected Session",
   "bookings.enter_session": "Enter Session",
-  "bookings.notes": "Notes",
   "bookings.accept": "Accept",
   "bookings.decline": "Decline",
   "bookings.sessions_description": "View and manage your upcoming and past sessions.",
@@ -116,6 +115,10 @@
   "bookings.cancel": "Cancel",
   "bookings.confirm_exceptions": "Confirm Exceptions",
   "bookings.confirmed_exceptions": "Confirmed Exceptions",
+  "bookings.cancel_session": "Cancel Session",
+  "bookings.cancel_session_title": "Cancel this session?",
+  "bookings.cancel_session_description": "This action cannot be undone. The session will be cancelled and the client will be notified.",
+  "bookings.cancel_session_confirm": "Yes, cancel session",
 
   "footer.tagline": "A platform dedicated to peace of mind through inquiry.\nConnect, question, and find freedom.",
   "footer.disclaimer": "This service does not replace professional medical diagnosis or treatment. If you are experiencing a serious mental health crisis, please contact emergency services or a licensed mental health professional immediately.",

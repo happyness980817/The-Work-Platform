@@ -93,7 +93,6 @@
   "bookings.live_now": "진행 중",
   "bookings.selected_session": "선택된 세션",
   "bookings.enter_session": "세션 입장",
-  "bookings.notes": "노트",
   "bookings.accept": "수락",
   "bookings.decline": "거절",
   "bookings.sessions_description": "예정된 세션과 지난 세션을 확인하고 관리하세요.",
@@ -116,6 +115,10 @@
   "bookings.cancel": "취소",
   "bookings.confirm_exceptions": "예외 확인",
   "bookings.confirmed_exceptions": "확인된 예외",
+  "bookings.cancel_session": "세션 취소",
+  "bookings.cancel_session_title": "이 세션을 취소하시겠습니까?",
+  "bookings.cancel_session_description": "이 작업은 되돌릴 수 없습니다. 세션이 취소되고 클라이언트에게 알림이 전송됩니다.",
+  "bookings.cancel_session_confirm": "네, 세션을 취소합니다",
 
   "footer.tagline": "The Work Platform은 네 가지 질문을 통해 마음의 평화를 찾는 공간입니다.\n 연결되고, 질문하고, 자유를 찾으세요.",
   "footer.disclaimer": "본 서비스는 전문적인 의료 진단이나 치료를 대체하지 않습니다. 심각한 정신건강 문제가 있거나 위기 상황에 처한 경우, 즉시 정신건강의학과 전문의 또는 응급 서비스(자살예방상담전화 1393, 정신건강위기상담전화 1577-0199)에 연락하시기 바랍니다. 상담사는 의료인이 아니며, 본 플랫폼의 상담은 심리적 지지와 자기탐색을 위한 보조 수단입니다.",

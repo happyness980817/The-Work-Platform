@@ -6,11 +6,18 @@ import {
 } from "~/common/components/ui/avatar";
 import { Badge } from "~/common/components/ui/badge";
 import { Button } from "~/common/components/ui/button";
+import { Card, CardContent, CardHeader } from "~/common/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "~/common/components/ui/card";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/common/components/ui/alert-dialog";
 import { ClockIcon, DoorOpenIcon, NotebookPenIcon } from "lucide-react";
 
 interface SessionInfoCardProps {
@@ -80,10 +87,30 @@ export function SessionInfoCard({
             <DoorOpenIcon className="size-4" />
             {t("bookings.enter_session")}
           </Button>
-          <Button variant="secondary" className="gap-2">
-            <NotebookPenIcon className="size-4" />
-            {t("bookings.notes")}
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <NotebookPenIcon className="size-4" />
+                {t("bookings.cancel_session")}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  {t("bookings.cancel_session_title")}
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  {t("bookings.cancel_session_description")}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>{t("bookings.cancel")}</AlertDialogCancel>
+                <AlertDialogAction>
+                  {t("bookings.cancel_session_confirm")}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </CardContent>
     </Card>
