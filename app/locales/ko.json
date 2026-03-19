@@ -89,7 +89,7 @@
 
   "bookings.manage_description": "스케줄 확인, 세션 관리, 예약 요청을 처리하세요.",
   "bookings.schedule_calendar": "스케줄 캘린더",
-  "bookings.pending_requests": "대기 중인 요청",
+  "bookings.pending_requests": "예약 요청",
   "bookings.live_now": "진행 중",
   "bookings.selected_session": "선택된 세션",
   "bookings.enter_session": "세션 입장",

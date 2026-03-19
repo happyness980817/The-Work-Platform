@@ -1,13 +1,7 @@
 import { DateTime } from "luxon";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "~/common/components/ui/avatar";
 import { Badge } from "~/common/components/ui/badge";
-import { Button } from "~/common/components/ui/button";
 import { Calendar } from "~/common/components/ui/calendar";
 import { Card, CardContent } from "~/common/components/ui/card";
 import {
@@ -16,8 +10,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "~/common/components/ui/tabs";
-import { CalendarIcon } from "lucide-react";
 import { SessionInfoCard } from "~/features/users/components/session-info-card";
+import { BookingRequestCard } from "~/features/users/components/booking-request-card";
 
 /* ── Mock: calendar events ── */
 interface CalendarEvent {
@@ -231,39 +225,16 @@ export default function FacilitatorManagePage() {
         <TabsContent value="pending">
           <div className="space-y-4">
             {mockPendingRequests.map((req) => (
-              <Card key={req.id}>
-                <CardContent className="flex items-center gap-6 p-6">
-                  {/* Avatar + info */}
-                  <Avatar className="size-12 shrink-0">
-                    <AvatarImage src={req.clientAvatar} />
-                    <AvatarFallback>{req.clientName.charAt(0)}</AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-sm">{req.clientName}</h4>
-                      <Badge variant={req.tagVariant} className="text-[10px]">
-                        {req.tag}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <CalendarIcon className="size-3" />
-                      <span>
-                        {req.requestedDate} - {req.requestedTime} (
-                        {req.duration})
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    <Button size="sm">{t("bookings.accept")}</Button>
-                    <Button size="sm" variant="outline">
-                      {t("bookings.decline")}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <BookingRequestCard
+                key={req.id}
+                clientName={req.clientName}
+                clientAvatar={req.clientAvatar}
+                requestedDate={req.requestedDate}
+                requestedTime={req.requestedTime}
+                duration={req.duration}
+                tag={req.tag}
+                tagVariant={req.tagVariant}
+              />
             ))}
           </div>
         </TabsContent>
