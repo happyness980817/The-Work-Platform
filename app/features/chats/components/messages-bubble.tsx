@@ -56,13 +56,13 @@ export function MessageBubble({
         className={cn("flex items-center gap-2", isFromMe ? "mr-12" : "ml-12")}
       >
         {timestamp && (
-          <span className="text-[11px] text-muted-foreground">{timestamp}</span>
+          <span className="text-[12px] text-muted-foreground">{timestamp}</span>
         )}
         {onGenerateAi && (
           <Button
             variant="ghost"
             onClick={onGenerateAi}
-            className="text-[11px] text-muted-foreground hover:text-primary h-auto p-0"
+            className="text-[12px] font-semibold text-muted-foreground hover:text-primary h-auto p-0"
           >
             <SparklesIcon className="size-3" />
             {t("chat.generate_ai")}

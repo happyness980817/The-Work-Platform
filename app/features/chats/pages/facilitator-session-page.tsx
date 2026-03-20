@@ -114,10 +114,10 @@ export default function FacilitatorSessionPage() {
       <div className="flex items-center justify-between px-6 py-4 border-b bg-card/50 backdrop-blur-md shrink-0">
         <div>
           <div className="flex flex-row items-center gap-1">
-            <h2 className="text-lg font-bold">{mockClient.name}</h2>
-            <span className="text-xs text-muted-foreground">@username</span>
+            <h2 className="text-xl font-bold">{mockClient.name}</h2>
+            <span className="text-sm text-muted-foreground">@username</span>
           </div>
-          <p className="text-xs text-muted-foreground flex items-center gap-1">
+          <p className="text-sm text-muted-foreground flex items-center gap-1">
             {t("chat.session", { number: 4 })}
           </p>
         </div>
@@ -201,7 +201,7 @@ export default function FacilitatorSessionPage() {
         </div>
         {isFacilitator && (
           <div className="text-center">
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {t("chat.ai_disclaimer")}
             </p>
           </div>
