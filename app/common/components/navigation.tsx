@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "react-router";
+import { Link } from "react-router";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -37,12 +37,14 @@ export default function Navigation({
   name,
   username,
   role,
+  isAdmin,
 }: {
   isLoggedIn: boolean;
   avatar?: string | null;
   name?: string;
   username?: string;
   role?: string;
+  isAdmin?: boolean;
 }) {
   const { t, i18n } = useTranslation();
   return (
@@ -125,7 +127,9 @@ export default function Navigation({
                   <span className="font-medium">
                     {name || t("nav.user_fallback")}
                   </span>
-                  <span className="capitalize">{` (${role})`}</span>
+                  <span className="capitalize">
+                    {isAdmin ? " (Administrator)" : ` (${role})`}
+                  </span>
                 </div>
                 {username && (
                   <span className="text-xs text-muted-foreground">
