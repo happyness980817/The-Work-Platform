@@ -12,7 +12,10 @@ export default function AuthLayout() {
             alt="The Work"
             className="size-16 rounded-xl mx-auto"
           />
-          <h2 className="text-3xl font-bold">The Work Platform</h2>
+          <h2 className="text-3xl font-bold">
+            The Work{" "}
+            <span className="text-primary italic font-semibold">Platform</span>
+          </h2>
           <p className="text-white/70 text-sm max-w-sm">
             Find peace of mind through inquiry. Connect with certified
             facilitators and question stressful thoughts.

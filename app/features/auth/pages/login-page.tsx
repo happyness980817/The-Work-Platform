@@ -73,7 +73,7 @@ export default function LoginPage() {
                   id="client-email"
                   name="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.placeholder_email")}
                 />
               </div>
               <div className="space-y-2">
@@ -98,7 +98,7 @@ export default function LoginPage() {
                   id="facilitator-email"
                   name="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.placeholder_email")}
                 />
               </div>
               <div className="space-y-2">

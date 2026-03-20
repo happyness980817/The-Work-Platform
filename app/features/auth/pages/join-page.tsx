@@ -29,7 +29,11 @@ export default function JoinPage() {
     <div className="flex flex-col relative items-center justify-center h-full px-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="absolute top-6 right-6">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-6 right-6"
+          >
             <GlobeIcon className="size-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -69,7 +73,11 @@ export default function JoinPage() {
               <input type="hidden" name="role" value="client" />
               <div className="space-y-2">
                 <Label htmlFor="client-name">{t("auth.name")}</Label>
-                <Input id="client-name" name="name" placeholder="홍길동" />
+                <Input
+                  id="client-name"
+                  name="name"
+                  placeholder={t("auth.placeholder_name")}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="client-email">{t("auth.email")}</Label>
@@ -77,16 +85,12 @@ export default function JoinPage() {
                   id="client-email"
                   name="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.placeholder_email")}
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="client-password">{t("auth.password")}</Label>
-                <Input
-                  id="client-password"
-                  name="password"
-                  type="password"
-                />
+                <Input id="client-password" name="password" type="password" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="client-password-confirm">
@@ -111,7 +115,7 @@ export default function JoinPage() {
                 <Input
                   id="facilitator-name"
                   name="name"
-                  placeholder="홍길동"
+                  placeholder={t("auth.placeholder_name")}
                 />
               </div>
               <div className="space-y-2">
@@ -120,7 +124,7 @@ export default function JoinPage() {
                   id="facilitator-email"
                   name="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.placeholder_email")}
                 />
               </div>
               <div className="space-y-2">

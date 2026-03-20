@@ -9,23 +9,7 @@ import { SaveIcon, PencilIcon } from "lucide-react";
 const MDEditor = lazy(() => import("@uiw/react-md-editor"));
 
 const DEFAULT_CONTENT: Record<string, string> = {
-  en: `# About Us
-
-Welcome to **The Work Platform** — a space dedicated to peace of mind through inquiry.
-
-## Our Mission
-
-We connect individuals with experienced facilitators who guide them through *The Work* of Byron Katie — a simple yet profound method of self-inquiry that helps identify and question stressful thoughts.
-
-## How It Works
-
-1. **Book a session** with a certified facilitator
-2. **Explore your thoughts** through guided inquiry
-3. **Find claHere is the English translation of your service introduction, maintaining the original structure and the profound tone of Byron Katie’s work.
-
----
-
-# About the Service
+  en: `# About the Service
 
 Welcome to **The Work Platform** — a space to find peace of mind through inquiry.
 
@@ -35,9 +19,9 @@ We connect individuals with experienced facilitators who guide them through Byro
 
 ## How It Works
 
-1.  **Sign Up**
-2.  **Book a Session**: Schedule a session with a certified facilitator using our **booking feature** or by **sending a DM**.
-3.  **The Session**: **Explore your thoughts** through "The Work" guided by your facilitator.
+1. **Sign Up**
+2. **Book a Session**: Schedule a session with a certified facilitator using our **booking feature** or by **sending a DM**.
+3. **The Session**: **Explore your thoughts** through "The Work" guided by your facilitator.
 
 ## Our Facilitators
 
