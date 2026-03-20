@@ -21,17 +21,33 @@ We connect individuals with experienced facilitators who guide them through *The
 
 1. **Book a session** with a certified facilitator
 2. **Explore your thoughts** through guided inquiry
-3. **Find clarity** and a new perspective
-
-## Our Facilitators
-
-Our facilitators are trained and certified practitioners who are passionate about helping others find freedom from painful thoughts.
-
-> "The Work is not about positive thinking. It's about true thinking." — Byron Katie
+3. **Find claHere is the English translation of your service introduction, maintaining the original structure and the profound tone of Byron Katie’s work.
 
 ---
 
-Have questions? [Contact us](#) or explore our [facilitator directory](/facilitators).
+# About the Service
+
+Welcome to **The Work Platform** — a space to find peace of mind through inquiry.
+
+## Our Mission
+
+We connect individuals with experienced facilitators who guide them through Byron Katie’s *The Work*—a simple yet profound method of self-inquiry designed to identify and question the thoughts that cause stress.
+
+## How It Works
+
+1.  **Sign Up**
+2.  **Book a Session**: Schedule a session with a certified facilitator using our **booking feature** or by **sending a DM**.
+3.  **The Session**: **Explore your thoughts** through "The Work" guided by your facilitator.
+
+## Our Facilitators
+
+Our facilitators are trained and certified professionals, passionate about helping others find freedom from painful thoughts.
+
+> "I found that suffering is optional. And I invite you not to believe me. I invite you to test it for yourself." — Byron Katie
+
+---
+
+Have any questions? [Contact Us](#) or check out our [Facilitator List](/facilitators).
 `,
   ko: `# 서비스 소개
 
@@ -43,15 +59,15 @@ Have questions? [Contact us](#) or explore our [facilitator directory](/facilita
 
 ## 이용 방법
 
-1. 인증된 퍼실리테이터와 **세션 예약**
-2. 안내된 탐구를 통해 **자신의 생각 탐색**
-3. **명료함**과 새로운 관점 발견
+1. **회원 가입**
+2. **세션 예약**: 인증된 퍼실리테이터와 **예약 기능을 통한 세션 예약** 또는 **DM 전송**
+2. **세션 진행**: 퍼실리테이터가 안내하는 "작업"을 통해 **자신의 생각 탐색**
 
 ## 우리의 퍼실리테이터
 
 저희 퍼실리테이터는 훈련되고 인증된 전문가로, 다른 사람들이 고통스러운 생각에서 자유로워질 수 있도록 돕는 일에 열정을 가지고 있습니다.
 
-> "The Work은 긍정적 사고에 관한 것이 아닙니다. 진실한 사고에 관한 것입니다." — Byron Katie
+> "저는 고통은 선택의 문제라는 것을 깨달았습니다. 당신이 제 말을 무조건 믿기를 바라지 않습니다. 그보다는 당신이 직접 확인해 보시길 권합니다." — Byron Katie
 
 ---
 
@@ -65,7 +81,8 @@ export default function AboutPage() {
 
   const lang = i18n.language.startsWith("ko") ? "ko" : "en";
 
-  const [contents, setContents] = useState<Record<string, string>>(DEFAULT_CONTENT);
+  const [contents, setContents] =
+    useState<Record<string, string>>(DEFAULT_CONTENT);
   const [saved, setSaved] = useState<Record<string, string>>(DEFAULT_CONTENT);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -136,7 +153,9 @@ export default function AboutPage() {
           <div data-color-mode="auto">
             <MDEditor
               value={content}
-              onChange={(val) => setContents((prev) => ({ ...prev, [lang]: val ?? "" }))}
+              onChange={(val) =>
+                setContents((prev) => ({ ...prev, [lang]: val ?? "" }))
+              }
               height={600}
               preview="live"
             />

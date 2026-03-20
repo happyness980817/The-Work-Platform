@@ -21,7 +21,6 @@ interface Client {
   id: number;
   name: string;
   avatar: string;
-  isActive: boolean;
   sessions: Session[];
 }
 
@@ -31,7 +30,6 @@ const mockClients: Client[] = [
     name: "Sarah Jenkins",
     avatar:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCe-Z-GSYoUFcFxWJXE4rOsFj2hUh0-WDZnmzA7FgGzGGG8X8mFUCRGAS0KUjljB1f4_zOS148H4R5tCYKeAV0dxPnWIlcA5Cn3_LPaX8s2x8T32b1YwADVlJDoj4Ltx9PoApSCYBmxQz2huLe24mgnx5ca6r4S7YD3QtBbT2QUpxty62bXO0EYKdLlYgnbZMw9hUdFzbTTtxTyPQYojAgDtbFi62TSutFzIhH2wTs43FmFTQYD-L8J8ESbCIj7DGKnjBUBQqONvEA",
-    isActive: true,
     sessions: [
       { id: 1, sessionNumber: 12, date: "October 24, 2023" },
       { id: 2, sessionNumber: 11, date: "October 10, 2023" },
@@ -42,7 +40,6 @@ const mockClients: Client[] = [
     name: "Marcus Reed",
     avatar:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAdhmS4pFo5JWAlDWTwRPdYMWq74TIqxFSRCjz_Ugj8LxB_uYag2Z9scERiBT90Ufk31UyQ-2w9aZixpAEMH1srOT2boFIU5aoIKWBmawDrdjba3PVUgbVz7jTxTYfSZQ5DlkOhABj93TbJ9wKfbw-84Ya9M3SwHdoyzJ3PLmRpTOU75or6L3VMP-I-Ecb91LTZe_bVKvuN9N_VjgazgK2WfgQJeaZ_GTE9OKWgwWRDPnzqP_fnjN3s31s71B17JAo43N6mrL_byxk",
-    isActive: true,
     sessions: [{ id: 3, sessionNumber: 8, date: "November 02, 2023" }],
   },
   {
@@ -50,7 +47,6 @@ const mockClients: Client[] = [
     name: "Elena Rodriguez",
     avatar:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuChWE6qgrfvkCNfdS_ku_EQXbXtPTrM4gOdz2bKRfL9chs5B-gWQlK63mBZkIJNwu8Yb-Rkn7J3tYrhUcmqe54G_wbJI1pL7UgkGq02H0LbPH4GcUks6XiT-xjRg2PHA2rLuIwB6r_DIqYdavYoN2PG3yJp9BKBe0P6sjoDxonoyhnIrpvYqSXgW-G52XGdI0gklwRcKDdDVOsKeZHADA_3Vp8L4NebsuRakvuGy_XK-r5eTP4n-lM0oDCwHA12T5wQMDYEW4mLlig",
-    isActive: true,
     sessions: [
       { id: 4, sessionNumber: 15, date: "October 30, 2023" },
       { id: 5, sessionNumber: 14, date: "October 16, 2023" },
@@ -90,12 +86,6 @@ export default function FacilitatorSessionsPage() {
                       <p className="text-lg font-bold leading-tight">
                         {client.name}
                       </p>
-                      <Badge
-                        variant={client.isActive ? "default" : "secondary"}
-                        className="w-fit text-[10px] mt-1"
-                      >
-                        {t("bookings.active_client")}
-                      </Badge>
                     </div>
                   </div>
                   <Button size="sm" className="gap-2 shrink-0">

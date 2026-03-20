@@ -127,6 +127,19 @@
   "bookings.session_number": "세션 #{{number}}",
   "bookings.active_client": "활성 클라이언트",
 
+  "auth.login": "로그인",
+  "auth.join": "회원가입",
+  "auth.client": "내담자",
+  "auth.facilitator": "퍼실리테이터",
+  "auth.email": "이메일",
+  "auth.password": "비밀번호",
+  "auth.password_confirm": "비밀번호 확인",
+  "auth.name": "이름",
+  "auth.login_button": "로그인",
+  "auth.join_button": "가입하기",
+  "auth.no_account": "계정이 없으신가요?",
+  "auth.has_account": "이미 계정이 있으신가요?",
+
   "footer.tagline": "The Work Platform은 네 가지 질문을 통해 마음의 평화를 찾는 공간입니다.\n 연결되고, 질문하고, 자유를 찾으세요.",
   "footer.disclaimer": "본 서비스는 전문적인 의료 진단이나 치료를 대체하지 않습니다. 심각한 정신건강 문제가 있거나 위기 상황에 처한 경우, 즉시 정신건강의학과 전문의 또는 응급 서비스(자살예방상담전화 1393, 정신건강위기상담전화 1577-0199)에 연락하시기 바랍니다. 상담사는 의료인이 아니며, 본 플랫폼의 상담은 심리적 지지와 자기탐색을 위한 보조 수단입니다.",
   "footer.copyright": "© 2026 The Work Platform. All rights reserved."
