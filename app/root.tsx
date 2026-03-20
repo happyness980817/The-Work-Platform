@@ -20,6 +20,12 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
+    as: "style",
+    crossOrigin: "anonymous",
+    href: "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css",
+  },
+  {
+    rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];

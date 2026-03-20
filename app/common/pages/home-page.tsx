@@ -11,7 +11,7 @@ const heroImageUrl =
 export default function HomePage() {
   const { t } = useTranslation();
   return (
-    <div className="flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-12">
+    <div className="flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-8 gap-12">
       {/* Hero Section */}
       <Card className="overflow-hidden border-0 bg-card">
         <div className="flex flex-col lg:flex-row lg:items-stretch gap-0">

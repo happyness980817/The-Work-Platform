@@ -9,7 +9,6 @@ import {
 } from "~/common/components/ui/dropdown-menu";
 import FacilitatorCard from "~/features/platform/components/facilitator-card";
 import { facilitators } from "~/features/users/data/facilitators";
-import type { Route } from "./+types/facilitators-page";
 
 const LANGUAGE_OPTIONS = [
   "lang.ko",
@@ -30,7 +29,7 @@ export default function FacilitatorsPage({}) {
   });
 
   return (
-    <div className="flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
+    <div className="flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-8 gap-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">
           {t("facilitators.title")}
