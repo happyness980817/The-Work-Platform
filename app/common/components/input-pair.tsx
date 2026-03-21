@@ -15,7 +15,7 @@ export default function InputPair({
 } & InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>) {
   return (
     <div className="space-y-2 flex flex-col">
-      <Label htmlFor={rest.id} className="flex flex-col">
+      <Label htmlFor={rest.id} className="flex flex-col gap-1 items-start text-left">
         {label}
         <small className="text-muted-foreground">{description}</small>
       </Label>
