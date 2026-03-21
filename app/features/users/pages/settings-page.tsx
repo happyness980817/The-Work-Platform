@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import InputPair from "~/common/components/input-pair";
 import { Input } from "~/common/components/ui/input";
 import { Label } from "~/common/components/ui/label";
 import { Button } from "~/common/components/ui/button";
+import { Alert, AlertDescription } from "~/common/components/ui/alert";
 import { Form } from "react-router";
+import { InfoIcon } from "lucide-react";
 
 const mockUser = {
   name: "Sarah Jenkins",
@@ -30,6 +33,19 @@ export default function SettingsPage() {
       <h2 className="text-2xl font-bold tracking-tight">
         {t("settings.title")}
       </h2>
+      <Alert>
+        <InfoIcon className="size-4" />
+        <AlertDescription className="flex flex-row items-center gap-1">
+          {t("settings.booking_hint")}
+          <Link
+            to="/my/bookings/availability"
+            className="font-medium underline underline-offset-4 hover:text-primary"
+          >
+            {t("settings.booking_hint_link")}
+          </Link>
+          {t("settings.booking_hint_suffix")}
+        </AlertDescription>
+      </Alert>
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-10 lg:gap-16">
         {/* 프로필 수정 폼 */}
         <div className="lg:col-span-4 flex flex-col gap-8">

@@ -92,11 +92,6 @@ export default function ProfilePage() {
                 {t("profile.edit_profile")}
               </Link>
             </Button>
-            <Button variant="outline" size="sm" asChild>
-              <Link to={`/facilitators/${profile.id}`}>
-                {t("profile.view_public")}
-              </Link>
-            </Button>
           </div>
         </div>
       </div>

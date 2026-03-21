@@ -146,6 +146,26 @@
   "auth.placeholder_name": "John Doe",
   "auth.placeholder_email": "you@example.com",
 
+  "profile.edit_profile": "Edit Profile",
+  "profile.view_profile": "View Profile",
+  "profile.total_sessions": "Total Sessions",
+  "profile.total_clients": "Total Clients",
+  "profile.avg_rating": "Avg. Rating",
+  "profile.availability": "Availability",
+  "profile.introduction": "Introduction",
+  "profile.account_info": "Account Info",
+  "profile.display_name": "Display Name",
+  "profile.role": "Role",
+  "profile.member_since": "Member Since",
+  "profile.bio": "About",
+  "profile.languages": "Languages",
+  "profile.sessions_completed": "Sessions Completed",
+  "profile.contact_facilitator": "Send Message",
+
+  "settings.booking_hint": "For booking-related settings, please go to the ",
+  "settings.booking_hint_link": "Availability",
+  "settings.booking_hint_suffix": " page.",
+
   "footer.tagline": "A platform dedicated to peace of mind through inquiry.\nConnect, question, and find freedom.",
   "footer.disclaimer": "This service does not replace professional medical diagnosis or treatment. If you are experiencing a serious mental health crisis, please contact emergency services or a licensed mental health professional immediately.",
   "footer.copyright": "© 2026 The Work Platform. All rights reserved."

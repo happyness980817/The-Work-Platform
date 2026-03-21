@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Link, useOutletContext } from "react-router";
 import { useTranslation } from "react-i18next";
-import { EyeIcon, CalendarIcon, ArrowRightIcon } from "lucide-react";
+import { EyeIcon, CalendarIcon, ArrowRightIcon, UserIcon } from "lucide-react";
 import { DateTime } from "luxon";
 import type { Route } from "./+types/facilitator-page";
 import type { AppContext } from "~/types";
@@ -86,6 +86,12 @@ export default function FacilitatorPage({ params }: Route.ComponentProps) {
             introduction={facilitator.introduction}
             languages={facilitator.languages}
           />
+          <Button variant="default" className="w-full mt-3 gap-2" asChild>
+            <Link to={`/facilitators/profile/${facilitator.id}`}>
+              <UserIcon className="size-4" />
+              {t("profile.view_profile")}
+            </Link>
+          </Button>
         </div>
 
         <div className="lg:col-span-9">

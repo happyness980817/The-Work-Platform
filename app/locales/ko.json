@@ -146,6 +146,26 @@
   "auth.placeholder_name": "홍길동",
   "auth.placeholder_email": "you@example.com",
 
+  "profile.edit_profile": "프로필 편집",
+  "profile.view_profile": "프로필 보기",
+  "profile.total_sessions": "총 세션 수",
+  "profile.total_clients": "총 내담자 수",
+  "profile.avg_rating": "평균 평점",
+  "profile.availability": "가능 시간",
+  "profile.introduction": "소개",
+  "profile.account_info": "계정 정보",
+  "profile.display_name": "이름",
+  "profile.role": "역할",
+  "profile.member_since": "가입일",
+  "profile.bio": "자기소개",
+  "profile.languages": "언어",
+  "profile.sessions_completed": "완료된 세션",
+  "profile.contact_facilitator": "메시지 보내기",
+
+  "settings.booking_hint": "예약 관련 설정은 우측 상단의",
+  "settings.booking_hint_link": "예약 페이지",
+  "settings.booking_hint_suffix": "에서 설정해주세요.",
+
   "footer.tagline": "The Work Platform은 네 가지 질문을 통해 마음의 평화를 찾는 공간입니다.\n 연결되고, 질문하고, 자유를 찾으세요.",
   "footer.disclaimer": "본 서비스는 전문적인 의료 진단이나 치료를 대체하지 않습니다. 심각한 정신건강 문제가 있거나 위기 상황에 처한 경우, 즉시 정신건강의학과 전문의 또는 응급 서비스(자살예방상담전화 1393, 정신건강위기상담전화 1577-0199)에 연락하시기 바랍니다. 상담사는 의료인이 아니며, 본 플랫폼의 상담은 심리적 지지와 자기탐색을 위한 보조 수단입니다.",
   "footer.copyright": "© 2026 The Work Platform. All rights reserved."
