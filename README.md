@@ -36,28 +36,60 @@ facilitator login:
 
 ```
 
-## Refactoring Plan (2026.03.22)
+## Refactoring Plan (2026.03.21)
 
 ```
 
 features/
-  auth/                    (로그인/회원가입 — 공통, 탭으로 분기)
-  facilitators/            ← facilitator 전용 전부
+  auth/
     components/
     layouts/
     pages/
-      bookings/            (manage, availability, sessions)
-      chats/               (session-page, dm-page)
-      profile/             (profile, settings)
-  clients/                 ← client 전용 전부
+    queries.ts          ← 로그인/회원가입 쿼리
+    mutations.ts
+    schema.ts
+
+  facilitators/          ← facilitator 전용 전부 통합
     components/
+      session-info-card.tsx
+      booking-request-card.tsx
+      session-card.tsx
     layouts/
+      bookings-layout.tsx
     pages/
-      bookings/            (manage, submit-application)
-      chats/               (client-chat-page)
-      profile/             (profile, settings)
-  platform/                ← 비로그인/공통 (facilitator 목록, 상세, about)
+      manage-page.tsx
+      sessions-page.tsx
+      availability-page.tsx
+      settings-page.tsx
+      profile-page.tsx
+    queries.ts           ← facilitator 세션/예약 조회
+    mutations.ts         ← 예약 수락/거절 등
+    schema.ts
+
+  clients/               ← client 전용
+    components/
+      client-booking-card.tsx
+    pages/
+      manage-page.tsx
+      settings-page.tsx
+      profile-page.tsx
+    queries.ts
+    mutations.ts
+    schema.ts
+
+  chats/
+    facilitator/         ← facilitator 채팅
+      pages/
+    client/              ← client 채팅
+      pages/
+    components/          ← 공통 채팅 컴포넌트 (bubble 등)
+    queries.ts
+    mutations.ts
+
+  platform/              ← 비로그인/공통 (목록, 상세, about)
     components/
     pages/
+    queries.ts
+
 
 ```
