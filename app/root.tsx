@@ -11,6 +11,11 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import type { AppContext } from "./types";
 
+const PRETENDARD =
+  "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css";
+const NOTOSANSKR =
+  "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap";
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -20,9 +25,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    as: "style",
-    crossOrigin: "anonymous",
-    href: "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css",
+    href: NOTOSANSKR,
   },
   {
     rel: "stylesheet",
