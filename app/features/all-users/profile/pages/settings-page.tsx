@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
+import { Link, useOutletContext } from "react-router";
+import type { AppContext } from "~/types";
 import InputPair from "~/common/components/input-pair";
 import { Input } from "~/common/components/ui/input";
 import { Label } from "~/common/components/ui/label";
@@ -20,6 +21,8 @@ const mockUser = {
 
 export default function SettingsPage() {
   const { t } = useTranslation();
+  const { role } = useOutletContext<AppContext>();
+  const isFacilitator = role === "facilitator";
   const [avatar, setAvatar] = useState<string | null>(mockUser.avatar);
   const onChangeAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -33,19 +36,21 @@ export default function SettingsPage() {
       <h2 className="text-2xl font-bold tracking-tight">
         {t("settings.title")}
       </h2>
-      <Alert>
-        <InfoIcon className="size-4" />
-        <AlertDescription className="flex flex-row items-center gap-1">
-          {t("settings.booking_hint")}
-          <Link
-            to="/my/bookings/availability"
-            className="font-medium underline underline-offset-4 hover:text-primary"
-          >
-            {t("settings.booking_hint_link")}
-          </Link>
-          {t("settings.booking_hint_suffix")}
-        </AlertDescription>
-      </Alert>
+      {isFacilitator && (
+        <Alert>
+          <InfoIcon className="size-4" />
+          <AlertDescription className="flex flex-row items-center gap-1">
+            {t("settings.booking_hint")}
+            <Link
+              to="/my/bookings/availability"
+              className="font-medium underline underline-offset-4 hover:text-primary"
+            >
+              {t("settings.booking_hint_link")}
+            </Link>
+            {t("settings.booking_hint_suffix")}
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-10 lg:gap-16">
         {/* 프로필 수정 폼 */}
         <div className="lg:col-span-4 flex flex-col gap-8">
@@ -59,24 +64,28 @@ export default function SettingsPage() {
               defaultValue={mockUser.name}
               placeholder={t("auth.placeholder_name")}
             />
-            <InputPair
-              label={t("settings.bio")}
-              description={t("settings.bio_hint")}
-              id="bio"
-              name="bio"
-              defaultValue={mockUser.bio}
-              placeholder={t("settings.bio_placeholder")}
-              textArea
-            />
-            <InputPair
-              label={t("settings.introduction")}
-              description={t("settings.introduction_hint")}
-              id="introduction"
-              name="introduction"
-              defaultValue={mockUser.introduction}
-              placeholder={t("settings.introduction_placeholder")}
-              textArea
-            />
+            {isFacilitator && (
+              <>
+                <InputPair
+                  label={t("settings.bio")}
+                  description={t("settings.bio_hint")}
+                  id="bio"
+                  name="bio"
+                  defaultValue={mockUser.bio}
+                  placeholder={t("settings.bio_placeholder")}
+                  textArea
+                />
+                <InputPair
+                  label={t("settings.introduction")}
+                  description={t("settings.introduction_hint")}
+                  id="introduction"
+                  name="introduction"
+                  defaultValue={mockUser.introduction}
+                  placeholder={t("settings.introduction_placeholder")}
+                  textArea
+                />
+              </>
+            )}
             <Button type="submit" className="w-full">
               {t("settings.save_profile")}
             </Button>

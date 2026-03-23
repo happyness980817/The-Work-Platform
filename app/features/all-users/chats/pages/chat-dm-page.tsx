@@ -42,7 +42,7 @@ const mockMessages = [
   },
 ];
 
-export default function FacilitatorDmPage() {
+export default function ChatDmPage() {
   const appContext = useOutletContext<ChatContext>();
   const { t } = useTranslation();
   const navigate = useNavigate();

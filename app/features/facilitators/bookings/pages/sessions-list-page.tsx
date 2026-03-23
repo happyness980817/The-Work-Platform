@@ -1,4 +1,6 @@
 import { useTranslation } from "react-i18next";
+import { useOutletContext } from "react-router";
+import type { AppContext } from "~/types";
 import { CalendarIcon, PlusIcon } from "lucide-react";
 import {
   Avatar,
@@ -82,9 +84,10 @@ const mockClients: Client[] = [
   },
 ];
 
-export default function FacilitatorSessionsPage() {
+export default function SessionsListPage() {
   const { t } = useTranslation();
-
+  const { role } = useOutletContext<AppContext>();
+  const isFacilitator = role === "facilitator";
   const hasClients = mockClients.length > 0;
 
   return (
@@ -123,10 +126,12 @@ export default function FacilitatorSessionsPage() {
                     </div>
                   </div>
                 </div>
-                <Button size="sm" className="gap-2 shrink-0">
-                  <PlusIcon className="size-4" />
-                  {t("bookings.new_session")}
-                </Button>
+                {isFacilitator && (
+                  <Button size="sm" className="gap-2 shrink-0">
+                    <PlusIcon className="size-4" />
+                    {t("bookings.new_session")}
+                  </Button>
+                )}
               </CardHeader>
 
               {/* Session list */}

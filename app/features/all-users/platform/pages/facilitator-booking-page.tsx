@@ -32,7 +32,9 @@ const MOCK_AVAILABLE_SLOTS = [
   "04:30 PM",
 ];
 
-export default function FacilitatorPage({ params }: Route.ComponentProps) {
+export default function FacilitatorBookingPage({
+  params,
+}: Route.ComponentProps) {
   const { t } = useTranslation();
   const { role } = useOutletContext<AppContext>();
   const facilitatorId = Number(params.facilitatorId);

@@ -170,7 +170,7 @@ function eventsForDate(date: Date) {
   );
 }
 
-export default function FacilitatorManagePage() {
+export default function ManageBookingsPage() {
   const { t } = useTranslation();
   const { role } = useOutletContext<AppContext>();
   const isClient = role === "client";

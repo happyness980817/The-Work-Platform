@@ -65,7 +65,7 @@ function getDayFromDate(date: Date): Day {
   return map[date.getDay()];
 }
 
-export default function FacilitatorAvailabilityPage() {
+export default function AvailabilityPage() {
   const { t } = useTranslation();
   const appContext = useOutletContext<AppContext>();
 

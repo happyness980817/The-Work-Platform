@@ -25,7 +25,7 @@ export default [
         index("features/all-users/bookings/pages/bookings-dashboard-page.tsx"),
         route(
           "/sessions",
-          "features/facilitators/bookings/pages/sessions-list.tsx",
+          "features/facilitators/bookings/pages/sessions-list-page.tsx",
         ),
         route(
           "/manage",

@@ -103,7 +103,7 @@ const mockMessages = [
 const mockSuggestion =
   "\"Now let's try some turnarounds. Can you turn the thought 'My boss doesn't respect me' around — to the self, to the other, and to the opposite?\"";
 
-export default function FacilitatorSessionPage() {
+export default function ChatSessionPage() {
   const appContext = useOutletContext<ChatContext>();
   const { t } = useTranslation();
   const [messageInput, setMessageInput] = useState("");

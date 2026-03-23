@@ -69,21 +69,25 @@ export default function ProfilePage() {
             )}
           </div>
 
-          <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
-            {profile.bio}
-          </p>
+          {isFacilitator && (
+            <>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
+                {profile.bio}
+              </p>
 
-          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <GlobeIcon className="size-3.5" />
-              {profile.languages.map((l) => t(l)).join(", ")}
-            </span>
-            <Separator orientation="vertical" className="h-4" />
-            <span className="flex items-center gap-1.5">
-              <ClockIcon className="size-3.5" />
-              {profile.timezone}
-            </span>
-          </div>
+              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1.5">
+                  <GlobeIcon className="size-3.5" />
+                  {profile.languages.map((l) => t(l)).join(", ")}
+                </span>
+                <Separator orientation="vertical" className="h-4" />
+                <span className="flex items-center gap-1.5">
+                  <ClockIcon className="size-3.5" />
+                  {profile.timezone}
+                </span>
+              </div>
+            </>
+          )}
 
           <div className="flex gap-3 pt-1">
             <Button variant="outline" size="sm" asChild>
@@ -142,17 +146,21 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* 소개 섹션 */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">{t("profile.introduction")}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {profile.introduction}
-          </p>
-        </CardContent>
-      </Card>
+      {/* 소개 섹션 (facilitator only) */}
+      {isFacilitator && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">
+              {t("profile.introduction")}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {profile.introduction}
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
       {/* 계정 정보 */}
       <Card>
