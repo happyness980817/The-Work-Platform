@@ -7,7 +7,7 @@ import { Input } from "~/common/components/ui/input";
 import { Badge } from "~/common/components/ui/badge";
 import { SendIcon, TimerIcon } from "lucide-react";
 import { MessageBubble } from "../components/messages-bubble";
-import { AiSuggestionCard } from "../components/ai-suggestion-card";
+import { AiSuggestionCard } from "../../../facilitators/ai/components/ai-suggestion-card";
 import type { ChatContext } from "../layouts/chat-layout";
 
 const mockClient = {
