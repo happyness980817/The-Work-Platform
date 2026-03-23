@@ -36,20 +36,19 @@ facilitator login:
 
 ```
 
-## Refactoring Plan (2026.03.21)
+## Refactoring Plan (2026.03.23)
 
 ```
-
 features/
   auth/
     components/
     layouts/
     pages/
-    queries.ts          ← 로그인/회원가입 쿼리
+    queries.ts
     mutations.ts
     schema.ts
 
-  facilitators/          ← facilitator 전용 전부 통합
+  facilitators/
     components/
       session-info-card.tsx
       booking-request-card.tsx
@@ -62,11 +61,11 @@ features/
       availability-page.tsx
       settings-page.tsx
       profile-page.tsx
-    queries.ts           ← facilitator 세션/예약 조회
-    mutations.ts         ← 예약 수락/거절 등
+    queries.ts
+    mutations.ts
     schema.ts
 
-  clients/               ← client 전용
+  clients/
     components/
       client-booking-card.tsx
     pages/
@@ -78,17 +77,39 @@ features/
     schema.ts
 
   chats/
-    facilitator/         ← facilitator 채팅
+    facilitator/
       pages/
-    client/              ← client 채팅
+        session-page.tsx      ← AI 제안 버튼이 여기에 붙음
+        dm-page.tsx
+    client/
       pages/
-    components/          ← 공통 채팅 컴포넌트 (bubble 등)
-    queries.ts
-    mutations.ts
-
-  platform/              ← 비로그인/공통 (목록, 상세, about)
+        chat-page.tsx
     components/
+      messages-bubble.tsx
+      message-rooms-card.tsx
+    layouts/
+      chat-layout.tsx
+      chat-shell-layout.tsx
+    queries.ts                ← 메시지/룸 조회
+    mutations.ts              ← 메시지 전송
+
+  ai/                         ← AI 전용 (OpenAI 연동)
+    components/
+      ai-suggestion-card.tsx
+    lib/
+      openai-client.ts        ← Assistants API / Responses API 래퍼
+    queries.ts                ← AI 제안 히스토리 조회
+    mutations.ts              ← generateAiResponse, refineAiResponse
+    schema.ts                 ← ai_suggestions, ai_threads 등
+
+  platform/
+    components/
+      facilitator-card.tsx
+      facilitator-profile-card.tsx
+      time-slot-picker.tsx
     pages/
+      facilitators-page.tsx
+      facilitator-profile-page.tsx
     queries.ts
 
 
