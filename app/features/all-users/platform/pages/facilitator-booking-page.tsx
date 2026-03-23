@@ -3,9 +3,9 @@ import { Link, useOutletContext } from "react-router";
 import { useTranslation } from "react-i18next";
 import { EyeIcon, CalendarIcon, ArrowRightIcon, UserIcon } from "lucide-react";
 import { DateTime } from "luxon";
-import type { Route } from "./+types/facilitator-page";
+import type { Route } from "./+types/facilitator-booking-page";
 import type { AppContext } from "~/types";
-import FacilitatorProfileCard from "~/features/platform/components/facilitator-profile-card";
+import FacilitatorProfileCard from "~/features/all-users/platform/components/facilitator-profile-card";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,9 +18,9 @@ import { Card, CardContent } from "~/common/components/ui/card";
 import { Button } from "~/common/components/ui/button";
 import { Calendar } from "~/common/components/ui/calendar";
 import { Separator } from "~/common/components/ui/separator";
-import TimeSlotPicker from "~/features/platform/components/time-slot-picker";
+import TimeSlotPicker from "~/features/all-users/platform/components/time-slot-picker";
 import TimezoneSelector from "~/common/components/timezone-selector";
-import { facilitators } from "~/features/users/data/facilitators";
+import { facilitators } from "~/features/all-users/data/facilitators";
 
 const MOCK_AVAILABLE_SLOTS = [
   "09:00 AM",

@@ -38,79 +38,109 @@ facilitator login:
 
 ## Refactoring Plan (2026.03.23)
 
+`features/` 폴더를 없애고, 역할별 최상위 폴더 → 기능별 하위 폴더 구조로 전환한다.
+
 ```
-features/
-  auth/
+app/
+  common/                              ← 비로그인/공통 (현재와 동일)
     components/
+      ui/                              ← shadcn 컴포넌트
+      navigation.tsx
+      footer.tsx
+      input-pair.tsx
+      timezone-selector.tsx
     layouts/
+      site-layout.tsx
     pages/
-    queries.ts
-    mutations.ts
-    schema.ts
-
-  facilitators/
-    components/
-      session-info-card.tsx
-      booking-request-card.tsx
-      session-card.tsx
-    layouts/
-      bookings-layout.tsx
-    pages/
-      manage-page.tsx
-      sessions-page.tsx
-      availability-page.tsx
-      settings-page.tsx
-      profile-page.tsx
-    queries.ts
-    mutations.ts
-    schema.ts
-
-  clients/
-    components/
-      client-booking-card.tsx
-    pages/
-      manage-page.tsx
-      settings-page.tsx
-      profile-page.tsx
-    queries.ts
-    mutations.ts
-    schema.ts
-
-  chats/
-    facilitator/
-      pages/
-        session-page.tsx      ← AI 제안 버튼이 여기에 붙음
-        dm-page.tsx
-    client/
-      pages/
-        chat-page.tsx
-    components/
-      messages-bubble.tsx
-      message-rooms-card.tsx
-    layouts/
-      chat-layout.tsx
-      chat-shell-layout.tsx
-    queries.ts                ← 메시지/룸 조회
-    mutations.ts              ← 메시지 전송
-
-  ai/                         ← AI 전용 (OpenAI 연동)
-    components/
-      ai-suggestion-card.tsx
-    lib/
-      openai-client.ts        ← Assistants API / Responses API 래퍼
-    queries.ts                ← AI 제안 히스토리 조회
-    mutations.ts              ← generateAiResponse, refineAiResponse
-    schema.ts                 ← ai_suggestions, ai_threads 등
-
-  platform/
-    components/
-      facilitator-card.tsx
-      facilitator-profile-card.tsx
-      time-slot-picker.tsx
-    pages/
+      home-page.tsx
+      about-page.tsx
       facilitators-page.tsx
-      facilitator-profile-page.tsx
-    queries.ts
+
+  all-users/                           ← facilitator/client 공통
+    auth/
+      components/
+      layouts/
+        auth-layout.tsx
+      pages/
+        login-page.tsx
+        join-page.tsx
+      queries.ts
+      mutations.ts
+      schema.ts
+    bookings/
+      components/
+        bookings-session-card.tsx
+        sessions-list-item-card.tsx
+      layouts/
+        bookings-layout.tsx
+      pages/
+        bookings-dashboard-page.tsx
+      queries.ts
+      mutations.ts
+    chats/                             ← 채팅 (공통, role 분기로 처리)
+      components/
+        messages-bubble.tsx
+        message-rooms-card.tsx
+        ai-suggestion-card.tsx         ← facilitator 세션에서만 표시
+      layouts/
+        chat-layout.tsx
+        chat-shell-layout.tsx
+      pages/
+        chats-index-page.tsx
+        chat-session-page.tsx          ← AI 제안 패널 포함 (role 분기)
+        chat-dm-page.tsx
+      queries.ts
+      mutations.ts
+    platform/                          ← 공개 facilitator 상세/예약
+      components/
+        facilitator-card.tsx
+        facilitator-profile-card.tsx
+        time-slot-picker.tsx
+      pages/
+        facilitator-booking-page.tsx
+        facilitator-profile-page.tsx
+      queries.ts
+    ai/                                ← AI 전용 (OpenAI 연동)
+      lib/
+        openai-client.ts               ← Assistants API / Responses API 래퍼
+    profile/
+      pages/
+        profile-page.tsx
+        settings-page.tsx
+      queries.ts
+      mutations.ts
+    data/
+      facilitators.ts
+
+
+  facilitators/                        ← facilitator 전용
+    bookings/
+      components/
+        booking-request-card.tsx
+      pages/
+        manage-bookings-page.tsx
+        sessions-list.tsx
+        availability-page.tsx
+      queries.ts
+      mutations.ts
+      schema.ts
+    ai/
+      components/
+        ai-suggestion-card.tsx
+      queries.ts                       ← AI 제안 히스토리 조회
+      mutations.ts                     ← generateAiResponse, refineAiResponse
+      schema.ts                        ← ai_suggestions, ai_threads 등
+
+  clients/                             ← client 전용
+    bookings/
+      components/
+        client-booking-card.tsx
+      pages/
+        submit-application-form.tsx
+      queries.ts
+      mutations.ts
+      schema.ts
+
 
 
 ```

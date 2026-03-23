@@ -8,7 +8,7 @@ import {
 import { Badge } from "~/common/components/ui/badge";
 import { Button } from "~/common/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/common/components/ui/card";
-import { SessionCard } from "~/features/users/components/session-card";
+import { SessionCard } from "~/features/all-users/bookings/components/sessions-list-item-card";
 
 /* ── Mock data ── */
 interface Session {

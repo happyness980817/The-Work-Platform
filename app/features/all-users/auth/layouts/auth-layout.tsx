@@ -2,7 +2,7 @@ import { Outlet, useOutletContext } from "react-router";
 import type { AppContext } from "~/types";
 import { LightRays } from "~/common/components/ui/light-rays";
 import { IconCloud } from "~/common/components/ui/icon-cloud";
-import { facilitators } from "~/features/users/data/facilitators";
+import { facilitators } from "~/features/all-users/data/facilitators";
 
 const facilitatorAvatars = facilitators.map((f) => f.imageUrl);
 

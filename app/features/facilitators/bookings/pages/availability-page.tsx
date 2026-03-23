@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { DateTime } from "luxon";
 import { cn } from "~/lib/utils";
-import TimeSlotPicker from "~/features/platform/components/time-slot-picker";
+import TimeSlotPicker from "~/features/all-users/platform/components/time-slot-picker";
 import TimezoneSelector from "~/common/components/timezone-selector";
 
 const DAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;

@@ -12,9 +12,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "~/common/components/ui/tabs";
-import { SessionInfoCard } from "~/features/users/components/session-info-card";
-import { BookingRequestCard } from "~/features/users/components/booking-request-card";
-import { ClientBookingCard } from "~/features/users/components/client-booking-card";
+import { SessionInfoCard } from "~/features/all-users/bookings/components/bookings-session-card";
+import { BookingRequestCard } from "~/features/facilitators/bookings/components/booking-request-card";
+import { ClientBookingCard } from "~/features/clients/bookings/components/client-booking-card";
 
 /* ── Mock: calendar events ── */
 interface CalendarEvent {

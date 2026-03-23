@@ -30,7 +30,7 @@ import {
   MessageCircleIcon,
   ClockIcon,
 } from "lucide-react";
-import { facilitators } from "~/features/users/data/facilitators";
+import { facilitators } from "~/features/all-users/data/facilitators";
 
 const mockStats: Record<
   number,

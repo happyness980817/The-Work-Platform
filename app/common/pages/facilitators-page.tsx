@@ -7,8 +7,8 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
-import FacilitatorCard from "~/features/platform/components/facilitator-card";
-import { facilitators } from "~/features/users/data/facilitators";
+import FacilitatorCard from "~/features/all-users/platform/components/facilitator-card";
+import { facilitators } from "~/features/all-users/data/facilitators";
 
 const LANGUAGE_OPTIONS = [
   "lang.ko",

@@ -24,7 +24,7 @@ import {
   MessageCircleIcon,
   ClockIcon,
 } from "lucide-react";
-import { facilitators } from "~/features/users/data/facilitators";
+import { facilitators } from "~/features/all-users/data/facilitators";
 
 /* ── Mock: 퍼실리테이터 프로필 상세 데이터 ── */
 const mockFacilitatorProfile = {

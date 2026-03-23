@@ -1,8 +1,8 @@
 import { Button } from "~/common/components/ui/button";
 import { Card } from "~/common/components/ui/card";
-import FacilitatorCard from "~/features/platform/components/facilitator-card";
+import FacilitatorCard from "~/features/all-users/platform/components/facilitator-card";
 import { useTranslation } from "react-i18next";
-import { facilitators } from "~/features/users/data/facilitators";
+import { facilitators } from "~/features/all-users/data/facilitators";
 import { Link } from "react-router";
 
 const heroImageUrl =
