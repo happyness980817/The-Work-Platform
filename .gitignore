@@ -7,3 +7,5 @@
 /build/
 /references/
 .mcp.json
+
+/.codeium/
