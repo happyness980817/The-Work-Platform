@@ -11,7 +11,6 @@ export default function SiteLayout() {
         isLoggedIn={appContext.isLoggedIn}
         avatar={appContext.avatar}
         name={appContext.name}
-        username={appContext.username}
         role={appContext.role}
         isAdmin={appContext.isAdmin}
       />

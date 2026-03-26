@@ -35,14 +35,12 @@ export default function Navigation({
   isLoggedIn,
   avatar,
   name,
-  username,
   role,
   isAdmin,
 }: {
   isLoggedIn: boolean;
   avatar?: string | null;
   name?: string;
-  username?: string;
   role?: string;
   isAdmin?: boolean;
 }) {
@@ -131,11 +129,6 @@ export default function Navigation({
                     {isAdmin ? " (Administrator)" : ` (${role})`}
                   </span>
                 </div>
-                {username && (
-                  <span className="text-xs text-muted-foreground">
-                    @{username}
-                  </span>
-                )}
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>

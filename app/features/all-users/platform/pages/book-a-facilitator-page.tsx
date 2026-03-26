@@ -3,7 +3,7 @@ import { Link, useOutletContext } from "react-router";
 import { useTranslation } from "react-i18next";
 import { EyeIcon, CalendarIcon, ArrowRightIcon, UserIcon } from "lucide-react";
 import { DateTime } from "luxon";
-import type { Route } from "./+types/facilitator-booking-page";
+import type { Route } from "./+types/book-a-facilitator-page";
 import type { AppContext } from "~/types";
 import FacilitatorProfileCard from "~/features/all-users/platform/components/facilitator-profile-card";
 import {

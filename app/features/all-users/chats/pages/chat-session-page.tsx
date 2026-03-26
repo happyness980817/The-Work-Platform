@@ -113,10 +113,7 @@ export default function ChatSessionPage() {
     <>
       <div className="flex items-center justify-between px-6 py-4 border-b bg-card/50 backdrop-blur-md shrink-0">
         <div>
-          <div className="flex flex-row items-center gap-1">
-            <h2 className="text-xl font-bold">{mockClient.name}</h2>
-            <span className="text-sm text-muted-foreground">@username</span>
-          </div>
+          <h2 className="text-xl font-bold">{mockClient.name}</h2>
           <p className="text-sm text-muted-foreground flex items-center gap-1">
             {t("chat.session", { number: 4 })}
           </p>

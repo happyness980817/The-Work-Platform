@@ -52,10 +52,7 @@ export default function ChatDmPage() {
   return (
     <>
       <div className="flex items-center justify-between px-6 py-4 border-b bg-card/50 backdrop-blur-md shrink-0">
-        <div className="flex flex-row items-center gap-1">
-          <h2 className="text-lg font-bold">{mockClient.name}</h2>
-          <span className="text-xs text-muted-foreground">@username</span>
-        </div>
+        <h2 className="text-lg font-bold">{mockClient.name}</h2>
         {isFacilitator && (
           <div className="flex items-center gap-1">
             <Button

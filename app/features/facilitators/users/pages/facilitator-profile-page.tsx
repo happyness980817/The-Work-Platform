@@ -16,24 +16,13 @@ import {
   CardTitle,
 } from "~/common/components/ui/card";
 import { Separator } from "~/common/components/ui/separator";
-import {
-  SettingsIcon,
-  GlobeIcon,
-  CalendarIcon,
-  UsersIcon,
-  MessageCircleIcon,
-  ClockIcon,
-} from "lucide-react";
+import { SettingsIcon, GlobeIcon, ClockIcon } from "lucide-react";
 import { facilitators } from "~/features/all-users/data/facilitators";
 
 /* ── Mock: 퍼실리테이터 프로필 상세 데이터 ── */
 const mockFacilitatorProfile = {
   ...facilitators[0],
   email: "sarah.jenkins@example.com",
-  timezone: "Asia/Seoul",
-  totalSessions: 248,
-  totalClients: 37,
-  avgRating: 4.9,
   memberSince: "2023-03-15",
   availability: "Mon–Fri, 09:00–17:00",
 };
@@ -75,11 +64,6 @@ export default function FacilitatorProfilePage() {
               <GlobeIcon className="size-3.5" />
               {profile.languages.map((l) => t(l)).join(", ")}
             </span>
-            <Separator orientation="vertical" className="h-4" />
-            <span className="flex items-center gap-1.5">
-              <ClockIcon className="size-3.5" />
-              {profile.timezone}
-            </span>
           </div>
 
           <div className="flex gap-3 pt-1">
@@ -95,52 +79,23 @@ export default function FacilitatorProfilePage() {
 
       <Separator />
 
-      {/* 통계 카드 */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-6 gap-1">
-            <CalendarIcon className="size-5 text-primary mb-1" />
-            <span className="text-2xl font-bold">{profile.totalSessions}</span>
-            <span className="text-xs text-muted-foreground">
-              {t("profile.total_sessions")}
-            </span>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-6 gap-1">
-            <UsersIcon className="size-5 text-primary mb-1" />
-            <span className="text-2xl font-bold">{profile.totalClients}</span>
-            <span className="text-xs text-muted-foreground">
-              {t("profile.total_clients")}
-            </span>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-6 gap-1">
-            <MessageCircleIcon className="size-5 text-primary mb-1" />
-            <span className="text-2xl font-bold">{profile.avgRating}</span>
-            <span className="text-xs text-muted-foreground">
-              {t("profile.avg_rating")}
-            </span>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-6 gap-1">
-            <ClockIcon className="size-5 text-primary mb-1" />
+      {/* Availability */}
+      <Card>
+        <CardContent className="flex items-center gap-3 py-6">
+          <ClockIcon className="size-5 text-primary" />
+          <div>
             <span className="text-sm font-bold">{profile.availability}</span>
-            <span className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {t("profile.availability")}
-            </span>
-          </CardContent>
-        </Card>
-      </div>
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* 소개 섹션 */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">
-            {t("profile.introduction")}
-          </CardTitle>
+          <CardTitle className="text-lg">{t("profile.introduction")}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground leading-relaxed">

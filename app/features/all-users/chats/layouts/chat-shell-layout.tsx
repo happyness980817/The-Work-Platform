@@ -10,7 +10,6 @@ export default function ChatShellLayout() {
         isLoggedIn={appContext.isLoggedIn}
         avatar={appContext.avatar}
         name={appContext.name}
-        username={appContext.username}
         role={appContext.role}
       />
       <main className="flex-1 pt-16 min-h-0">

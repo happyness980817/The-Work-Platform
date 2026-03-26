@@ -3,7 +3,6 @@ export interface AppContext {
   role: "client" | "facilitator";
   isAdmin: boolean;
   name: string;
-  username: string;
   userId: string;
   avatar: string;
 }
