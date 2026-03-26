@@ -1,119 +1,9 @@
 {
-  "id": "b504dd24-85ce-439c-ae2c-b5d9d703d7ca",
+  "id": "9dc56bfd-b1fb-4ddd-9b54-1283f2ceb4ba",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.bookings": {
-      "name": "bookings",
-      "schema": "",
-      "columns": {
-        "booking_id": {
-          "name": "booking_id",
-          "type": "bigint",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "bookings_booking_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "9223372036854775807",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "client_id": {
-          "name": "client_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "facilitator_id": {
-          "name": "facilitator_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "date": {
-          "name": "date",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "time": {
-          "name": "time",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "timezone": {
-          "name": "timezone",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'Asia/Seoul'"
-        },
-        "status": {
-          "name": "status",
-          "type": "booking_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'pending'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "bookings_client_id_profiles_profile_id_fk": {
-          "name": "bookings_client_id_profiles_profile_id_fk",
-          "tableFrom": "bookings",
-          "tableTo": "profiles",
-          "columnsFrom": [
-            "client_id"
-          ],
-          "columnsTo": [
-            "profile_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "bookings_facilitator_id_profiles_profile_id_fk": {
-          "name": "bookings_facilitator_id_profiles_profile_id_fk",
-          "tableFrom": "bookings",
-          "tableTo": "profiles",
-          "columnsFrom": [
-            "facilitator_id"
-          ],
-          "columnsTo": [
-            "profile_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.client_profiles": {
       "name": "client_profiles",
       "schema": "",
@@ -187,6 +77,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "is_certified": {
+          "name": "is_certified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {},
@@ -288,16 +185,6 @@
     }
   },
   "enums": {
-    "public.booking_status": {
-      "name": "booking_status",
-      "schema": "public",
-      "values": [
-        "pending",
-        "confirmed",
-        "cancelled",
-        "completed"
-      ]
-    },
     "public.role": {
       "name": "role",
       "schema": "public",

@@ -1,1 +1,0 @@
-ALTER TABLE "facilitator_profiles" ADD COLUMN "is_certified" boolean DEFAULT false NOT NULL;
