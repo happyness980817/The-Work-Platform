@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from "~/common/components/ui/card";
 import { Separator } from "~/common/components/ui/separator";
-import { SettingsIcon, GlobeIcon, ClockIcon } from "lucide-react";
+import { SettingsIcon, GlobeIcon } from "lucide-react";
 import { facilitators } from "~/features/all-users/data/facilitators";
 
 /* ── Mock: 퍼실리테이터 프로필 상세 데이터 ── */
@@ -24,7 +24,6 @@ const mockFacilitatorProfile = {
   ...facilitators[0],
   email: "sarah.jenkins@example.com",
   memberSince: "2023-03-15",
-  availability: "Mon–Fri, 09:00–17:00",
 };
 
 export default function FacilitatorProfilePage() {
@@ -78,19 +77,6 @@ export default function FacilitatorProfilePage() {
       </div>
 
       <Separator />
-
-      {/* Availability */}
-      <Card>
-        <CardContent className="flex items-center gap-3 py-6">
-          <ClockIcon className="size-5 text-primary" />
-          <div>
-            <span className="text-sm font-bold">{profile.availability}</span>
-            <p className="text-xs text-muted-foreground">
-              {t("profile.availability")}
-            </p>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* 소개 섹션 */}
       <Card>

@@ -48,4 +48,5 @@ export const facilitatorProfiles = pgTable("facilitator_profiles", {
   introduction: text(),
   languages: jsonb().$type<string[]>().default([]),
   availability: text(),
+  is_certified: boolean().notNull().default(false),
 });

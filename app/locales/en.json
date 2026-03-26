@@ -160,7 +160,7 @@
   "profile.bio": "About",
   "profile.languages": "Languages",
   "profile.sessions_completed": "Sessions Completed",
-  "profile.contact_facilitator": "Send Message",
+  "profile.contact_facilitator": "DM",
 
   "settings.booking_hint": "For booking-related settings, please go to the ",
   "settings.booking_hint_link": "Availability",

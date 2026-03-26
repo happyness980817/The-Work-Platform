@@ -11,18 +11,9 @@ import { useTranslation } from "react-i18next";
 
 const TIMEZONE_IANA = [
   "Asia/Seoul",
-  "Asia/Tokyo",
-  "Asia/Shanghai",
-  "Asia/Kolkata",
-  "Europe/London",
-  "Europe/Paris",
-  "Europe/Berlin",
   "America/New_York",
-  "America/Chicago",
-  "America/Denver",
   "America/Los_Angeles",
-  "Pacific/Auckland",
-  "Australia/Sydney",
+  "Europe/London",
 ] as const;
 
 function formatOffset(zone: string): string {
