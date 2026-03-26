@@ -17,7 +17,7 @@ export default [
       ),
       route(
         "/:facilitatorId",
-        "features/all-users/platform/pages/facilitator-booking-page.tsx",
+        "features/all-users/platform/pages/book-a-facilitator-page.tsx",
       ),
     ]),
     layout("features/all-users/bookings/layouts/bookings-layout.tsx", [
@@ -25,7 +25,7 @@ export default [
         index("features/all-users/bookings/pages/bookings-dashboard-page.tsx"),
         route(
           "/sessions",
-          "features/facilitators/bookings/pages/sessions-list-page.tsx",
+          "features/all-users/bookings/pages/sessions-list-page.tsx",
         ),
         route(
           "/manage",
@@ -38,8 +38,8 @@ export default [
       ]),
     ]),
     route("/about", "common/pages/about-page.tsx"),
-    route("/my/profile", "features/all-users/profile/pages/profile-page.tsx"),
-    route("/my/settings", "features/all-users/profile/pages/settings-page.tsx"),
+    route("/my/profile", "features/all-users/users/pages/profile-page.tsx"),
+    route("/my/settings", "features/all-users/users/pages/settings-page.tsx"),
   ]),
   layout("features/all-users/auth/layouts/auth-layout.tsx", [
     ...prefix("/auth", [

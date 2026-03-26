@@ -17,14 +17,18 @@ export function SessionCard({
 
   return (
     <div className="flex flex-col">
-      <Button variant="secondary" className="w-full h-auto p-0 my-1" asChild>
+      <Button
+        variant="secondary"
+        className="group w-full h-auto p-0 my-1"
+        asChild
+      >
         <Link
           to={`/facilitator/chats/sessions/${sessionNumber}`}
           className="flex flex-col items-start w-full px-5 py-1"
         >
           <div className="flex flex-col w-full justify-between">
             <div className="flex items-center py-1 w-full justify-between">
-              <span className="text-base font-semibold text-foreground">
+              <span className="text-base font-semibold text-foreground group-hover:underline">
                 {t("bookings.session_number", { number: sessionNumber })}
               </span>
               <span className="text-xs text-muted-foreground font-normal">
