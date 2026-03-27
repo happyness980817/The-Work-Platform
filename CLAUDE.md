@@ -103,11 +103,3 @@ Currently using **mock data** in `root.tsx` — no real auth flow yet. Toggle `r
 ### Role Branching in Pages
 
 Some pages (e.g., `facilitator-manage-page.tsx`) serve both roles by reading `role` from context and conditionally rendering different components (e.g., `BookingRequestCard` for facilitators vs `ClientBookingCard` for clients).
-
-## Conventions
-
-- All user-facing strings go through `t()` from react-i18next. Always add keys to **both** `ko.json` and `en.json`.
-- UI components live in `app/common/components/ui/` (shadcn pattern). Feature components are colocated with their feature.
-- The About page supports **per-language markdown editing** — content is stored separately for ko/en, switching based on `i18n.language`.
-- `@uiw/react-md-editor` must be **lazy-loaded** (`lazy(() => import(...))`) to avoid SSR CSS import errors.
-- Facilitator avatar URLs from `features/users/data/facilitators.ts` are reused across components (auth layout IconCloud, facilitator cards, etc.).
