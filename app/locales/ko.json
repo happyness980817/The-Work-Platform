@@ -78,7 +78,7 @@
   "chat.date_today": "오늘",
   "chat.type_message": "메시지를 입력하세요...",
   "chat.select_conversation": "대화를 시작하면 메시지가 표시됩니다.",
-  "chat.ai_disclaimer": "Copilot 은 실수를 할 수 있습니다. 전송하기 전에 검토하세요.",
+  "chat.ai_disclaimer": "Copilot 은 실수를 할 수 있습니다. 전송하기 전에 반드시 검토하세요.",
   "chat.ai_copilot": "AI COPILOT",
   "chat.regenerate": "다시 생성",
   "chat.stop": "중지",

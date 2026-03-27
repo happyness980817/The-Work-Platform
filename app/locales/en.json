@@ -78,7 +78,7 @@
   "chat.date_today": "Today",
   "chat.type_message": "Type a message...",
   "chat.select_conversation": "Select a conversation to start messaging",
-  "chat.ai_disclaimer": "Copilot can make mistakes. Review before sending.",
+  "chat.ai_disclaimer": "Copilot can make mistakes. Please review before sending.",
   "chat.ai_copilot": "AI COPILOT",
   "chat.regenerate": "Regenerate",
   "chat.stop": "Stop",
