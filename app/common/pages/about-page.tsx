@@ -29,9 +29,6 @@ Our facilitators are trained and certified professionals, passionate about helpi
 
 > "I found that suffering is optional. And I invite you not to believe me. I invite you to test it for yourself." — Byron Katie
 
----
-
-Have any questions? [Contact Us](#) or check out our [Facilitator List](/facilitators).
 `,
   ko: `# 서비스 소개
 
@@ -53,15 +50,12 @@ Have any questions? [Contact Us](#) or check out our [Facilitator List](/facilit
 
 > "저는 고통은 선택의 문제라는 것을 깨달았습니다. 당신이 제 말을 무조건 믿기를 바라지 않습니다. 그보다는 당신이 직접 확인해 보시길 권합니다." — Byron Katie
 
----
-
-궁금한 점이 있으신가요? [문의하기](#) 또는 [퍼실리테이터 목록](/facilitators)을 확인하세요.
 `,
 };
 
 export default function AboutPage() {
   const { t, i18n } = useTranslation();
-  const { isAdmin } = useOutletContext<AppContext>();
+  const { isEditor } = useOutletContext<AppContext>();
 
   const lang = i18n.language.startsWith("ko") ? "ko" : "en";
 
@@ -88,11 +82,11 @@ export default function AboutPage() {
     <div
       className={`flex flex-col w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-4 ${isEditing ? "max-w-7xl" : "max-w-4xl"}`}
     >
-      {/* Admin toolbar — only visible to admin */}
-      {isAdmin && (
+      {/* Editor toolbar — only visible to editor */}
+      {isEditor && (
         <div className="flex items-center justify-between gap-4 rounded-lg border border-dashed px-4 py-2">
           <p className="text-muted-foreground text-sm">
-            {t("about.admin_hint")}
+            {t("about.editor_hint")}
           </p>
           <div className="flex items-center gap-2 shrink-0">
             {isEditing ? (
@@ -126,7 +120,7 @@ export default function AboutPage() {
       )}
 
       {/* Editor or Viewer */}
-      {isAdmin && isEditing ? (
+      {isEditor && isEditing ? (
         <Suspense
           fallback={
             <div className="flex items-center justify-center h-[600px] rounded-lg border bg-card">

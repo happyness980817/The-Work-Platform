@@ -55,7 +55,7 @@ export default function App() {
   const appContext: AppContext = {
     isLoggedIn: true,
     role: "facilitator",
-    isAdmin: false,
+    isEditor: true,
     name: "mockname",
     userId: "mockuserid",
     avatar: "",

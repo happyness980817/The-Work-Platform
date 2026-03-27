@@ -12,7 +12,7 @@ export default function SiteLayout() {
         avatar={appContext.avatar}
         name={appContext.name}
         role={appContext.role}
-        isAdmin={appContext.isAdmin}
+        isEditor={appContext.isEditor}
       />
       <main className="flex-1 pt-16">
         <Outlet context={appContext} />

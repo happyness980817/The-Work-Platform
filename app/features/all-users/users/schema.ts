@@ -24,7 +24,7 @@ export const profiles = pgTable("profiles", {
   role: roles().notNull().default("client"),
   name: text().notNull(),
   avatar: text(),
-  is_admin: boolean().notNull().default(false),
+  is_editor: boolean().notNull().default(false),
   created_at: timestamp().notNull().defaultNow(),
   updated_at: timestamp().notNull().defaultNow(),
 });

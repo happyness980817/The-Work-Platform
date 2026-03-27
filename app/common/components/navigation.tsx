@@ -36,13 +36,13 @@ export default function Navigation({
   avatar,
   name,
   role,
-  isAdmin,
+  isEditor,
 }: {
   isLoggedIn: boolean;
   avatar?: string | null;
   name?: string;
   role?: string;
-  isAdmin?: boolean;
+  isEditor?: boolean;
 }) {
   const { t, i18n } = useTranslation();
   return (
@@ -126,7 +126,7 @@ export default function Navigation({
                     {name || t("nav.user_fallback")}
                   </span>
                   <span className="capitalize">
-                    {isAdmin ? " (Administrator)" : ` (${role})`}
+                    {isEditor ? ` (${t("nav.editor")})` : ` (${role})`}
                   </span>
                 </div>
               </DropdownMenuLabel>

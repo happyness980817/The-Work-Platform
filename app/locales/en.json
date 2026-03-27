@@ -2,7 +2,8 @@
   "nav.facilitators": "Facilitators",
   "nav.conversations": "Conversations",
   "nav.about": "About",
-  "about.admin_hint": "You are viewing this as an admin. Click Edit to modify the page content.",
+  "nav.editor": "Editor",
+  "about.editor_hint": "You are viewing this as an editor. Click Edit to modify the page content.",
   "about.edit": "Edit",
   "about.save": "Save",
   "about.discard": "Discard",
@@ -99,7 +100,7 @@
   "chat.report.title": "Report Message",
   "chat.report.description": "Please describe why you are reporting this message.",
   "chat.report.placeholder": "Enter the reason for your report...",
-  "chat.report.notice": "False reports may result in restrictions on your account. Reports are reviewed by an administrator.",
+  "chat.report.notice": "False reports may result in restrictions on your account. Reports are reviewed by administrators.",
 
   "bookings.manage_description": "View your schedule, manage sessions, and handle booking requests.",
   "bookings.schedule_calendar": "Schedule Calendar",
