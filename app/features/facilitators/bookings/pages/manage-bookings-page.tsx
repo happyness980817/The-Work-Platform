@@ -19,6 +19,7 @@ import { ClientBookingCard } from "~/features/clients/bookings/components/client
 /* ── Mock: calendar events ── */
 interface CalendarEvent {
   id: number;
+  clientId?: number;
   date: Date;
   time: string;
   clientName: string;
@@ -31,6 +32,7 @@ const today = new Date();
 const mockEvents: CalendarEvent[] = [
   {
     id: 1,
+    clientId: 2,
     date: new Date(today.getFullYear(), today.getMonth(), 3),
     time: "09:00",
     clientName: "James W.",
@@ -38,6 +40,7 @@ const mockEvents: CalendarEvent[] = [
   },
   {
     id: 2,
+    clientId: 1,
     date: new Date(today.getFullYear(), today.getMonth(), 5),
     time: "14:30",
     clientName: "Sarah K.",
@@ -46,6 +49,7 @@ const mockEvents: CalendarEvent[] = [
   },
   {
     id: 3,
+    clientId: 3,
     date: new Date(today.getFullYear(), today.getMonth(), 5),
     time: "17:00",
     clientName: "Group Session",
@@ -262,6 +266,7 @@ export default function ManageBookingsPage() {
                 eventsForDate(selectedDate).map((ev) => (
                   <SessionInfoCard
                     key={ev.id}
+                    clientId={ev.clientId}
                     clientName={ev.clientName}
                     time={ev.time}
                     isLive={ev.isLive}

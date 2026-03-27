@@ -19,8 +19,10 @@ import {
   AlertDialogTrigger,
 } from "~/common/components/ui/alert-dialog";
 import { ClockIcon, DoorOpenIcon, NotebookPenIcon } from "lucide-react";
+import { Link } from "react-router";
 
 interface SessionInfoCardProps {
+  clientId?: number;
   clientName: string;
   clientAvatar?: string;
   subtitle?: string;
@@ -30,6 +32,7 @@ interface SessionInfoCardProps {
 }
 
 export function SessionInfoCard({
+  clientId,
   clientName,
   clientAvatar,
   subtitle,
@@ -83,9 +86,13 @@ export function SessionInfoCard({
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-3">
-          <Button className="gap-2">
-            <DoorOpenIcon className="size-4" />
-            {t("bookings.enter_session")}
+          <Button className="gap-2" asChild>
+            <Link
+              to={`/my/bookings/sessions${clientId != null ? `?clientId=${clientId}` : ""}`}
+            >
+              <DoorOpenIcon className="size-4" />
+              {t("bookings.enter_session")}
+            </Link>
           </Button>
           <AlertDialog>
             <AlertDialogTrigger asChild>

@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useOutletContext } from "react-router";
+import { useOutletContext, useSearchParams } from "react-router";
 import type { AppContext } from "~/types";
+import { cn } from "~/lib/utils";
 import { CalendarIcon, PlusIcon } from "lucide-react";
 import {
   Avatar,
@@ -90,6 +92,19 @@ export default function SessionsListPage() {
   const isFacilitator = role === "facilitator";
   const hasClients = mockClients.length > 0;
 
+  const [searchParams] = useSearchParams();
+  const targetClientId = searchParams.get("clientId");
+  const cardRefs = useRef<Record<number, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    if (!targetClientId) return;
+    const id = Number(targetClientId);
+    const el = cardRefs.current[id];
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [targetClientId]);
+
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-6">
       {/* Header */}
@@ -105,7 +120,18 @@ export default function SessionsListPage() {
       {hasClients ? (
         <div className="flex flex-col gap-6">
           {mockClients.map((client) => (
-            <Card key={client.id}>
+            <Card
+              key={client.id}
+              ref={(el) => {
+                cardRefs.current[client.id] = el;
+              }}
+              className={cn(
+                "transition-all duration-500",
+                targetClientId &&
+                  Number(targetClientId) === client.id &&
+                  "ring-2 ring-primary ring-offset-2",
+              )}
+            >
               {/* Client header */}
               <CardHeader className="flex flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
