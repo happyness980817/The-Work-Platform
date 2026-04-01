@@ -92,7 +92,7 @@ export default function ChatDmPage() {
       </ScrollArea>
 
       <div className="shrink-0 bg-background p-4 space-y-3">
-        <div className="flex gap-3 items-center bg-card px-3 py-2.5 rounded-xl border shadow-sm">
+        <div className="flex gap-3 items-center bg-card px-3 py-2.5 my-3 rounded-xl border shadow-sm">
           <Input
             className="ml-2 flex-1 border-0 shadow-none focus-visible:ring-0 bg-transparent h-auto p-0"
             placeholder={t("chat.type_message")}

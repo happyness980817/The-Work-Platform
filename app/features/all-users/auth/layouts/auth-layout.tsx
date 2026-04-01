@@ -1,10 +1,8 @@
 import { Outlet, useOutletContext } from "react-router";
 import type { AppContext } from "~/types";
 import { LightRays } from "~/common/components/ui/light-rays";
-import { IconCloud } from "~/common/components/ui/icon-cloud";
+import { OrbitingCircles } from "~/common/components/ui/orbiting-circles";
 import { facilitators } from "~/features/all-users/data/facilitators";
-
-const facilitatorAvatars = facilitators.map((f) => f.imageUrl);
 
 export default function AuthLayout() {
   const appContext = useOutletContext<AppContext>();
@@ -18,7 +16,32 @@ export default function AuthLayout() {
           speed={16}
         />
         <div className="relative z-10 flex flex-col items-center gap-6">
-          <IconCloud images={facilitatorAvatars} />
+          <div className="relative flex size-[400px] items-center justify-center">
+            <span className="text-6xl">🌏</span>
+
+            <OrbitingCircles iconSize={48} radius={120} duration={30}>
+              {facilitators.slice(0, 3).map((f) => (
+                <img
+                  key={f.id}
+                  src={f.imageUrl}
+                  alt={f.name}
+                  className="size-12 rounded-full ring-2 ring-background shadow-md"
+                />
+              ))}
+            </OrbitingCircles>
+
+            <OrbitingCircles iconSize={40} radius={180} duration={38} reverse>
+              {facilitators.slice(3).map((f) => (
+                <img
+                  key={f.id}
+                  src={f.imageUrl}
+                  alt={f.name}
+                  className="size-10 rounded-full ring-2 ring-background shadow-md"
+                />
+              ))}
+            </OrbitingCircles>
+          </div>
+
           <div className="text-center space-y-3 px-12">
             <h2 className="text-3xl font-bold">
               The Work{" "}
