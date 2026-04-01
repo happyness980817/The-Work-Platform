@@ -5,7 +5,7 @@ import { ScrollArea } from "~/common/components/ui/scroll-area";
 import { Button } from "~/common/components/ui/button";
 import { Input } from "~/common/components/ui/input";
 import { Badge } from "~/common/components/ui/badge";
-import { SendIcon, TimerIcon } from "lucide-react";
+import { PlayIcon, SendIcon, StopCircleIcon, TimerIcon } from "lucide-react";
 import { MessageBubble } from "../components/messages-bubble";
 import { AiSuggestionCard } from "../../../facilitators/ai/components/ai-suggestion-card";
 import type { ChatContext } from "../layouts/chat-layout";
@@ -107,16 +107,32 @@ export default function ChatSessionPage() {
   const appContext = useOutletContext<ChatContext>();
   const { t } = useTranslation();
   const [messageInput, setMessageInput] = useState("");
+  const [isInSession, setIsInSession] = useState(false);
   const isFacilitator = appContext.role === "facilitator";
 
   return (
     <div className="flex flex-col overflow-hidden h-11/12">
       <div className="flex items-center justify-between px-6 py-4 border-b bg-card/50 backdrop-blur-md shrink-0">
-        <div>
-          <h2 className="text-xl font-bold">{mockClient.name}</h2>
-          <p className="text-sm text-muted-foreground flex items-center gap-1">
-            {t("chat.session", { number: 4 })}
-          </p>
+        <div className="flex flex-row justify-between w-full">
+          <div>
+            <h2 className="text-xl font-bold">{mockClient.name}</h2>
+            <p className="text-sm text-muted-foreground flex items-center gap-1">
+              {t("chat.session", { number: 4 })}
+            </p>
+          </div>
+          <div className="flex gap-2 items-center">
+            <Button
+              variant={isInSession ? "destructive" : "outline"}
+              onClick={() => setIsInSession((prev) => !prev)}
+            >
+              {isInSession ? (
+                <StopCircleIcon className="size-4" />
+              ) : (
+                <PlayIcon className="size-4" />
+              )}
+              {isInSession ? t("chat.end_session") : t("chat.start_session")}
+            </Button>
+          </div>
         </div>
       </div>
 

@@ -101,7 +101,8 @@
   "chat.edit": "편집",
   "chat.use": "사용",
   "chat.refine_placeholder": "제안 다듬기 (예: '더 공감적으로')",
-  "chat.in_session": "상담 중",
+  "chat.in_session": "세션 중",
+  "chat.session_count": "{{count}}개의 세션",
   "chat.current": "현재 세션",
   "chat.translated": "번역됨",
   "chat.context.translate": "번역 (추가 예정)",
@@ -179,6 +180,13 @@
   "profile.languages": "언어",
   "profile.sessions_completed": "완료된 세션",
   "profile.contact_facilitator": "DM (직접 예약 잡기)",
+
+  "settings.change_password": "비밀번호 변경",
+  "settings.change_password_desc": "계정 보안을 위해 정기적으로 비밀번호를 변경해 주세요.",
+  "settings.current_password": "현재 비밀번호",
+  "settings.new_password": "새 비밀번호",
+  "settings.confirm_new_password": "새 비밀번호 확인",
+  "settings.update_password": "비밀번호 변경",
 
   "settings.booking_hint": "예약 관련 설정은 우측 상단의",
   "settings.booking_hint_link": "예약 페이지",

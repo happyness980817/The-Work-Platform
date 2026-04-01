@@ -102,6 +102,7 @@
   "chat.use": "Use",
   "chat.refine_placeholder": "Refine suggestion (e.g., 'Make it more empathetic')",
   "chat.in_session": "In Session",
+  "chat.session_count": "{{count}} sessions",
   "chat.current": "Current Session",
   "chat.translated": "Translated",
   "chat.context.translate": "Translate",
@@ -179,6 +180,13 @@
   "profile.languages": "Languages",
   "profile.sessions_completed": "Sessions Completed",
   "profile.contact_facilitator": "DM (For Reservation)",
+
+  "settings.change_password": "Change Password",
+  "settings.change_password_desc": "Update your password regularly to keep your account secure.",
+  "settings.current_password": "Current Password",
+  "settings.new_password": "New Password",
+  "settings.confirm_new_password": "Confirm New Password",
+  "settings.update_password": "Update Password",
 
   "settings.booking_hint": "For booking-related settings, please go to the ",
   "settings.booking_hint_link": "Availability",

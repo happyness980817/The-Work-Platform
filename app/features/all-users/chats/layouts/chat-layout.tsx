@@ -46,6 +46,7 @@ interface SessionItem {
   id: number;
   label: string;
   date: string;
+  lastMessage?: string;
   isInSession?: boolean;
 }
 
@@ -63,10 +64,31 @@ const mockClients: ClientGroup[] = [
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAr5DPdUsim3L9Kd3llvPH6I8419IVP7m1w2K28cUTt7w4zFdKZnEXScHfN0P-bw6f992O45khAmkw3uKCuIKzVRaDNoA9khVUAGboQKBRJMu-oUi8glutmMNVl0VDeRRkMhzRqOw3QW4-oyziBPA0NbpMoLNRR2R8cUNPcAM-jErc2uJQFIBDEJiTWOwijTlGxvfBwXu7WCrycwKZKGRLV97wvZOU89tYEfXhe2InwTJGfHFsWi4dC4d9Bwr_ToHzzQgsuzGDG0Kk",
     sessions: [
-      { id: 1, label: "Session #4", date: "Today", isInSession: true },
-      { id: 5, label: "Session #3", date: "Oct 28" },
-      { id: 6, label: "Session #2", date: "Oct 14" },
-      { id: 7, label: "Session #1", date: "Sep 30" },
+      {
+        id: 1,
+        label: "Session #4",
+        date: "Today",
+        lastMessage: "I noticed a pattern in my thinking...",
+        isInSession: true,
+      },
+      {
+        id: 5,
+        label: "Session #3",
+        date: "Oct 28",
+        lastMessage: "That turnaround was really helpful",
+      },
+      {
+        id: 6,
+        label: "Session #2",
+        date: "Oct 14",
+        lastMessage: "I’m starting to see things differently",
+      },
+      {
+        id: 7,
+        label: "Session #1",
+        date: "Sep 30",
+        lastMessage: "Thank you for the introduction",
+      },
     ],
   },
   {
@@ -75,9 +97,24 @@ const mockClients: ClientGroup[] = [
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCwj7VhOVv0ogQu1v9Op6Ozzi1KKDhKNiVxSgvafTAOYkXwG_R7CaWa1iDObfv1plX6sgbdsazipCWXXoBsn9WMIPwQEOrV7vdORzvd8LLv-rOjS4VJlZlfZj-PENOiaLAbiGSu9IWjq0FP5jx3-WrlSesH_YMmMmAzKLQDTuSvdaCRZyWHIW1peFwLovI7wYOGQG9M1jYXqso3-gC-ekbhgkckDtOGW3QQdKYPg7UZ2UeGtWgWfV7aHajuzyfHfj3iaa8Q0LlS7_Q",
     sessions: [
-      { id: 2, label: "Session #12", date: "2:00 PM" },
-      { id: 8, label: "Session #11", date: "Oct 25" },
-      { id: 9, label: "Session #10", date: "Oct 18" },
+      {
+        id: 2,
+        label: "Session #12",
+        date: "2:00 PM",
+        lastMessage: "Let’s continue with the worksheet",
+      },
+      {
+        id: 8,
+        label: "Session #11",
+        date: "Oct 25",
+        lastMessage: "I feel much calmer now",
+      },
+      {
+        id: 9,
+        label: "Session #10",
+        date: "Oct 18",
+        lastMessage: "The four questions really helped",
+      },
     ],
   },
   {
@@ -86,8 +123,18 @@ const mockClients: ClientGroup[] = [
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDwHBxU-0QC9ee-C4NLQHTAuxEXt4LDepI3zFdpOxdeWyCY7RVnkQ0ZFmjm9D6tlXcW2ITHEH3B7QF0svK8-JDHijjA7SkiqzZwxA3-_1RvwM3v6aWoDxJnJYjplauF56h4XEuFWXDa6Xwmd6jmvFVQ4U6at5pgvtZx8dK2zf7wLu8XAF1efmrLya-fhicloj8XClHQ5XPEfV9AB8bRYNt30bF0qLMLUjukuNY7ripDZkk6heng5oHWZUApYZfmInRRBqstSdDVxaE",
     sessions: [
-      { id: 3, label: "Session #3", date: "Oct 23" },
-      { id: 10, label: "Session #2", date: "Oct 9" },
+      {
+        id: 3,
+        label: "Session #3",
+        date: "Oct 23",
+        lastMessage: "I’ll try the turnarounds this week",
+      },
+      {
+        id: 10,
+        label: "Session #2",
+        date: "Oct 9",
+        lastMessage: "That was a great session",
+      },
     ],
   },
   {
@@ -95,7 +142,14 @@ const mockClients: ClientGroup[] = [
     name: "Emily Davis",
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBBxCezaT1dvFo82Vbg4k_skl8xk0Q8crY7oUFlyHImMaJFbX_IGOUS_Af_iXtEV4Qc3AjAaLAz3RzijCKOVMlUBq8rygp0S8s1GqizGk7KHz7YHa1oO-QtyQY_RSHGBA-qCyakvZliHqQdBGr3m3KdpyCspQMDUSP0HcrTc8AfW7HtAUaASsZ0rSw3Lo8pQIgaO7pNdgfnSLhBmIoBxPx15mmlAQmilTFAPx318IWeRJ1JmmGDmTYov-7jvnQ3mS-Q-FsjUHPYSBw",
-    sessions: [{ id: 4, label: "Session #8", date: "Oct 21" }],
+    sessions: [
+      {
+        id: 4,
+        label: "Session #8",
+        date: "Oct 21",
+        lastMessage: "Looking forward to next time",
+      },
+    ],
   },
 ];
 
@@ -151,6 +205,17 @@ export default function ChatLayout() {
   const hasInSessionSession = mockClients.some((c) =>
     c.sessions.some((s) => s.isInSession),
   );
+  const [openClients, setOpenClients] = useState<Record<number, boolean>>(
+    () => {
+      const initial: Record<number, boolean> = {};
+      mockClients.forEach((c) => {
+        if (c.sessions.some((s) => s.isInSession)) {
+          initial[c.clientId] = true;
+        }
+      });
+      return initial;
+    },
+  );
 
   return (
     <SidebarProvider className="flex h-full overflow-hidden">
@@ -181,33 +246,46 @@ export default function ChatLayout() {
               <SidebarGroupLabel>{t("chat.sessions")}</SidebarGroupLabel>
               <SidebarMenu>
                 {mockClients.map((client) => {
-                  const hasInSession = client.sessions.some(
-                    (s) => s.isInSession,
-                  );
+                  const isOpen = openClients[client.clientId] ?? false;
                   return (
                     <Collapsible
                       key={client.clientId}
-                      defaultOpen={hasInSession}
+                      open={isOpen}
+                      onOpenChange={(open) =>
+                        setOpenClients((prev) => ({
+                          ...prev,
+                          [client.clientId]: open,
+                        }))
+                      }
                       className="group/collapsible"
                     >
                       <SidebarMenuItem>
                         <CollapsibleTrigger asChild>
-                          <SidebarMenuButton className="h-10">
-                            <Avatar className="size-6 shrink-0">
+                          <SidebarMenuButton size="lg">
+                            <Avatar className="size-8 shrink-0">
                               <AvatarImage src={client.avatarUrl} />
-                              <AvatarFallback className="text-[10px]">
+                              <AvatarFallback className="text-xs">
                                 {client.name.charAt(0)}
                               </AvatarFallback>
                             </Avatar>
-                            <span className="font-medium truncate">
-                              {client.name}
-                            </span>
-                            {hasInSession && (
-                              <Badge className="text-[10px] px-1.5 py-0 shrink-0 ml-1">
-                                {t("chat.in_session")}
-                              </Badge>
-                            )}
-                            <ChevronRightIcon className="ml-auto size-4 text-muted-foreground transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-medium text-sm truncate">
+                                  {client.name}
+                                </span>
+                                {client.sessions.some((s) => s.isInSession) && (
+                                  <Badge className="text-[10px] px-1.5 py-0 shrink-0">
+                                    {t("chat.in_session")}
+                                  </Badge>
+                                )}
+                              </div>
+                              <span className="text-xs text-muted-foreground">
+                                {t("chat.session_count", {
+                                  count: client.sessions.length,
+                                })}
+                              </span>
+                            </div>
+                            <ChevronRightIcon className="ml-auto size-4 text-muted-foreground shrink-0 transition-transform group-data-[state=open]/collapsible:rotate-90" />
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
@@ -221,16 +299,24 @@ export default function ChatLayout() {
                                   <SidebarMenuSubButton
                                     asChild
                                     isActive={isSelected}
+                                    className="h-auto py-1.5"
                                   >
                                     <Link to={`/chats/sessions/${session.id}`}>
-                                      <span className="truncate text-muted-foreground">
-                                        {session.label}
-                                      </span>
-                                      <span className="ml-auto text-[10px] text-muted-foreground shrink-0">
-                                        {session.isInSession
-                                          ? t("chat.current")
-                                          : session.date}
-                                      </span>
+                                      <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                                        <div className="flex items-center justify-between gap-2">
+                                          <span className="truncate text-sm">
+                                            {session.label}
+                                          </span>
+                                          <span className="text-[10px] text-muted-foreground shrink-0">
+                                            {session.date}
+                                          </span>
+                                        </div>
+                                        {session.lastMessage && (
+                                          <span className="text-xs text-muted-foreground truncate">
+                                            {session.lastMessage}
+                                          </span>
+                                        )}
+                                      </div>
                                     </Link>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>

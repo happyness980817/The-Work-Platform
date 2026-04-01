@@ -39,6 +39,30 @@ export default function ClientSettingsPage() {
               defaultValue={mockUser.name}
               placeholder={t("auth.placeholder_name")}
             />
+            <InputPair
+              label={t("settings.current_password")}
+              description={t("settings.change_password_desc")}
+              id="current-password"
+              name="currentPassword"
+              type="password"
+              placeholder="••••••••"
+            />
+            <InputPair
+              label={t("settings.new_password")}
+              description=""
+              id="new-password"
+              name="newPassword"
+              type="password"
+              placeholder="••••••••"
+            />
+            <InputPair
+              label={t("settings.confirm_new_password")}
+              description=""
+              id="confirm-password"
+              name="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+            />
             <Button type="submit" className="w-full">
               {t("settings.save_profile")}
             </Button>
