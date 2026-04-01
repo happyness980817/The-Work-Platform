@@ -1,10 +1,12 @@
 import { Outlet, useOutletContext } from "react-router";
+import { useTranslation } from "react-i18next";
 import type { AppContext } from "~/types";
 import { LightRays } from "~/common/components/ui/light-rays";
 import { OrbitingCircles } from "~/common/components/ui/orbiting-circles";
 import { facilitators } from "~/features/all-users/data/facilitators";
 
 export default function AuthLayout() {
+  const { t } = useTranslation();
   const appContext = useOutletContext<AppContext>();
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
@@ -49,9 +51,8 @@ export default function AuthLayout() {
                 Platform
               </span>
             </h2>
-            <p className="text-muted-foreground text-sm max-w-sm">
-              Find peace of mind through inquiry. Connect with certified
-              facilitators and question stressful thoughts.
+            <p className="text-muted-foreground text-sm max-w-sm whitespace-pre-line">
+              {t("auth.tagline")}
             </p>
           </div>
         </div>

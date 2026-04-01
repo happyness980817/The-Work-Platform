@@ -1,12 +1,13 @@
 import { useState, useCallback } from "react";
-import { Link, useOutletContext } from "react-router";
+import { Link, useNavigate, useOutletContext } from "react-router";
 import { useTranslation } from "react-i18next";
 import {
   EyeIcon,
   CalendarIcon,
   ArrowRightIcon,
   UserIcon,
-  MailIcon,
+  MessageCircleIcon,
+  CheckCircleIcon,
 } from "lucide-react";
 import { DateTime } from "luxon";
 import type { Route } from "./+types/book-a-facilitator-page";
@@ -24,6 +25,16 @@ import { Card, CardContent } from "~/common/components/ui/card";
 import { Button } from "~/common/components/ui/button";
 import { Calendar } from "~/common/components/ui/calendar";
 import { Separator } from "~/common/components/ui/separator";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "~/common/components/ui/alert-dialog";
 import TimeSlotPicker from "~/features/all-users/platform/components/time-slot-picker";
 import TimezoneSelector from "~/common/components/timezone-selector";
 import { facilitators } from "~/features/all-users/data/facilitators";
@@ -42,7 +53,8 @@ export default function FacilitatorBookingPage({
   params,
 }: Route.ComponentProps) {
   const { t } = useTranslation();
-  const { role } = useOutletContext<AppContext>();
+  const { role, isLoggedIn } = useOutletContext<AppContext>();
+  const navigate = useNavigate();
   const facilitatorId = Number(params.facilitatorId);
   const facilitator =
     facilitators.find((item) => item.id === facilitatorId) ?? facilitators[0];
@@ -52,6 +64,9 @@ export default function FacilitatorBookingPage({
   );
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedTimezone, setSelectedTimezone] = useState("Asia/Seoul");
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmedOpen, setConfirmedOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   const handleTimeSelect = useCallback((slot: string) => {
     setSelectedTime(slot);
@@ -100,12 +115,23 @@ export default function FacilitatorBookingPage({
               {t("profile.view_profile")}
             </Link>
           </Button>
-          <Button variant="secondary" className="w-full mt-3 gap-2" asChild>
-            <Link to="/chat">
-              <MailIcon className="size-4" />
+          {isLoggedIn ? (
+            <Button variant="secondary" className="w-full mt-3 gap-2" asChild>
+              <Link to="/chat">
+                <MessageCircleIcon className="size-4" />
+                {t("profile.contact_facilitator")}
+              </Link>
+            </Button>
+          ) : (
+            <Button
+              variant="secondary"
+              className="w-full mt-3 gap-2"
+              onClick={() => setLoginOpen(true)}
+            >
+              <MessageCircleIcon className="size-4" />
               {t("profile.contact_facilitator")}
-            </Link>
-          </Button>
+            </Button>
+          )}
         </div>
 
         <div className="lg:col-span-9">
@@ -171,7 +197,16 @@ export default function FacilitatorBookingPage({
                           </p>
                         </div>
                       </div>
-                      <Button className="w-full sm:w-auto gap-2">
+                      <Button
+                        className="w-full sm:w-auto gap-2"
+                        onClick={() => {
+                          if (!isLoggedIn) {
+                            setLoginOpen(true);
+                          } else {
+                            setConfirmOpen(true);
+                          }
+                        }}
+                      >
                         {t("facilitator.booking.request")}
                         <ArrowRightIcon className="size-4" />
                       </Button>
@@ -199,6 +234,87 @@ export default function FacilitatorBookingPage({
           )}
         </div>
       </div>
+
+      {/* Booking Confirm Dialog */}
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {t("facilitator.booking.confirm_title")}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("facilitator.booking.confirm_description")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          {selectedDate && selectedTime && (
+            <div className="flex items-center gap-3 rounded-lg border p-3 bg-muted/50">
+              <CalendarIcon className="size-5 text-muted-foreground shrink-0" />
+              <div>
+                <p className="text-sm font-semibold">
+                  {formatSelectedDate(selectedDate)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {formatTimeRange(selectedTime)} · {facilitator.name}
+                </p>
+              </div>
+            </div>
+          )}
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setConfirmOpen(false);
+                setConfirmedOpen(true);
+              }}
+            >
+              {t("facilitator.booking.confirm_button")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Booking Confirmed Dialog */}
+      <AlertDialog open={confirmedOpen} onOpenChange={setConfirmedOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <div className="flex items-center gap-2">
+              <CheckCircleIcon className="size-5 text-primary" />
+              <AlertDialogTitle>
+                {t("facilitator.booking.confirmed_title")}
+              </AlertDialogTitle>
+            </div>
+            <AlertDialogDescription>
+              {t("facilitator.booking.confirmed_description")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("common.close")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => navigate("/my/bookings/sessions")}
+            >
+              {t("facilitator.booking.go_sessions")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Login Required Dialog */}
+      <AlertDialog open={loginOpen} onOpenChange={setLoginOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("auth.login_required")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("auth.login_required_description")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => navigate("/auth/login")}>
+              {t("auth.go_login")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
