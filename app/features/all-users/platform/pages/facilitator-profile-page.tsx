@@ -99,7 +99,7 @@ export default function FacilitatorProfilePage({
             <Button variant="outline" size="sm" asChild>
               <Link to={`/chats/dms/${facilitator.id}`}>
                 <MessageCircleIcon className="size-4 mr-1.5" />
-                {t("profile.contact_facilitator")}
+                DM
               </Link>
             </Button>
           </div>

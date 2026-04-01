@@ -101,7 +101,7 @@ interface AppContext {
 ## OpenAI 사용
 
 - 서버에서만 호출: `new OpenAI({ apiKey: process.env.OPENAI_API_KEY })`
-- Responses API, 모델 `gpt-5.2`, developer 프롬프트에 'The Work' 네 가지 질문 철학 반영
+- Responses API, 모델 `gpt-5.4-nano`, developer 프롬프트에 'The Work' 네 가지 질문 철학 반영
 - AI 초안은 상담사 화면에서만 표시, 내담자 화면 노출 절대 불가
 - 공식 문서: [Text](https://platform.openai.com/docs/guides/text) · [Responses API](https://platform.openai.com/docs/api-reference/responses) · [Conversation State](https://platform.openai.com/docs/guides/conversation-state?api-mode=responses)
 

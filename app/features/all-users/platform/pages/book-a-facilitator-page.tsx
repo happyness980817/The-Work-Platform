@@ -1,7 +1,13 @@
 import { useState, useCallback } from "react";
 import { Link, useOutletContext } from "react-router";
 import { useTranslation } from "react-i18next";
-import { EyeIcon, CalendarIcon, ArrowRightIcon, UserIcon } from "lucide-react";
+import {
+  EyeIcon,
+  CalendarIcon,
+  ArrowRightIcon,
+  UserIcon,
+  MailIcon,
+} from "lucide-react";
 import { DateTime } from "luxon";
 import type { Route } from "./+types/book-a-facilitator-page";
 import type { AppContext } from "~/types";
@@ -92,6 +98,12 @@ export default function FacilitatorBookingPage({
             <Link to={`/facilitators/profile/${facilitator.id}`}>
               <UserIcon className="size-4" />
               {t("profile.view_profile")}
+            </Link>
+          </Button>
+          <Button variant="secondary" className="w-full mt-3 gap-2" asChild>
+            <Link to="/chat">
+              <MailIcon className="size-4" />
+              {t("profile.contact_facilitator")}
             </Link>
           </Button>
         </div>

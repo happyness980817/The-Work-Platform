@@ -96,11 +96,6 @@
   "chat.context.original": "View Original",
   "chat.context.like": "Like",
   "chat.context.unlike": "Unlike",
-  "chat.context.report": "Report",
-  "chat.report.title": "Report Message",
-  "chat.report.description": "Please describe why you are reporting this message.",
-  "chat.report.placeholder": "Enter the reason for your report...",
-  "chat.report.notice": "False reports may result in restrictions on your account. Reports are reviewed by administrators.",
 
   "bookings.manage_description": "View your schedule, manage sessions, and handle booking requests.",
   "bookings.schedule_calendar": "Schedule Calendar",
@@ -171,7 +166,7 @@
   "profile.bio": "About",
   "profile.languages": "Languages",
   "profile.sessions_completed": "Sessions Completed",
-  "profile.contact_facilitator": "DM",
+  "profile.contact_facilitator": "DM (For Reservation)",
 
   "settings.booking_hint": "For booking-related settings, please go to the ",
   "settings.booking_hint_link": "Availability",

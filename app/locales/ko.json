@@ -96,11 +96,6 @@
   "chat.context.original": "원본 보기",
   "chat.context.like": "좋아요",
   "chat.context.unlike": "좋아요 취소",
-  "chat.context.report": "신고",
-  "chat.report.title": "메시지 신고",
-  "chat.report.description": "이 메시지를 신고하는 이유를 작성해주세요.",
-  "chat.report.placeholder": "신고 사유를 입력하세요...",
-  "chat.report.notice": "허위 신고는 서비스 이용에 제한이 될 수 있습니다. 신고 내용은 관리자가 검토합니다.",
 
   "bookings.manage_description": "스케줄 확인, 세션 관리, 예약 요청을 처리하세요.",
   "bookings.schedule_calendar": "스케줄 캘린더",
@@ -171,7 +166,7 @@
   "profile.bio": "자기소개",
   "profile.languages": "언어",
   "profile.sessions_completed": "완료된 세션",
-  "profile.contact_facilitator": "DM",
+  "profile.contact_facilitator": "DM (직접 예약 잡기)",
 
   "settings.booking_hint": "예약 관련 설정은 우측 상단의",
   "settings.booking_hint_link": "예약 페이지",
