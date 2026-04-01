@@ -50,7 +50,7 @@ export default function ChatDmPage() {
   const isFacilitator = appContext.role === "facilitator";
 
   return (
-    <>
+    <div className="flex flex-col h-11/12 overflow-hidden">
       <div className="flex items-center justify-between px-6 py-4 border-b bg-card/50 backdrop-blur-md shrink-0">
         <h2 className="text-lg font-bold">{mockClient.name}</h2>
         {isFacilitator && (
@@ -114,6 +114,6 @@ export default function ChatDmPage() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

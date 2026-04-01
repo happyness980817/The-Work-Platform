@@ -153,7 +153,7 @@ export default function ChatLayout() {
   );
 
   return (
-    <SidebarProvider className="flex h-[calc(100vh-4rem)] overflow-hidden">
+    <SidebarProvider className="flex h-full overflow-hidden">
       <Sidebar collapsible="none" className="w-80 border-r bg-card shrink-0">
         <SidebarHeader className="p-4 flex flex-col gap-4">
           <h2 className="text-base font-bold">{t("chat.unified_inbox")}</h2>

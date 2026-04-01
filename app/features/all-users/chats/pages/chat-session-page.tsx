@@ -110,7 +110,7 @@ export default function ChatSessionPage() {
   const isFacilitator = appContext.role === "facilitator";
 
   return (
-    <>
+    <div className="flex flex-col overflow-hidden h-11/12">
       <div className="flex items-center justify-between px-6 py-4 border-b bg-card/50 backdrop-blur-md shrink-0">
         <div>
           <h2 className="text-xl font-bold">{mockClient.name}</h2>
@@ -204,6 +204,6 @@ export default function ChatSessionPage() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
