@@ -110,7 +110,7 @@ export default function SessionsListPage() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight">
-          {t("nav.sessions")}
+          {t("bookings.sessions_list")}
         </h1>
         <p className="text-muted-foreground text-sm mt-1">
           {t("bookings.sessions_description")}

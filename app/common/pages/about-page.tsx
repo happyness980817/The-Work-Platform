@@ -27,7 +27,7 @@ We connect individuals with experienced facilitators who guide them through Byro
 
 Our facilitators are trained and certified professionals, passionate about helping others find freedom from painful thoughts.
 
-> "I found that suffering is optional. And I invite you not to believe me. I invite you to test it for yourself." — Byron Katie
+> I found that suffering is optional. And I invite you not to believe me. I invite you to test it for yourself. — Byron Katie
 
 `,
   ko: `# 서비스 소개
@@ -48,7 +48,7 @@ Our facilitators are trained and certified professionals, passionate about helpi
 
 저희 퍼실리테이터는 훈련되고 인증된 전문가로, 다른 사람들이 고통스러운 생각에서 자유로워질 수 있도록 돕는 일에 열정을 가지고 있습니다.
 
-> "저는 고통은 선택의 문제라는 것을 깨달았습니다. 당신이 제 말을 무조건 믿기를 바라지 않습니다. 그보다는 당신이 직접 확인해 보시길 권합니다." — Byron Katie
+> 저는 고통은 선택의 문제라는 것을 깨달았습니다. 당신이 제 말을 무조건 믿기를 바라지 않습니다. 그보다는 당신이 직접 확인해 보시길 권합니다. — Byron Katie
 
 `,
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import InputPair from "~/common/components/input-pair";
+import PasswordInputPair from "~/common/components/password-input-pair";
 import { Input } from "~/common/components/ui/input";
 import { Label } from "~/common/components/ui/label";
 import { Button } from "~/common/components/ui/button";
@@ -39,28 +40,25 @@ export default function ClientSettingsPage() {
               defaultValue={mockUser.name}
               placeholder={t("auth.placeholder_name")}
             />
-            <InputPair
+            <PasswordInputPair
               label={t("settings.current_password")}
               description={t("settings.change_password_desc")}
               id="current-password"
               name="currentPassword"
-              type="password"
               placeholder="••••••••"
             />
-            <InputPair
+            <PasswordInputPair
               label={t("settings.new_password")}
               description=""
               id="new-password"
               name="newPassword"
-              type="password"
               placeholder="••••••••"
             />
-            <InputPair
+            <PasswordInputPair
               label={t("settings.confirm_new_password")}
               description=""
               id="confirm-password"
               name="confirmPassword"
-              type="password"
               placeholder="••••••••"
             />
             <Button type="submit" className="w-full">

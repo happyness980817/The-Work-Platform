@@ -120,19 +120,22 @@ export default function ChatSessionPage() {
               {t("chat.session", { number: 4 })}
             </p>
           </div>
-          <div className="flex gap-2 items-center">
-            <Button
-              variant={isInSession ? "destructive" : "outline"}
-              onClick={() => setIsInSession((prev) => !prev)}
-            >
-              {isInSession ? (
-                <StopCircleIcon className="size-4" />
-              ) : (
-                <PlayIcon className="size-4" />
-              )}
-              {isInSession ? t("chat.end_session") : t("chat.start_session")}
-            </Button>
-          </div>
+          {isFacilitator && (
+            <div className="flex gap-2 items-center">
+              <Button variant="secondary"> + 새 세션</Button>
+              <Button
+                variant={isInSession ? "destructive" : "outline"}
+                onClick={() => setIsInSession((prev) => !prev)}
+              >
+                {isInSession ? (
+                  <StopCircleIcon className="size-4" />
+                ) : (
+                  <PlayIcon className="size-4" />
+                )}
+                {isInSession ? t("chat.end_session") : t("chat.start_session")}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 

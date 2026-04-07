@@ -1,173 +1,173 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useOutletContext } from "react-router";
-import type { AppContext } from "~/types";
-import { Button } from "~/common/components/ui/button";
-import { Calendar } from "~/common/components/ui/calendar";
-import { Separator } from "~/common/components/ui/separator";
-import { Checkbox } from "~/common/components/ui/checkbox";
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "~/common/components/ui/native-select";
-import {
-  SaveIcon,
-  PlusIcon,
-  Trash2Icon,
-  CalendarOffIcon,
-  CheckIcon,
-  XIcon,
-  PencilIcon,
-} from "lucide-react";
-import { DateTime } from "luxon";
-import { cn } from "~/lib/utils";
-import TimeSlotPicker from "~/features/all-users/platform/components/time-slot-picker";
-import TimezoneSelector from "~/common/components/timezone-selector";
+// import { useOutletContext } from "react-router";
+// import type { AppContext } from "~/types";
+// import { Button } from "~/common/components/ui/button";
+// import { Calendar } from "~/common/components/ui/calendar";
+// import { Separator } from "~/common/components/ui/separator";
+// import { Checkbox } from "~/common/components/ui/checkbox";
+// import {
+//   NativeSelect,
+//   NativeSelectOption,
+// } from "~/common/components/ui/native-select";
+// import {
+//   SaveIcon,
+//   PlusIcon,
+//   Trash2Icon,
+//   CalendarOffIcon,
+//   CheckIcon,
+//   XIcon,
+//   PencilIcon,
+// } from "lucide-react";
+// import { DateTime } from "luxon";
+// import { cn } from "~/lib/utils";
+// import TimeSlotPicker from "~/features/all-users/platform/components/time-slot-picker";
+// import TimezoneSelector from "~/common/components/timezone-selector";
 
-const DAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
-type Day = (typeof DAYS)[number];
+// const DAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
+// type Day = (typeof DAYS)[number];
 
-type TimeRange = { start: string; end: string };
-type DaySchedule = { enabled: boolean; ranges: TimeRange[] };
+// type TimeRange = { start: string; end: string };
+// type DaySchedule = { enabled: boolean; ranges: TimeRange[] };
 
-const HOURS = Array.from(
-  { length: 24 },
-  (_, i) => `${String(i).padStart(2, "0")}:00`,
-);
+// const HOURS = Array.from(
+//   { length: 24 },
+//   (_, i) => `${String(i).padStart(2, "0")}:00`,
+// );
 
-function buildInitialWeekly(): Record<Day, DaySchedule> {
-  const def: TimeRange[] = [{ start: "09:00", end: "17:00" }];
-  return {
-    mon: { enabled: true, ranges: [...def] },
-    tue: { enabled: true, ranges: [...def] },
-    wed: { enabled: true, ranges: [...def] },
-    thu: { enabled: true, ranges: [...def] },
-    fri: { enabled: true, ranges: [...def] },
-    sat: { enabled: false, ranges: [] },
-    sun: { enabled: false, ranges: [] },
-  };
-}
+// function buildInitialWeekly(): Record<Day, DaySchedule> {
+//   const def: TimeRange[] = [{ start: "09:00", end: "17:00" }];
+//   return {
+//     mon: { enabled: true, ranges: [...def] },
+//     tue: { enabled: true, ranges: [...def] },
+//     wed: { enabled: true, ranges: [...def] },
+//     thu: { enabled: true, ranges: [...def] },
+//     fri: { enabled: true, ranges: [...def] },
+//     sat: { enabled: false, ranges: [] },
+//     sun: { enabled: false, ranges: [] },
+//   };
+// }
 
-function rangesToSlots(ranges: TimeRange[]): string[] {
-  const slots: string[] = [];
-  for (const r of ranges) {
-    const s = parseInt(r.start.split(":")[0], 10);
-    const e = parseInt(r.end.split(":")[0], 10);
-    for (let h = s; h < e; h++) {
-      slots.push(`${String(h).padStart(2, "0")}:00`);
-    }
-  }
-  return slots;
-}
+// function rangesToSlots(ranges: TimeRange[]): string[] {
+//   const slots: string[] = [];
+//   for (const r of ranges) {
+//     const s = parseInt(r.start.split(":")[0], 10);
+//     const e = parseInt(r.end.split(":")[0], 10);
+//     for (let h = s; h < e; h++) {
+//       slots.push(`${String(h).padStart(2, "0")}:00`);
+//     }
+//   }
+//   return slots;
+// }
 
-function getDayFromDate(date: Date): Day {
-  const map: Day[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  return map[date.getDay()];
-}
+// function getDayFromDate(date: Date): Day {
+//   const map: Day[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+//   return map[date.getDay()];
+// }
 
 export default function AvailabilityPage() {
   const { t } = useTranslation();
-  const appContext = useOutletContext<AppContext>();
+  // const appContext = useOutletContext<AppContext>();
 
-  const [weekly, setWeekly] = useState(buildInitialWeekly);
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedTimezone, setSelectedTimezone] = useState("Asia/Seoul");
+  // const [weekly, setWeekly] = useState(buildInitialWeekly);
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [selectedTimezone, setSelectedTimezone] = useState("Asia/Seoul");
 
-  const [overrideDate, setOverrideDate] = useState<Date | undefined>(undefined);
-  const [exceptionSlots, setExceptionSlots] = useState<string[]>([]);
-  const [confirmedExceptions, setConfirmedExceptions] = useState<
-    Record<string, string[]>
-  >({});
+  // const [overrideDate, setOverrideDate] = useState<Date | undefined>(undefined);
+  // const [exceptionSlots, setExceptionSlots] = useState<string[]>([]);
+  // const [confirmedExceptions, setConfirmedExceptions] = useState<
+  //   Record<string, string[]>
+  // >({});
 
-  const handleToggleDay = (day: Day) => {
-    setWeekly((prev) => ({
-      ...prev,
-      [day]: {
-        ...prev[day],
-        enabled: !prev[day].enabled,
-        ranges: prev[day].enabled ? [] : [{ start: "09:00", end: "17:00" }],
-      },
-    }));
-  };
+  // const handleToggleDay = (day: Day) => {
+  //   setWeekly((prev) => ({
+  //     ...prev,
+  //     [day]: {
+  //       ...prev[day],
+  //       enabled: !prev[day].enabled,
+  //       ranges: prev[day].enabled ? [] : [{ start: "09:00", end: "17:00" }],
+  //     },
+  //   }));
+  // };
 
-  const handleAddRange = (day: Day) => {
-    setWeekly((prev) => ({
-      ...prev,
-      [day]: {
-        ...prev[day],
-        ranges: [...prev[day].ranges, { start: "09:00", end: "17:00" }],
-      },
-    }));
-  };
+  // const handleAddRange = (day: Day) => {
+  //   setWeekly((prev) => ({
+  //     ...prev,
+  //     [day]: {
+  //       ...prev[day],
+  //       ranges: [...prev[day].ranges, { start: "09:00", end: "17:00" }],
+  //     },
+  //   }));
+  // };
 
-  const handleRemoveRange = (day: Day, idx: number) => {
-    setWeekly((prev) => {
-      const next = [...prev[day].ranges];
-      next.splice(idx, 1);
-      return {
-        ...prev,
-        [day]: { ...prev[day], enabled: next.length > 0, ranges: next },
-      };
-    });
-  };
+  // const handleRemoveRange = (day: Day, idx: number) => {
+  //   setWeekly((prev) => {
+  //     const next = [...prev[day].ranges];
+  //     next.splice(idx, 1);
+  //     return {
+  //       ...prev,
+  //       [day]: { ...prev[day], enabled: next.length > 0, ranges: next },
+  //     };
+  //   });
+  // };
 
-  const handleRangeChange = (
-    day: Day,
-    idx: number,
-    field: "start" | "end",
-    value: string,
-  ) => {
-    setWeekly((prev) => {
-      const next = [...prev[day].ranges];
-      next[idx] = { ...next[idx], [field]: value };
-      return { ...prev, [day]: { ...prev[day], ranges: next } };
-    });
-  };
+  // const handleRangeChange = (
+  //   day: Day,
+  //   idx: number,
+  //   field: "start" | "end",
+  //   value: string,
+  // ) => {
+  //   setWeekly((prev) => {
+  //     const next = [...prev[day].ranges];
+  //     next[idx] = { ...next[idx], [field]: value };
+  //     return { ...prev, [day]: { ...prev[day], ranges: next } };
+  //   });
+  // };
 
-  const overrideDay: Day | null = overrideDate
-    ? getDayFromDate(overrideDate)
-    : null;
+  // const overrideDay: Day | null = overrideDate
+  //   ? getDayFromDate(overrideDate)
+  //   : null;
 
-  const overrideDateKey = overrideDate
-    ? DateTime.fromJSDate(overrideDate).toISODate()
-    : null;
+  // const overrideDateKey = overrideDate
+  //   ? DateTime.fromJSDate(overrideDate).toISODate()
+  //   : null;
 
-  const weeklyDefaultSlots: string[] = overrideDay
-    ? rangesToSlots(weekly[overrideDay].ranges)
-    : [];
+  // const weeklyDefaultSlots: string[] = overrideDay
+  //   ? rangesToSlots(weekly[overrideDay].ranges)
+  //   : [];
 
-  const handleDateSelect = (date: Date | undefined) => {
-    setOverrideDate(date);
-    setExceptionSlots([]);
-  };
+  // const handleDateSelect = (date: Date | undefined) => {
+  //   setOverrideDate(date);
+  //   setExceptionSlots([]);
+  // };
 
-  const handleConfirmExceptions = () => {
-    if (!overrideDateKey || exceptionSlots.length === 0) return;
-    setConfirmedExceptions((prev) => ({
-      ...prev,
-      [overrideDateKey]: [
-        ...new Set([...(prev[overrideDateKey] ?? []), ...exceptionSlots]),
-      ],
-    }));
-    setExceptionSlots([]);
-  };
+  // const handleConfirmExceptions = () => {
+  //   if (!overrideDateKey || exceptionSlots.length === 0) return;
+  //   setConfirmedExceptions((prev) => ({
+  //     ...prev,
+  //     [overrideDateKey]: [
+  //       ...new Set([...(prev[overrideDateKey] ?? []), ...exceptionSlots]),
+  //     ],
+  //   }));
+  //   setExceptionSlots([]);
+  // };
 
-  const handleRemoveConfirmedException = (dateKey: string) => {
-    setConfirmedExceptions((prev) => {
-      const next = { ...prev };
-      delete next[dateKey];
-      return next;
-    });
-  };
+  // const handleRemoveConfirmedException = (dateKey: string) => {
+  //   setConfirmedExceptions((prev) => {
+  //     const next = { ...prev };
+  //     delete next[dateKey];
+  //     return next;
+  //   });
+  // };
 
-  const formatOverrideDate = (date: Date | undefined) => {
-    if (!date) return "";
-    return DateTime.fromJSDate(date).toFormat("EEEE, MMM d");
-  };
+  // const formatOverrideDate = (date: Date | undefined) => {
+  //   if (!date) return "";
+  //   return DateTime.fromJSDate(date).toFormat("EEEE, MMM d");
+  // };
 
-  const formatDateKey = (key: string) => {
-    return DateTime.fromISO(key).toFormat("MMM d, yyyy (EEEE)");
-  };
+  // const formatDateKey = (key: string) => {
+  //   return DateTime.fromISO(key).toFormat("MMM d, yyyy (EEEE)");
+  // };
 
   return (
     <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
@@ -180,7 +180,11 @@ export default function AvailabilityPage() {
         </p>
       </div>
 
-      <div className="mb-2">
+      <p className="text-muted-foreground text-center py-16">
+        구현 예정입니다
+      </p>
+
+      {/* <div className="mb-2">
         <TimezoneSelector
           value={selectedTimezone}
           onChange={setSelectedTimezone}
@@ -471,7 +475,7 @@ export default function AvailabilityPage() {
             ))}
           </div>
         )}
-      </section>
+      </section> */}
     </div>
   );
 }

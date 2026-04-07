@@ -13,7 +13,7 @@ export default [
       index("common/pages/facilitators-page.tsx"),
       route(
         "/profile/:facilitatorId",
-        "features/all-users/platform/pages/facilitator-profile-page.tsx",
+        "features/all-users/platform/pages/public-facilitator-profile-page.tsx",
       ),
       route(
         "/:facilitatorId",
