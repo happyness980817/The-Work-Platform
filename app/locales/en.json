@@ -188,6 +188,9 @@
   "settings.confirm_new_password": "Confirm New Password",
   "settings.update_password": "Update Password",
 
+  "settings.languages": "Languages",
+  "settings.languages_hint": "Enter the languages you can facilitate sessions in.",
+  "settings.languages_placeholder": "e.g. Korean, English",
   "settings.booking_hint": "For booking-related settings, please go to the ",
   "settings.booking_hint_link": "Availability",
   "settings.booking_hint_suffix": " page.",

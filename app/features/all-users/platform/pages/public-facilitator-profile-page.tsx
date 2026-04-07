@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
-import type { Route } from "./+types/facilitator-profile-page";
+import type { Route } from "./+types/public-facilitator-profile-page";
 import {
   Avatar,
   AvatarFallback,

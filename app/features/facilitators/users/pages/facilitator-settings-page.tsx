@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import InputPair from "~/common/components/input-pair";
 import PasswordInputPair from "~/common/components/password-input-pair";
+import SelectPair from "~/common/components/select-pair";
 import { Input } from "~/common/components/ui/input";
 import { Label } from "~/common/components/ui/label";
 import { Button } from "~/common/components/ui/button";
@@ -15,6 +16,7 @@ const mockUser = {
   bio: "Specializing in relationship conflicts and self-worth inquiries. I help clients apply The Work to dissolve painful beliefs about family dynamics.",
   introduction:
     "I help individuals untangle stressful thoughts using The Work. My sessions are direct, compassionate, and focused on finding your own truth.",
+  languages: ["lang.ko", "lang.en"],
   avatar:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuBXh6AuGuTwRu_SVMeV_O2NOB3mGLJxzoF9XCWWWe5WN8vX2IQao-efhpJ6weRRdkSzqpB_w848n6wlL5_KU_8Q7nxy_1Gtaw4s-HeiUOBj7O2r8V1nqDNoxZOb9j5VLSBOEv1eXZVu84bjfLHSt1RyDc5N4SCVBhvFvDu-sm1Yug1y9qIb2px-nRNtFFUSE6UJ9HdAUGfs8d9yf6o60NUr7b7ekhpcPWit0x20EtmcdaJLOAPLJH5-4soyAyypJGNKx8loua8gAFk",
 };
@@ -77,6 +79,22 @@ export default function FacilitatorSettingsPage() {
               defaultValue={mockUser.introduction}
               placeholder={t("settings.introduction_placeholder")}
               textArea
+            />
+            <SelectPair
+              label={t("settings.languages")}
+              description={t("settings.languages_hint")}
+              name="languages"
+              required={false}
+              placeholder={t("settings.languages_placeholder")}
+              multiple
+              defaultValues={mockUser.languages}
+              options={[
+                { value: "lang.ko", label: t("lang.ko") },
+                { value: "lang.en", label: t("lang.en") },
+                { value: "lang.zh", label: t("lang.zh") },
+                { value: "lang.es", label: t("lang.es") },
+                { value: "lang.hi", label: t("lang.hi") },
+              ]}
             />
             <PasswordInputPair
               label={t("settings.current_password")}

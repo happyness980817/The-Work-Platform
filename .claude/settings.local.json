@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "c:\\dev-products\\web\\app\\migrations\\meta"
+    ],
+    "allow": [
+      "mcp__supabase__list_tables"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}
