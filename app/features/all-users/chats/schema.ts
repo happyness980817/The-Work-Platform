@@ -44,7 +44,7 @@ export const dmMessages = pgTable("dm_messages", {
 
 /* ── 세션(상담 채팅방) ── */
 
-export const chatSessions = pgTable("chat_sessions", {
+export const sessionRooms = pgTable("session_rooms", {
   session_id: uuid().primaryKey().defaultRandom(),
   room_code: text().notNull().unique(),
   client_id: uuid()
@@ -67,7 +67,7 @@ export const sessionMessages = pgTable("session_messages", {
   message_id: uuid().primaryKey().defaultRandom(),
   session_id: uuid()
     .notNull()
-    .references(() => chatSessions.session_id, { onDelete: "cascade" }),
+    .references(() => sessionRooms.session_id, { onDelete: "cascade" }),
   sender_id: uuid()
     .notNull()
     .references(() => profiles.profile_id, { onDelete: "cascade" }),
