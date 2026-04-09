@@ -22,7 +22,15 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "~/common/components/ui/avatar";
-import { CalendarIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  LogOutIcon,
+  MoonIcon,
+  SettingsIcon,
+  SunIcon,
+  UserIcon,
+} from "lucide-react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Separator } from "~/common/components/ui/separator";
 
@@ -30,6 +38,27 @@ const languages = [
   { label: "한국어", value: "ko" },
   { label: "English", value: "en" },
 ];
+
+function ThemeToggle() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  const toggle = () => {
+    const next = !isDark;
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+    setIsDark(next);
+  };
+
+  return (
+    <Button variant="ghost" size="icon" onClick={toggle} className="size-8">
+      {isDark ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
+    </Button>
+  );
+}
 
 export default function Navigation({
   isLoggedIn,
@@ -110,6 +139,7 @@ export default function Navigation({
       </div>
       {isLoggedIn ? (
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="size-8 cursor-pointer">
@@ -163,6 +193,7 @@ export default function Navigation({
         </div>
       ) : (
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <Button asChild variant="outline">
             <Link to="/auth/login">{t("nav.login")}</Link>
           </Button>

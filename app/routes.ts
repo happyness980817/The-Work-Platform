@@ -20,26 +20,26 @@ export default [
         "features/all-users/platform/pages/book-a-facilitator-page.tsx",
       ),
     ]),
-    layout("features/all-users/bookings/layouts/bookings-layout.tsx", [
-      ...prefix("/my/bookings", [
-        index("features/all-users/bookings/pages/bookings-dashboard-page.tsx"),
-        route(
-          "/sessions",
-          "features/all-users/bookings/pages/sessions-list-page.tsx",
-        ),
-        route(
-          "/manage",
-          "features/facilitators/bookings/pages/manage-bookings-page.tsx",
-        ),
-        route(
-          "/availability",
-          "features/facilitators/bookings/pages/availability-page.tsx",
-        ),
-      ]),
-    ]),
     route("/about", "common/pages/about-page.tsx"),
     route("/my/profile", "features/all-users/users/pages/profile-page.tsx"),
     route("/my/settings", "features/all-users/users/pages/settings-page.tsx"),
+  ]),
+  layout("features/all-users/bookings/layouts/bookings-layout.tsx", [
+    ...prefix("/my/bookings", [
+      index("features/all-users/bookings/pages/bookings-dashboard-page.tsx"),
+      route(
+        "/sessions",
+        "features/all-users/bookings/pages/sessions-list-page.tsx",
+      ),
+      route(
+        "/manage",
+        "features/facilitators/bookings/pages/manage-bookings-page.tsx",
+      ),
+      route(
+        "/availability",
+        "features/facilitators/bookings/pages/availability-page.tsx",
+      ),
+    ]),
   ]),
   layout("features/all-users/auth/layouts/auth-layout.tsx", [
     ...prefix("/auth", [

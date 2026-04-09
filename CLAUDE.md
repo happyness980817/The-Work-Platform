@@ -109,6 +109,12 @@ interface AppContext {
 - **세션(채팅방)**: room code, 생성 시각, 참여자, OpenAI conversation ID
 - **메시지**: 소속 세션, 발신자(client/counselor/ai), 텍스트, 전송 시각
 
+## DB 마이그레이션 규칙
+
+- 에이전트는 Supabase MCP로 직접 테이블을 생성/수정/삭제하지 않는다
+- 스키마 변경 시 `schema.ts` 파일만 수정하고, 사용자가 직접 `npm run db:generate` → `npm run db:migrate`를 실행한다
+- 마이그레이션 파일 경로: `app/sql/migrations/`
+
 ## 핵심 흐름
 
 세션 선택/입장 → 실시간 채팅 → AI 초안 생성 → 상담사 검토/수정 → 최종 메시지 전송 (전송된 메시지만 내담자에게 표시)
