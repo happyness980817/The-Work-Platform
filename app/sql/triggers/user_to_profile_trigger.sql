@@ -1,22 +1,24 @@
-create function public.handle_new_user()
-returns trigger as $$
+create or replace function public.handle_new_user()
+returns trigger
 language plpgsql
 security definer
 set search_path = ''
 as $$
 begin
-    if new.raw_app_metadata is not null then
-        if new.raw_app_meta_data ? 'provider' and new.raw_app_meta_data ->> 'provider' = 'email' then
-            if new.role = 'facilitator' then
-                insert into profiles (profile_id, name, role) values (new.id, 'Anonymous Facilitator', 'facilitator');
-            else
-                insert into profiles (profile_id, name, role) values (new.id, 'Anonymous Client', 'client');
-            end if;
-        end if;
-    end if;
+    insert into public.profiles (profile_id, name, role)
+    values (
+        new.id,
+        coalesce(new.raw_user_meta_data ->> 'name', 'Anonymous'),
+        case
+            when new.raw_user_meta_data ->> 'role' = 'facilitator' then 'facilitator'::public.role
+            else 'client'::public.role
+        end
+    );
     return new;
 end;
 $$;
+
+drop trigger if exists user_to_profile_trigger on auth.users;
 
 create trigger user_to_profile_trigger
 after insert on auth.users
