@@ -19,25 +19,21 @@
   "nav.settings": "Settings",
   "nav.logout": "Log Out",
   "nav.user_fallback": "User",
-
   "hero.title_before": "Find Peace with ",
   "hero.title_highlight": "The Work",
   "hero.title_after": "",
   "hero.description": "Connect with certified facilitators who can guide you through The Four Questions to question stressful thoughts and find clarity.",
   "hero.cta": "Learn More",
-
-  "facilitators.book": "Schedule Date",
+  "facilitators.book": "Book a Session",
   "facilitators.online": "ONLINE",
   "facilitators.in-session": "IN SESSION",
   "facilitators.offline": "OFFLINE",
   "facilitators.see_more": "See More",
-
   "lang.ko": "Korean",
   "lang.en": "English",
   "lang.zh": "Chinese",
   "lang.es": "Spanish",
   "lang.hi": "Hindi",
-
   "facilitators.title": "Facilitators",
   "facilitators.subtitle": "Meet Facilitators",
   "facilitators.filter.availability": "Availability",
@@ -47,7 +43,6 @@
   "facilitators.filter.in-session": "In Session",
   "facilitators.filter.offline": "Offline",
   "facilitators.filter.no_results": "No results found",
-
   "days.mon": "Mon",
   "days.tue": "Tue",
   "days.wed": "Wed",
@@ -55,7 +50,6 @@
   "days.fri": "Fri",
   "days.sat": "Sat",
   "days.sun": "Sun",
-
   "facilitator.certified": "Certified Facilitator",
   "facilitator.booking.title": "Book a Session",
   "facilitator.booking.subtitle": "Check availability and schedule your time.",
@@ -77,7 +71,6 @@
   "auth.tagline": "Find peace of mind through inquiry. Connect with certified facilitators and question stressful thoughts.",
   "facilitator.preview.title": "Profile Preview",
   "facilitator.preview.description": "This page is how your profile appears to clients. Booking is only available for client accounts.",
-
   "chat.online": "Online",
   "chat.offline": "Offline",
   "chat.unified_inbox": "Unified Inbox",
@@ -109,7 +102,6 @@
   "chat.context.original": "View Original",
   "chat.context.like": "Like",
   "chat.context.unlike": "Unlike",
-
   "bookings.manage_description": "View your schedule, manage sessions, and handle booking requests.",
   "bookings.schedule_calendar": "Schedule Calendar",
   "bookings.pending_requests": "Pending Requests",
@@ -149,7 +141,6 @@
   "bookings.new_session": "New Session",
   "bookings.session_number": "Session #{{number}}",
   "bookings.active_client": "Active Client",
-
   "auth.login": "Log In",
   "auth.join": "Sign Up",
   "auth.client": "Client",
@@ -164,7 +155,6 @@
   "auth.has_account": "Already have an account?",
   "auth.placeholder_name": "John Doe",
   "auth.placeholder_email": "you@example.com",
-
   "profile.edit_profile": "Edit Profile",
   "profile.view_profile": "View Profile",
   "profile.total_sessions": "Total Sessions",
@@ -180,21 +170,18 @@
   "profile.languages": "Languages",
   "profile.sessions_completed": "Sessions Completed",
   "profile.contact_facilitator": "DM (For Reservation)",
-
   "settings.change_password": "Change Password",
   "settings.change_password_desc": "Update your password regularly to keep your account secure.",
   "settings.current_password": "Current Password",
   "settings.new_password": "New Password",
   "settings.confirm_new_password": "Confirm New Password",
   "settings.update_password": "Update Password",
-
   "settings.languages": "Languages",
   "settings.languages_hint": "Enter the languages you can facilitate sessions in.",
   "settings.languages_placeholder": "e.g. Korean, English",
   "settings.booking_hint": "For booking-related settings, please go to the ",
   "settings.booking_hint_link": "Availability",
   "settings.booking_hint_suffix": " page.",
-
   "footer.tagline": "A platform dedicated to peace of mind through inquiry.\nConnect, question, and find freedom.",
   "footer.disclaimer": "This service does not replace professional medical diagnosis or treatment. If you are experiencing a serious mental health crisis, please contact emergency services or a licensed mental health professional immediately.",
   "footer.copyright": "© 2026 The Work Platform. All rights reserved."
