@@ -7,7 +7,7 @@ import { getFacilitators } from '~/features/all-users/platform/queries';
 import type { Route } from './+types/home-page';
 
 export const loader = async () => {
-  const facilitators = await getFacilitators();
+  const facilitators = await getFacilitators(6);
   return { facilitators };
 };
 
@@ -35,7 +35,9 @@ export default function HomePage({ loaderData }: Route.ComponentProps) {
               {t('hero.description')}
             </p>
             <div className="flex justify-end">
-              <Button variant="link">{t('hero.cta')} &rarr;</Button>
+              <Button variant="link" asChild>
+                <Link to="/about">{t('hero.cta')} &rarr;</Link>
+              </Button>
             </div>
           </div>
         </div>

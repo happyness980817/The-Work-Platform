@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOutletContext, useSearchParams } from "react-router";
 import type { AppContext } from "~/types";
@@ -9,7 +9,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "~/common/components/ui/avatar";
-import { Badge } from "~/common/components/ui/badge";
 import { Button } from "~/common/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/common/components/ui/card";
 import { SessionCard } from "~/features/all-users/bookings/components/sessions-list-item-card";
@@ -90,7 +89,20 @@ export default function SessionsListPage() {
   const { t } = useTranslation();
   const { role } = useOutletContext<AppContext>();
   const isFacilitator = role === "facilitator";
-  const hasClients = mockClients.length > 0;
+  const [clients, setClients] = useState(mockClients);
+  const hasClients = clients.length > 0;
+
+  const handleDeleteSession = (clientId: number, sessionId: number) => {
+    setClients((prev) =>
+      prev
+        .map((c) =>
+          c.id === clientId
+            ? { ...c, sessions: c.sessions.filter((s) => s.id !== sessionId) }
+            : c
+        )
+        .filter((c) => c.sessions.length > 0)
+    );
+  };
 
   const [searchParams] = useSearchParams();
   const targetClientId = searchParams.get("clientId");
@@ -119,7 +131,7 @@ export default function SessionsListPage() {
 
       {hasClients ? (
         <div className="flex flex-col gap-6">
-          {mockClients.map((client) => (
+          {clients.map((client) => (
             <Card
               key={client.id}
               ref={(el) => {
@@ -169,6 +181,7 @@ export default function SessionsListPage() {
                       sessionNumber={session.sessionNumber}
                       startDate={session.startDate}
                       lastMessage={session.lastMessage}
+                      onDelete={() => handleDeleteSession(client.id, session.id)}
                     />
                   ))}
                 </div>

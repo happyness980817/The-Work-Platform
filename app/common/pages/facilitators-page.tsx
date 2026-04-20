@@ -10,6 +10,7 @@ import {
 import FacilitatorCard from '~/features/all-users/platform/components/facilitator-card';
 import { getFacilitators } from '~/features/all-users/platform/queries';
 import type { Route } from './+types/facilitators-page';
+import client from '~/supa-client';
 
 export const meta: Route.MetaFunction = () => {
   return [
