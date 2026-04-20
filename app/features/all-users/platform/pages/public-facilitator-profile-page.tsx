@@ -30,23 +30,30 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '~/common/components/ui/hover-card';
+import { getFacilitators } from '../queries';
+import { getFacilitatorsInfo } from '~/features/facilitators/queries';
 
-const mockBios: Record<number, string> = {
-  1: "I'm passionate about guiding people through The Work to find clarity and peace. With over 5 years of facilitation experience, I specialize in helping individuals navigate relationship challenges and workplace stress.",
-  2: 'As a certified facilitator, I help people question their stressful beliefs and find freedom through self-inquiry. I work with both individuals and groups.',
-  3: "I've been facilitating The Work for over 7 years. My focus is on helping people discover their own truth through compassionate, patient inquiry.",
+export const loader = async () => {
+  const facilitators = await getFacilitators();
+  const facilitatorsInfo = await getFacilitatorsInfo();
+  return { facilitators, facilitatorsInfo };
 };
 
+
 export default function FacilitatorProfilePage({
+  loaderData,
   params,
 }: Route.ComponentProps) {
   const { t } = useTranslation();
-  const facilitatorId = Number(params.facilitatorId);
+  const facilitatorId = params.facilitatorId;
   const facilitator =
-    dummyFacilitators.find((item) => item.id === facilitatorId) ??
-    dummyFacilitators[0];
-  const bio = mockBios[facilitator.id] ?? mockBios[1];
-
+    loaderData.facilitators.find((item) => item.profile_id === facilitatorId) ??
+    loaderData.facilitators[0];
+  const facilitatorInfo = loaderData.facilitatorsInfo?.find(
+    (item) => item.profile_id === facilitator?.profile_id
+  );
+  const bio = facilitatorInfo?.bio ?? '';
+  const introduction = facilitatorInfo?.introduction ?? '';
   return (
     <div className="flex flex-col max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
       <Breadcrumb>
@@ -67,7 +74,7 @@ export default function FacilitatorProfilePage({
       <div className="flex flex-col sm:flex-row gap-6 items-start">
         <Avatar className="size-28 border-4 border-background shadow-lg">
           <AvatarImage
-            src={facilitator.imageUrl}
+            src={facilitator.avatar || ''}
             alt={facilitator.name}
             className="object-cover"
           />
@@ -91,7 +98,9 @@ export default function FacilitatorProfilePage({
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <GlobeIcon className="size-3.5" />
-              {facilitator.languages.map((l) => t(l)).join(', ')}
+              {(facilitator.facilitator_profiles?.languages as string[] ?? [])
+                .map((l) => t(l))
+                .join(', ')}
             </span>
           </div>
 
@@ -110,7 +119,7 @@ export default function FacilitatorProfilePage({
               </HoverCardContent>
             </HoverCard>
             <Button variant="outline" size="sm" asChild>
-              <Link to={`/chats/dms/${facilitator.id}`}>
+              <Link to={`/chats/dms/${facilitator.profile_id}`}>
                 <MessageCircleIcon className="size-4 mr-1.5" />
                 DM
               </Link>
@@ -128,7 +137,7 @@ export default function FacilitatorProfilePage({
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            {facilitator.introduction}
+            {introduction}
           </p>
         </CardContent>
       </Card>
