@@ -5,21 +5,19 @@ import { useTranslation } from "react-i18next";
 import { Separator } from "~/common/components/ui/separator";
 import { MailIcon } from "lucide-react";
 
-interface FacilitatorCardProps {
-  id: number;
-  name: string;
-  languages: string[];
-  bio: string;
-  imageUrl: string;
-}
-
 export default function FacilitatorCard({
-  id,
+  profileId,
   name,
   languages,
   bio,
   imageUrl,
-}: FacilitatorCardProps) {
+}: {
+  profileId: string;
+  name: string;
+  languages: string[];
+  bio: string;
+  imageUrl: string | null;
+}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
@@ -44,7 +42,7 @@ export default function FacilitatorCard({
           disabled
           variant="secondary"
           className="flex-1 cursor-pointer"
-          onClick={() => navigate(`/facilitators/${id}`)}
+          onClick={() => navigate(`/facilitators/${profileId}`)}
         >
           <span>{t("facilitators.book")}</span>
         </Button>
