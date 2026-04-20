@@ -5,7 +5,23 @@ import { ScrollArea } from "~/common/components/ui/scroll-area";
 import { Button } from "~/common/components/ui/button";
 import { Input } from "~/common/components/ui/input";
 import { Badge } from "~/common/components/ui/badge";
-import { PlayIcon, SendIcon, StopCircleIcon, TimerIcon } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "~/common/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/common/components/ui/dropdown-menu";
+import { EllipsisVertical, LogOutIcon, PlayIcon, PlusIcon, SendIcon, StopCircleIcon, TimerIcon } from "lucide-react";
 import { MessageBubble } from "../components/messages-bubble";
 import { AiSuggestionCard } from "../../../facilitators/ai/components/ai-suggestion-card";
 import type { ChatContext } from "../layouts/chat-layout";
@@ -108,6 +124,7 @@ export default function ChatSessionPage() {
   const { t } = useTranslation();
   const [messageInput, setMessageInput] = useState("");
   const [isInSession, setIsInSession] = useState(false);
+  const [leaveOpen, setLeaveOpen] = useState(false);
   const isFacilitator = appContext.role === "facilitator";
 
   return (
@@ -122,7 +139,6 @@ export default function ChatSessionPage() {
           </div>
           {isFacilitator && (
             <div className="flex gap-2 items-center">
-              <Button variant="secondary"> + 새 세션</Button>
               <Button
                 variant={isInSession ? "destructive" : "outline"}
                 onClick={() => setIsInSession((prev) => !prev)}
@@ -134,6 +150,26 @@ export default function ChatSessionPage() {
                 )}
                 {isInSession ? t("chat.end_session") : t("chat.start_session")}
               </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-muted-foreground">
+                    <EllipsisVertical className="size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <PlusIcon className="size-4 mr-2" />
+                    새 세션
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-destructive focus:text-destructive cursor-pointer"
+                    onClick={() => setLeaveOpen(true)}
+                  >
+                    <LogOutIcon className="size-4 mr-2" />
+                    채팅방 나가기
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           )}
         </div>
@@ -223,6 +259,22 @@ export default function ChatSessionPage() {
           </div>
         )}
       </div>
+      <AlertDialog open={leaveOpen} onOpenChange={setLeaveOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>정말로 채팅방을 나가시겠습니까?</AlertDialogTitle>
+            <AlertDialogDescription>
+              채팅방을 나가면 이 세션의 모든 대화 내용이 삭제되며 복구할 수 없습니다.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>취소</AlertDialogCancel>
+            <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              나가기
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

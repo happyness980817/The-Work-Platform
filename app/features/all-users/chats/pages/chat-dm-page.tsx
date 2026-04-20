@@ -5,7 +5,23 @@ import { ScrollArea } from "~/common/components/ui/scroll-area";
 import { Button } from "~/common/components/ui/button";
 import { Input } from "~/common/components/ui/input";
 import { Badge } from "~/common/components/ui/badge";
-import { SendIcon } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "~/common/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/common/components/ui/dropdown-menu";
+import { EllipsisVertical, LogOutIcon, PlayIcon, SendIcon } from "lucide-react";
 import { MessageBubble } from "../components/messages-bubble";
 import type { ChatContext } from "../layouts/chat-layout";
 
@@ -47,6 +63,7 @@ export default function ChatDmPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [messageInput, setMessageInput] = useState("");
+  const [leaveOpen, setLeaveOpen] = useState(false);
   const isFacilitator = appContext.role === "facilitator";
 
   return (
@@ -54,13 +71,30 @@ export default function ChatDmPage() {
       <div className="flex items-center justify-between px-6 py-4 border-b bg-card/50 backdrop-blur-md shrink-0">
         <h2 className="text-lg font-bold">{mockClient.name}</h2>
         {isFacilitator && (
-          <div className="flex items-center gap-1">
-            <Button
-              onClick={() => navigate("/chats/sessions/1")}
-              className="font-semibold"
-            >
-              {t("chat.start_session")} &rarr;
-            </Button>
+          <div className="flex items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-muted-foreground">
+                  <EllipsisVertical className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => navigate("/chats/sessions/1")}
+                >
+                  <PlayIcon className="size-4 mr-2" />
+                  {t("chat.start_session")}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-destructive focus:text-destructive cursor-pointer"
+                  onClick={() => setLeaveOpen(true)}
+                >
+                  <LogOutIcon className="size-4 mr-2" />
+                  채팅방 나가기
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
       </div>
@@ -114,6 +148,22 @@ export default function ChatDmPage() {
           </div>
         )}
       </div>
+      <AlertDialog open={leaveOpen} onOpenChange={setLeaveOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>정말로 채팅방을 나가시겠습니까?</AlertDialogTitle>
+            <AlertDialogDescription>
+              채팅방을 나가면 이 대화의 모든 내용이 삭제되며 복구할 수 없습니다.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>취소</AlertDialogCancel>
+            <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              나가기
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

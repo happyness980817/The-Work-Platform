@@ -36,35 +36,31 @@ export function SessionCard({
 
   return (
     <>
-      <div className="flex items-center my-1">
-        <Button variant="ghost" className="flex-1 h-auto p-0" asChild>
-          <Link
-            to={`/facilitator/chats/sessions/${sessionNumber}`}
-            className="flex flex-col items-start w-full px-5 py-1"
-          >
-            <div className="flex flex-col w-full justify-between">
-              <div className="flex items-center py-1 w-full justify-between">
-                <span className="text-base font-semibold text-foreground">
-                  {t('bookings.session_number', { number: sessionNumber })}
-                </span>
-                <span className="text-xs text-muted-foreground font-normal">
-                  {startDate}
-                </span>
-              </div>
-              {lastMessage && (
-                <span className="text-sm text-muted-foreground font-normal mt-1 text-left w-full truncate">
-                  {lastMessage}
-                </span>
-              )}
-            </div>
-          </Link>
-        </Button>
+      <div className="group relative my-1 rounded-md hover:bg-accent">
+        <Link
+          to={`/facilitator/chats/sessions/${sessionNumber}`}
+          className="flex flex-col items-start w-full px-5 py-2"
+        >
+          <div className="flex items-center py-1 w-full justify-between gap-2 pr-8">
+            <span className="text-base font-semibold text-foreground">
+              {t('bookings.session_number', { number: sessionNumber })}
+            </span>
+            <span className="text-xs text-muted-foreground font-normal">
+              {startDate}
+            </span>
+          </div>
+          {lastMessage && (
+            <span className="text-sm text-muted-foreground font-normal mt-1 text-left w-full truncate pr-8">
+              {lastMessage}
+            </span>
+          )}
+        </Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="shrink-0 text-muted-foreground"
+              className="absolute right-2 top-1/2 -translate-y-1/2 size-7 text-muted-foreground opacity-0 group-hover:opacity-100 focus-visible:opacity-100 data-[state=open]:opacity-100 transition-opacity"
             >
               <EllipsisVertical className="size-4" />
             </Button>
