@@ -17,11 +17,11 @@ import {
 } from "~/common/components/ui/card";
 import { Separator } from "~/common/components/ui/separator";
 import { SettingsIcon, GlobeIcon } from "lucide-react";
-import { facilitators } from "~/features/all-users/data/facilitators";
+import { dummyFacilitators } from "~/features/all-users/data/facilitators";
 
 /* ── Mock: 퍼실리테이터 프로필 상세 데이터 ── */
 const mockFacilitatorProfile = {
-  ...facilitators[0],
+  ...dummyFacilitators[0],
   email: "sarah.jenkins@example.com",
   memberSince: "2023-03-15",
 };

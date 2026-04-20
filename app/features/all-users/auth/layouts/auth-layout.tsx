@@ -1,9 +1,9 @@
-import { Outlet, useOutletContext } from "react-router";
-import { useTranslation } from "react-i18next";
-import type { AppContext } from "~/types";
-import { LightRays } from "~/common/components/ui/light-rays";
-import { OrbitingCircles } from "~/common/components/ui/orbiting-circles";
-import { facilitators } from "~/features/all-users/data/facilitators";
+import { Outlet, useOutletContext } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import type { AppContext } from '~/types';
+import { LightRays } from '~/common/components/ui/light-rays';
+import { OrbitingCircles } from '~/common/components/ui/orbiting-circles';
+import { dummyFacilitators } from '~/features/all-users/data/facilitators';
 
 export default function AuthLayout() {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ export default function AuthLayout() {
             <span className="text-6xl">🌏</span>
 
             <OrbitingCircles iconSize={48} radius={120} duration={30}>
-              {facilitators.slice(0, 3).map((f) => (
+              {dummyFacilitators.slice(0, 3).map((f) => (
                 <img
                   key={f.id}
                   src={f.imageUrl}
@@ -33,7 +33,7 @@ export default function AuthLayout() {
             </OrbitingCircles>
 
             <OrbitingCircles iconSize={40} radius={180} duration={38} reverse>
-              {facilitators.slice(3).map((f) => (
+              {dummyFacilitators.slice(3).map((f) => (
                 <img
                   key={f.id}
                   src={f.imageUrl}
@@ -46,13 +46,13 @@ export default function AuthLayout() {
 
           <div className="text-center space-y-3 px-12">
             <h2 className="text-3xl font-bold">
-              The Work{" "}
+              The Work{' '}
               <span className="text-primary italic font-semibold">
                 Platform
               </span>
             </h2>
             <p className="text-muted-foreground text-sm max-w-sm whitespace-pre-line">
-              {t("auth.tagline")}
+              {t('auth.tagline')}
             </p>
           </div>
         </div>

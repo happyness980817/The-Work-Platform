@@ -1,20 +1,20 @@
-import { Link } from "react-router";
-import { useTranslation } from "react-i18next";
-import type { Route } from "./+types/public-facilitator-profile-page";
+import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import type { Route } from './+types/public-facilitator-profile-page';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "~/common/components/ui/avatar";
-import { Badge } from "~/common/components/ui/badge";
-import { Button } from "~/common/components/ui/button";
+} from '~/common/components/ui/avatar';
+import { Badge } from '~/common/components/ui/badge';
+import { Button } from '~/common/components/ui/button';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "~/common/components/ui/card";
-import { Separator } from "~/common/components/ui/separator";
+} from '~/common/components/ui/card';
+import { Separator } from '~/common/components/ui/separator';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,13 +22,18 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "~/common/components/ui/breadcrumb";
-import { GlobeIcon, CalendarIcon, MessageCircleIcon } from "lucide-react";
-import { facilitators } from "~/features/all-users/data/facilitators";
+} from '~/common/components/ui/breadcrumb';
+import { GlobeIcon, CalendarIcon, MessageCircleIcon } from 'lucide-react';
+import { dummyFacilitators } from '~/features/all-users/data/facilitators';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '~/common/components/ui/hover-card';
 
 const mockBios: Record<number, string> = {
   1: "I'm passionate about guiding people through The Work to find clarity and peace. With over 5 years of facilitation experience, I specialize in helping individuals navigate relationship challenges and workplace stress.",
-  2: "As a certified facilitator, I help people question their stressful beliefs and find freedom through self-inquiry. I work with both individuals and groups.",
+  2: 'As a certified facilitator, I help people question their stressful beliefs and find freedom through self-inquiry. I work with both individuals and groups.',
   3: "I've been facilitating The Work for over 7 years. My focus is on helping people discover their own truth through compassionate, patient inquiry.",
 };
 
@@ -38,7 +43,8 @@ export default function FacilitatorProfilePage({
   const { t } = useTranslation();
   const facilitatorId = Number(params.facilitatorId);
   const facilitator =
-    facilitators.find((item) => item.id === facilitatorId) ?? facilitators[0];
+    dummyFacilitators.find((item) => item.id === facilitatorId) ??
+    dummyFacilitators[0];
   const bio = mockBios[facilitator.id] ?? mockBios[1];
 
   return (
@@ -47,7 +53,7 @@ export default function FacilitatorProfilePage({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to="/facilitators">{t("facilitators.title")}</Link>
+              <Link to="/facilitators">{t('facilitators.title')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -74,7 +80,7 @@ export default function FacilitatorProfilePage({
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <h1 className="text-2xl font-bold">{facilitator.name}</h1>
             <Badge variant="default" className="w-fit text-xs">
-              {t("facilitator.certified")}
+              {t('facilitator.certified')}
             </Badge>
           </div>
 
@@ -85,17 +91,24 @@ export default function FacilitatorProfilePage({
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <GlobeIcon className="size-3.5" />
-              {facilitator.languages.map((l) => t(l)).join(", ")}
+              {facilitator.languages.map((l) => t(l)).join(', ')}
             </span>
           </div>
 
           <div className="flex gap-3 pt-1">
-            <Button size="sm" asChild>
-              <Link to={`/facilitators/${facilitator.id}`}>
-                <CalendarIcon className="size-4 mr-1.5" />
-                {t("facilitator.booking.title")}
-              </Link>
-            </Button>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <span className="cursor-not-allowed">
+                  <Button size="sm" className="opacity-50">
+                    <CalendarIcon className="size-4 mr-1.5" />
+                    {t('facilitator.booking.title')}
+                  </Button>
+                </span>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-auto px-3 py-2 text-sm">
+                구현 예정입니다
+              </HoverCardContent>
+            </HoverCard>
             <Button variant="outline" size="sm" asChild>
               <Link to={`/chats/dms/${facilitator.id}`}>
                 <MessageCircleIcon className="size-4 mr-1.5" />
@@ -111,7 +124,7 @@ export default function FacilitatorProfilePage({
       {/* Introduction */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">{t("profile.introduction")}</CardTitle>
+          <CardTitle className="text-lg">{t('profile.introduction')}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground leading-relaxed">

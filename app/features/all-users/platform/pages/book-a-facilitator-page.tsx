@@ -37,7 +37,7 @@ import {
 } from "~/common/components/ui/alert-dialog";
 import TimeSlotPicker from "~/features/all-users/platform/components/time-slot-picker";
 import TimezoneSelector from "~/common/components/timezone-selector";
-import { facilitators } from "~/features/all-users/data/facilitators";
+import { dummyFacilitators } from "~/features/all-users/data/facilitators";
 
 const MOCK_AVAILABLE_SLOTS = [
   "09:00 AM",
@@ -57,7 +57,7 @@ export default function FacilitatorBookingPage({
   const navigate = useNavigate();
   const facilitatorId = Number(params.facilitatorId);
   const facilitator =
-    facilitators.find((item) => item.id === facilitatorId) ?? facilitators[0];
+    dummyFacilitators.find((item) => item.id === facilitatorId) ?? dummyFacilitators[0];
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     new Date(),
