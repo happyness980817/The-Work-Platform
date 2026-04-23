@@ -2,19 +2,8 @@ import client from '~/supa-client';
 
 export const getFacilitators = async (limit?: number) => {
   let query = client
-    .from('profiles')
-    .select(
-      `
-      profile_id,
-      name,
-      avatar,
-      facilitator_profiles (
-        bio,
-        languages
-      )
-    `
-    )
-    .eq('role', 'facilitator')
+    .from('facilitator_list_view')
+    .select('*')
     .order('created_at', { ascending: false });
 
   if (limit) query = query.limit(limit);

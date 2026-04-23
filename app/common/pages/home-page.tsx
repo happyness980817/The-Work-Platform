@@ -57,14 +57,10 @@ export default function HomePage({ loaderData }: Route.ComponentProps) {
           {loaderData.facilitators.map((facilitator) => (
             <FacilitatorCard
               key={facilitator.profile_id}
-              profileId={facilitator.profile_id}
-              name={facilitator.name}
-              languages={
-                (facilitator.facilitator_profiles?.languages as
-                  | string[]
-                  | null) ?? []
-              }
-              bio={facilitator.facilitator_profiles?.bio || ''}
+              profileId={facilitator.profile_id ?? ''}
+              name={facilitator.name ?? ''}
+              languages={(facilitator.languages as string[] | null) ?? []}
+              bio={facilitator.bio ?? ''}
               imageUrl={facilitator.avatar}
             />
           ))}

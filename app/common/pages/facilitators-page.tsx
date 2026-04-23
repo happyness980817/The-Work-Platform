@@ -10,7 +10,6 @@ import {
 import FacilitatorCard from '~/features/all-users/platform/components/facilitator-card';
 import { getFacilitators } from '~/features/all-users/platform/queries';
 import type { Route } from './+types/facilitators-page';
-import client from '~/supa-client';
 
 export const meta: Route.MetaFunction = () => {
   return [
@@ -38,7 +37,7 @@ export default function FacilitatorsPage({ loaderData }: Route.ComponentProps) {
   const language = searchParams.get('language');
 
   const filtered = loaderData.facilitators.filter((f) => {
-    const langs = (f.facilitator_profiles?.languages as string[] | null) ?? [];
+    const langs = (f.languages as string[] | null) ?? [];
     if (language && !langs.includes(language)) return false;
     return true;
   });
@@ -98,15 +97,11 @@ export default function FacilitatorsPage({ loaderData }: Route.ComponentProps) {
         {filtered.map((facilitator) => (
           <FacilitatorCard
             key={facilitator.profile_id}
-            profileId={facilitator.profile_id}
-            name={facilitator.name}
+            profileId={facilitator.profile_id ?? ''}
+            name={facilitator.name ?? ''}
             imageUrl={facilitator.avatar}
-            bio={facilitator.facilitator_profiles?.bio ?? ''}
-            languages={
-              (facilitator.facilitator_profiles?.languages as
-                | string[]
-                | null) ?? []
-            }
+            bio={facilitator.bio ?? ''}
+            languages={(facilitator.languages as string[] | null) ?? []}
           />
         ))}
       </div>

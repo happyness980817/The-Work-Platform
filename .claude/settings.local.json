@@ -3,7 +3,10 @@
     "allow": [
       "mcp__supabase__list_tables",
       "mcp__supabase__apply_migration",
-      "mcp__supabase__execute_sql"
+      "mcp__supabase__execute_sql",
+      "Bash(curl -s -i http://localhost:5174/facilitators)",
+      "Bash(curl -s http://localhost:5174/)",
+      "Bash(curl -s http://localhost:5174/facilitators)"
     ],
     "additionalDirectories": [
       "c:\\dev-products\\web\\app\\migrations\\meta"

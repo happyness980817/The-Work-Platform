@@ -3,6 +3,7 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
@@ -94,21 +95,21 @@ export default function Navigation({
         <NavigationMenu viewport={false}>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link to="/facilitators" className={navigationMenuTriggerStyle()}>
-                {t("nav.facilitators")}
-              </Link>
+              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <Link to="/facilitators">{t("nav.facilitators")}</Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
             {isLoggedIn && (
               <NavigationMenuItem>
-                <Link to="/chats" className={navigationMenuTriggerStyle()}>
-                  {t("nav.conversations")}
-                </Link>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link to="/chats">{t("nav.conversations")}</Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
             )}
             <NavigationMenuItem>
-              <Link to="/about" className={navigationMenuTriggerStyle()}>
-                {t("nav.about")}
-              </Link>
+              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <Link to="/about">{t("nav.about")}</Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>{t("nav.language")}</NavigationMenuTrigger>

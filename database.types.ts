@@ -32,6 +32,13 @@ export type Database = {
             foreignKeyName: "client_profiles_profile_id_profiles_profile_id_fk"
             columns: ["profile_id"]
             isOneToOne: true
+            referencedRelation: "facilitator_list_view"
+            referencedColumns: ["profile_id"]
+          },
+          {
+            foreignKeyName: "client_profiles_profile_id_profiles_profile_id_fk"
+            columns: ["profile_id"]
+            isOneToOne: true
             referencedRelation: "profiles"
             referencedColumns: ["profile_id"]
           },
@@ -71,6 +78,13 @@ export type Database = {
             foreignKeyName: "dm_messages_sender_id_profiles_profile_id_fk"
             columns: ["sender_id"]
             isOneToOne: false
+            referencedRelation: "facilitator_list_view"
+            referencedColumns: ["profile_id"]
+          },
+          {
+            foreignKeyName: "dm_messages_sender_id_profiles_profile_id_fk"
+            columns: ["sender_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["profile_id"]
           },
@@ -96,6 +110,13 @@ export type Database = {
           room_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "dm_room_members_profile_id_profiles_profile_id_fk"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "facilitator_list_view"
+            referencedColumns: ["profile_id"]
+          },
           {
             foreignKeyName: "dm_room_members_profile_id_profiles_profile_id_fk"
             columns: ["profile_id"]
@@ -153,6 +174,13 @@ export type Database = {
           profile_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "facilitator_profiles_profile_id_profiles_profile_id_fk"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "facilitator_list_view"
+            referencedColumns: ["profile_id"]
+          },
           {
             foreignKeyName: "facilitator_profiles_profile_id_profiles_profile_id_fk"
             columns: ["profile_id"]
@@ -222,6 +250,13 @@ export type Database = {
             foreignKeyName: "session_messages_sender_id_profiles_profile_id_fk"
             columns: ["sender_id"]
             isOneToOne: false
+            referencedRelation: "facilitator_list_view"
+            referencedColumns: ["profile_id"]
+          },
+          {
+            foreignKeyName: "session_messages_sender_id_profiles_profile_id_fk"
+            columns: ["sender_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["profile_id"]
           },
@@ -276,7 +311,21 @@ export type Database = {
             foreignKeyName: "session_rooms_client_id_profiles_profile_id_fk"
             columns: ["client_id"]
             isOneToOne: false
+            referencedRelation: "facilitator_list_view"
+            referencedColumns: ["profile_id"]
+          },
+          {
+            foreignKeyName: "session_rooms_client_id_profiles_profile_id_fk"
+            columns: ["client_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["profile_id"]
+          },
+          {
+            foreignKeyName: "session_rooms_facilitator_id_profiles_profile_id_fk"
+            columns: ["facilitator_id"]
+            isOneToOne: false
+            referencedRelation: "facilitator_list_view"
             referencedColumns: ["profile_id"]
           },
           {
@@ -290,7 +339,21 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      facilitator_list_view: {
+        Row: {
+          availability: string | null
+          avatar: string | null
+          bio: string | null
+          created_at: string | null
+          introduction: string | null
+          is_certified: boolean | null
+          languages: Json | null
+          name: string | null
+          profile_id: string | null
+          updated_at: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

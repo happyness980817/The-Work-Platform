@@ -24,19 +24,16 @@ import {
   BreadcrumbSeparator,
 } from '~/common/components/ui/breadcrumb';
 import { GlobeIcon, CalendarIcon, MessageCircleIcon } from 'lucide-react';
-import { dummyFacilitators } from '~/features/all-users/data/facilitators';
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '~/common/components/ui/hover-card';
 import { getFacilitators } from '../queries';
-import { getFacilitatorsInfo } from '~/features/facilitators/queries';
 
 export const loader = async () => {
   const facilitators = await getFacilitators();
-  const facilitatorsInfo = await getFacilitatorsInfo();
-  return { facilitators, facilitatorsInfo };
+  return { facilitators };
 };
 
 
@@ -49,11 +46,10 @@ export default function FacilitatorProfilePage({
   const facilitator =
     loaderData.facilitators.find((item) => item.profile_id === facilitatorId) ??
     loaderData.facilitators[0];
-  const facilitatorInfo = loaderData.facilitatorsInfo?.find(
-    (item) => item.profile_id === facilitator?.profile_id
-  );
-  const bio = facilitatorInfo?.bio ?? '';
-  const introduction = facilitatorInfo?.introduction ?? '';
+  const name = facilitator?.name ?? '';
+  const bio = facilitator?.bio ?? '';
+  const introduction = facilitator?.introduction ?? '';
+  const languages = (facilitator?.languages as string[] | null) ?? [];
   return (
     <div className="flex flex-col max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
       <Breadcrumb>
@@ -65,7 +61,7 @@ export default function FacilitatorProfilePage({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{facilitator.name}</BreadcrumbPage>
+            <BreadcrumbPage>{name}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -75,17 +71,17 @@ export default function FacilitatorProfilePage({
         <Avatar className="size-28 border-4 border-background shadow-lg">
           <AvatarImage
             src={facilitator.avatar || ''}
-            alt={facilitator.name}
+            alt={name}
             className="object-cover"
           />
           <AvatarFallback className="text-3xl">
-            {facilitator.name.charAt(0)}
+            {name.charAt(0)}
           </AvatarFallback>
         </Avatar>
 
         <div className="flex-1 space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <h1 className="text-2xl font-bold">{facilitator.name}</h1>
+            <h1 className="text-2xl font-bold">{name}</h1>
             <Badge variant="default" className="w-fit text-xs">
               {t('facilitator.certified')}
             </Badge>
@@ -98,9 +94,7 @@ export default function FacilitatorProfilePage({
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <GlobeIcon className="size-3.5" />
-              {(facilitator.facilitator_profiles?.languages as string[] ?? [])
-                .map((l) => t(l))
-                .join(', ')}
+              {languages.map((l) => t(l)).join(', ')}
             </span>
           </div>
 

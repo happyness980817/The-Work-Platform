@@ -28,28 +28,20 @@ export default function FacilitatorCard({
   return (
     <Card className="overflow-hidden flex flex-col">
       <Link to={`/facilitators/profile/${profileId}`} className="block group">
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <div
-            className="h-48 w-full bg-cover bg-center transition-transform duration-200 group-hover:scale-105"
-            style={{ backgroundImage: `url("${imageUrl}")` }}
+            className="h-48 w-full bg-cover bg-center bg-muted transition-transform duration-200 group-hover:scale-105"
+            style={imageUrl ? { backgroundImage: `url("${imageUrl}")` } : undefined}
           />
-          <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-card to-transparent h-16" />
+          <div className="absolute bottom-0 left-0 right-0 h-12 bg-linear-to-t from-card to-transparent pointer-events-none" />
         </div>
         <CardContent className="flex-1 pt-4 space-y-2">
           <h3 className="text-lg font-bold group-hover:text-primary transition-colors">
             {name}
           </h3>
-          <div className="flex flex-wrap gap-1">
-            {languages.map((l) => (
-              <Badge
-                key={l}
-                variant="secondary"
-                className="text-xs px-2 py-0.5"
-              >
-                {t(l)}
-              </Badge>
-            ))}
-          </div>
+          <p className="text-sm py-0.5 font-light">
+            {languages.map((l) => t(l)).join(', ')}
+          </p>
           <p className="text-sm text-muted-foreground line-clamp-3">{bio}</p>
         </CardContent>
       </Link>
