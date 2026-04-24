@@ -37,8 +37,7 @@ export default function FacilitatorsPage({ loaderData }: Route.ComponentProps) {
   const language = searchParams.get('language');
 
   const filtered = loaderData.facilitators.filter((f) => {
-    const langs = (f.languages as string[] | null) ?? [];
-    if (language && !langs.includes(language)) return false;
+    if (language && !f.languages.includes(language)) return false;
     return true;
   });
 
@@ -97,11 +96,11 @@ export default function FacilitatorsPage({ loaderData }: Route.ComponentProps) {
         {filtered.map((facilitator) => (
           <FacilitatorCard
             key={facilitator.profile_id}
-            profileId={facilitator.profile_id ?? ''}
-            name={facilitator.name ?? ''}
+            profileId={facilitator.profile_id}
+            name={facilitator.name}
             imageUrl={facilitator.avatar}
             bio={facilitator.bio ?? ''}
-            languages={(facilitator.languages as string[] | null) ?? []}
+            languages={facilitator.languages}
           />
         ))}
       </div>

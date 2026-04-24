@@ -49,7 +49,7 @@ export default function FacilitatorProfilePage({
   const name = facilitator?.name ?? '';
   const bio = facilitator?.bio ?? '';
   const introduction = facilitator?.introduction ?? '';
-  const languages = (facilitator?.languages as string[] | null) ?? [];
+  const languages = facilitator?.languages ?? [];
   return (
     <div className="flex flex-col max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
       <Breadcrumb>
