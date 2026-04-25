@@ -12,3 +12,13 @@ export const getFacilitators = async (limit?: number) => {
   if (error) throw error;
   return data ?? [];
 };
+
+export const getFacilitatorById = async (facilitatorId: string) => {
+  const { data, error } = await client
+    .from('facilitator_list_view')
+    .select('*')
+    .eq('profile_id', facilitatorId)
+    .single();
+  if (error) throw error;
+  return data;
+};

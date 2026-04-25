@@ -29,27 +29,31 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '~/common/components/ui/hover-card';
-import { getFacilitators } from '../queries';
+import { getFacilitatorById } from '../queries';
 
-export const loader = async () => {
-  const facilitators = await getFacilitators();
-  return { facilitators };
+export const meta: Route.MetaFunction = ({ data }) => {
+  return [
+    {
+      title: `${data?.facilitator?.name ?? 'Facilitator'} | The Work Platform`,
+    },
+    { name: 'description', content: `Facilitator profile` },
+  ];
 };
 
+export const loader = async ({ params }: Route.LoaderArgs) => {
+  const facilitator = await getFacilitatorById(params.facilitatorId);
+  return { facilitator };
+};
 
 export default function FacilitatorProfilePage({
   loaderData,
-  params,
 }: Route.ComponentProps) {
   const { t } = useTranslation();
-  const facilitatorId = params.facilitatorId;
-  const facilitator =
-    loaderData.facilitators.find((item) => item.profile_id === facilitatorId) ??
-    loaderData.facilitators[0];
-  const name = facilitator?.name ?? '';
-  const bio = facilitator?.bio ?? '';
-  const introduction = facilitator?.introduction ?? '';
-  const languages = facilitator?.languages ?? [];
+  const { facilitator } = loaderData;
+  const name = facilitator.name;
+  const bio = facilitator.bio ?? '';
+  const introduction = facilitator.introduction ?? '';
+  const languages = facilitator.languages;
   return (
     <div className="flex flex-col max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
       <Breadcrumb>
@@ -74,9 +78,7 @@ export default function FacilitatorProfilePage({
             alt={name}
             className="object-cover"
           />
-          <AvatarFallback className="text-3xl">
-            {name.charAt(0)}
-          </AvatarFallback>
+          <AvatarFallback className="text-3xl">{name.charAt(0)}</AvatarFallback>
         </Avatar>
 
         <div className="flex-1 space-y-3">
