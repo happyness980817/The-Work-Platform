@@ -6,7 +6,8 @@
       "mcp__supabase__execute_sql",
       "Bash(curl -s -i http://localhost:5174/facilitators)",
       "Bash(curl -s http://localhost:5174/)",
-      "Bash(curl -s http://localhost:5174/facilitators)"
+      "Bash(curl -s http://localhost:5174/facilitators)",
+      "mcp__supabase__get_logs"
     ],
     "additionalDirectories": [
       "c:\\dev-products\\web\\app\\migrations\\meta"

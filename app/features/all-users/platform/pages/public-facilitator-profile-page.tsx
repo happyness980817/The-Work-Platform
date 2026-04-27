@@ -30,6 +30,7 @@ import {
   HoverCardTrigger,
 } from '~/common/components/ui/hover-card';
 import { getFacilitatorById } from '../queries';
+import { makeSSRClient } from '~/supa-client';
 
 export const meta: Route.MetaFunction = ({ data }) => {
   return [
@@ -40,8 +41,9 @@ export const meta: Route.MetaFunction = ({ data }) => {
   ];
 };
 
-export const loader = async ({ params }: Route.LoaderArgs) => {
-  const facilitator = await getFacilitatorById(params.facilitatorId);
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
+  const { client } = makeSSRClient(request);
+  const facilitator = await getFacilitatorById(client, params.facilitatorId);
   return { facilitator };
 };
 

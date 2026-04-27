@@ -1,9 +1,20 @@
-import { Outlet, useOutletContext } from 'react-router';
+import { Outlet, redirect, useOutletContext } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import type { Route } from './+types/auth-layout';
 import type { AppContext } from '~/types';
 import { LightRays } from '~/common/components/ui/light-rays';
 import { OrbitingCircles } from '~/common/components/ui/orbiting-circles';
 import { dummyFacilitators } from '~/features/all-users/data/facilitators';
+import { makeSSRClient } from '~/supa-client';
+
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { client } = makeSSRClient(request);
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  if (user) throw redirect('/');
+  return null;
+};
 
 export default function AuthLayout() {
   const { t } = useTranslation();

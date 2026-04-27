@@ -10,6 +10,8 @@ import "./lib/i18n";
 import type { Route } from "./+types/root";
 import "./app.css";
 import type { AppContext } from "./types";
+import { makeSSRClient } from "./supa-client";
+import { getUserById } from "./features/all-users/users/queries";
 
 const PRETENDARD =
   "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css";
@@ -56,14 +58,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { client, headers } = makeSSRClient(request);
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  if (user) {
+    const profile = await getUserById(user.id);
+    return { user, profile };
+  }
+  return { user: null, profile: null };
+};
+
+export default function App({ loaderData }: Route.ComponentProps) {
+  const isLoggedIn = loaderData.user !== null;
   const appContext: AppContext = {
-    isLoggedIn: true,
-    role: "facilitator",
-    isEditor: false,
-    name: "mockname",
-    userId: "mockuserid",
-    avatar: "",
+    isLoggedIn,
+    role: loaderData.profile?.role ?? "client",
+    isEditor: loaderData.profile?.is_editor ?? false,
+    name: loaderData.profile?.name ?? "",
+    userId: loaderData.user?.id ?? "",
+    avatar: loaderData.profile?.avatar ?? "",
   };
 
   return <Outlet context={appContext} />;

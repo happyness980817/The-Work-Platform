@@ -1,5 +1,8 @@
-import { Link } from "react-router";
+import { Form, Link, redirect, useNavigation } from "react-router";
 import { useTranslation } from "react-i18next";
+import z from "zod";
+import { LoaderCircle, GlobeIcon } from "lucide-react";
+import type { Route } from "./+types/join-page";
 import { Button } from "~/common/components/ui/button";
 import { Input } from "~/common/components/ui/input";
 import { Label } from "~/common/components/ui/label";
@@ -15,15 +18,73 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
-import { GlobeIcon } from "lucide-react";
+import { makeSSRClient } from "~/supa-client";
+
+export const meta: Route.MetaFunction = () => {
+  return [{ title: "Join | The Work Platform" }];
+};
+
+const formSchema = z
+  .object({
+    name: z.string().min(2, "Name must be at least 2 characters long."),
+    email: z.email(),
+    password: z.string().min(8, "Password must be at least 8 characters long."),
+    passwordConfirmation: z.string(),
+    role: z.enum(["client", "facilitator"]),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: "Passwords do not match.",
+    path: ["passwordConfirmation"],
+  });
+
+export const action = async ({ request }: Route.ActionArgs) => {
+  const formData = await request.formData();
+  const { success, data, error } = formSchema.safeParse(
+    Object.fromEntries(formData)
+  );
+  if (!success) {
+    return {
+      signUpError: null,
+      formErrors: z.flattenError(error).fieldErrors,
+    };
+  }
+  const { client, headers } = makeSSRClient(request);
+  const { data: signUpData, error: signUpError } = await client.auth.signUp({
+    email: data.email,
+    password: data.password,
+    options: {
+      data: {
+        name: data.name,
+        role: data.role,
+      },
+    },
+  });
+  if (signUpError) {
+    return {
+      formErrors: null,
+      signUpError: signUpError.message,
+    };
+  }
+  // Supabase는 보안상 중복 이메일에 명시적 에러를 반환하지 않고 빈 identities 배열로 신호한다
+  if (signUpData.user && signUpData.user.identities?.length === 0) {
+    return {
+      formErrors: null,
+      signUpError: "가입에 실패했습니다. 다른 이메일로 시도해주세요.",
+    };
+  }
+  return redirect("/", { headers });
+};
 
 const languages = [
   { label: "한국어", value: "ko" },
   { label: "English", value: "en" },
 ];
 
-export default function JoinPage() {
+export default function JoinPage({ actionData }: Route.ComponentProps) {
   const { t, i18n } = useTranslation();
+  const navigation = useNavigation();
+  const isSubmitting =
+    navigation.state === "submitting" || navigation.state === "loading";
 
   return (
     <div className="flex flex-col relative items-center justify-center h-full px-4">
@@ -69,15 +130,21 @@ export default function JoinPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="client">
-            <form className="space-y-4">
+            <Form className="space-y-4" method="post">
               <input type="hidden" name="role" value="client" />
               <div className="space-y-2">
                 <Label htmlFor="client-name">{t("auth.name")}</Label>
                 <Input
                   id="client-name"
                   name="name"
+                  required
                   placeholder={t("auth.placeholder_name")}
                 />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.name?.join(", ")}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="client-email">{t("auth.email")}</Label>
@@ -85,12 +152,28 @@ export default function JoinPage() {
                   id="client-email"
                   name="email"
                   type="email"
+                  required
                   placeholder={t("auth.placeholder_email")}
                 />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.email?.join(", ")}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="client-password">{t("auth.password")}</Label>
-                <Input id="client-password" name="password" type="password" />
+                <Input
+                  id="client-password"
+                  name="password"
+                  type="password"
+                  required
+                />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.password?.join(", ")}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="client-password-confirm">
@@ -100,23 +183,42 @@ export default function JoinPage() {
                   id="client-password-confirm"
                   name="passwordConfirmation"
                   type="password"
+                  required
                 />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.passwordConfirmation?.join(", ")}
+                  </p>
+                )}
               </div>
-              <Button className="w-full" type="submit">
-                {t("auth.join_button")}
+              <Button className="w-full" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <LoaderCircle className="animate-spin" />
+                ) : (
+                  t("auth.join_button")
+                )}
               </Button>
-            </form>
+              {actionData && "signUpError" in actionData && actionData.signUpError && (
+                <p className="text-sm text-red-500">{actionData.signUpError}</p>
+              )}
+            </Form>
           </TabsContent>
           <TabsContent value="facilitator">
-            <form className="space-y-4">
+            <Form className="space-y-4" method="post">
               <input type="hidden" name="role" value="facilitator" />
               <div className="space-y-2">
                 <Label htmlFor="facilitator-name">{t("auth.name")}</Label>
                 <Input
                   id="facilitator-name"
                   name="name"
+                  required
                   placeholder={t("auth.placeholder_name")}
                 />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.name?.join(", ")}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="facilitator-email">{t("auth.email")}</Label>
@@ -124,8 +226,14 @@ export default function JoinPage() {
                   id="facilitator-email"
                   name="email"
                   type="email"
+                  required
                   placeholder={t("auth.placeholder_email")}
                 />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.email?.join(", ")}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="facilitator-password">
@@ -135,7 +243,13 @@ export default function JoinPage() {
                   id="facilitator-password"
                   name="password"
                   type="password"
+                  required
                 />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.password?.join(", ")}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="facilitator-password-confirm">
@@ -145,12 +259,25 @@ export default function JoinPage() {
                   id="facilitator-password-confirm"
                   name="passwordConfirmation"
                   type="password"
+                  required
                 />
+                {actionData && "formErrors" in actionData && (
+                  <p className="text-sm text-red-500">
+                    {actionData?.formErrors?.passwordConfirmation?.join(", ")}
+                  </p>
+                )}
               </div>
-              <Button className="w-full" type="submit">
-                {t("auth.join_button")}
+              <Button className="w-full" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <LoaderCircle className="animate-spin" />
+                ) : (
+                  t("auth.join_button")
+                )}
               </Button>
-            </form>
+              {actionData && "signUpError" in actionData && actionData.signUpError && (
+                <p className="text-sm text-red-500">{actionData.signUpError}</p>
+              )}
+            </Form>
           </TabsContent>
         </Tabs>
         <p className="text-sm text-muted-foreground">

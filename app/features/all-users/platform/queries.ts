@@ -1,6 +1,10 @@
-import client from '~/supa-client';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '~/supa-client';
 
-export const getFacilitators = async (limit?: number) => {
+export const getFacilitators = async (
+  client: SupabaseClient<Database>,
+  limit?: number
+) => {
   let query = client
     .from('facilitator_list_view')
     .select('*')
@@ -13,7 +17,10 @@ export const getFacilitators = async (limit?: number) => {
   return data ?? [];
 };
 
-export const getFacilitatorById = async (facilitatorId: string) => {
+export const getFacilitatorById = async (
+  client: SupabaseClient<Database>,
+  facilitatorId: string
+) => {
   const { data, error } = await client
     .from('facilitator_list_view')
     .select('*')

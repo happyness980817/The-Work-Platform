@@ -9,6 +9,7 @@ import {
 } from '~/common/components/ui/dropdown-menu';
 import FacilitatorCard from '~/features/all-users/platform/components/facilitator-card';
 import { getFacilitators } from '~/features/all-users/platform/queries';
+import { makeSSRClient } from '~/supa-client';
 import type { Route } from './+types/facilitators-page';
 
 export const meta: Route.MetaFunction = () => {
@@ -18,8 +19,9 @@ export const meta: Route.MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
-  const facilitators = await getFacilitators();
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { client } = makeSSRClient(request);
+  const facilitators = await getFacilitators(client);
   return { facilitators };
 };
 

@@ -1,29 +1,64 @@
-import { Link } from "react-router";
+import { Form, Link, redirect, useNavigation } from "react-router";
 import { useTranslation } from "react-i18next";
+import z from "zod";
+import { LoaderCircle, GlobeIcon } from "lucide-react";
+import type { Route } from "./+types/login-page";
 import { Button } from "~/common/components/ui/button";
 import { Input } from "~/common/components/ui/input";
 import { Label } from "~/common/components/ui/label";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "~/common/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
-import { GlobeIcon } from "lucide-react";
+import { makeSSRClient } from "~/supa-client";
+
+export const meta: Route.MetaFunction = () => {
+  return [{ title: "Login | The Work Platform" }];
+};
+
+const formSchema = z.object({
+  email: z.email(),
+  password: z.string().min(8, "Password must be at least 8 characters long."),
+});
+
+export const action = async ({ request }: Route.ActionArgs) => {
+  const formData = await request.formData();
+  const { success, data, error } = formSchema.safeParse(
+    Object.fromEntries(formData)
+  );
+  if (!success) {
+    return {
+      loginError: null,
+      formErrors: z.flattenError(error).fieldErrors,
+    };
+  }
+  const { email, password } = data;
+  const { client, headers } = makeSSRClient(request);
+  const { error: loginError } = await client.auth.signInWithPassword({
+    email,
+    password,
+  });
+  if (loginError) {
+    return {
+      formErrors: null,
+      loginError: loginError.message,
+    };
+  }
+  return redirect("/", { headers });
+};
 
 const languages = [
   { label: "한국어", value: "ko" },
   { label: "English", value: "en" },
 ];
 
-export default function LoginPage() {
+export default function LoginPage({ actionData }: Route.ComponentProps) {
   const { t, i18n } = useTranslation();
+  const navigation = useNavigation();
+  const isSubmitting =
+    navigation.state === "submitting" || navigation.state === "loading";
 
   return (
     <div className="flex flex-col relative items-center justify-center h-full px-4">
@@ -57,66 +92,42 @@ export default function LoginPage() {
           />
         </div>
         <h1 className="text-2xl font-semibold">{t("auth.login")}</h1>
-        <Tabs defaultValue="client" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="client">{t("auth.client")}</TabsTrigger>
-            <TabsTrigger value="facilitator">
-              {t("auth.facilitator")}
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="client">
-            <form className="space-y-4">
-              <input type="hidden" name="role" value="client" />
-              <div className="space-y-2">
-                <Label htmlFor="client-email">{t("auth.email")}</Label>
-                <Input
-                  id="client-email"
-                  name="email"
-                  type="email"
-                  placeholder={t("auth.placeholder_email")}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="client-password">{t("auth.password")}</Label>
-                <Input
-                  id="client-password"
-                  name="password"
-                  type="password"
-                />
-              </div>
-              <Button className="w-full" type="submit">
-                {t("auth.login_button")}
-              </Button>
-            </form>
-          </TabsContent>
-          <TabsContent value="facilitator">
-            <form className="space-y-4">
-              <input type="hidden" name="role" value="facilitator" />
-              <div className="space-y-2">
-                <Label htmlFor="facilitator-email">{t("auth.email")}</Label>
-                <Input
-                  id="facilitator-email"
-                  name="email"
-                  type="email"
-                  placeholder={t("auth.placeholder_email")}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="facilitator-password">
-                  {t("auth.password")}
-                </Label>
-                <Input
-                  id="facilitator-password"
-                  name="password"
-                  type="password"
-                />
-              </div>
-              <Button className="w-full" type="submit">
-                {t("auth.login_button")}
-              </Button>
-            </form>
-          </TabsContent>
-        </Tabs>
+        <Form className="w-full space-y-4" method="post">
+          <div className="space-y-2">
+            <Label htmlFor="email">{t("auth.email")}</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder={t("auth.placeholder_email")}
+            />
+            {actionData && "formErrors" in actionData && (
+              <p className="text-sm text-red-500">
+                {actionData?.formErrors?.email?.join(", ")}
+              </p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">{t("auth.password")}</Label>
+            <Input id="password" name="password" type="password" required />
+            {actionData && "formErrors" in actionData && (
+              <p className="text-sm text-red-500">
+                {actionData?.formErrors?.password?.join(", ")}
+              </p>
+            )}
+          </div>
+          <Button className="w-full" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <LoaderCircle className="animate-spin" />
+            ) : (
+              t("auth.login_button")
+            )}
+          </Button>
+          {actionData && "loginError" in actionData && actionData.loginError && (
+            <p className="text-sm text-red-500">{actionData.loginError}</p>
+          )}
+        </Form>
         <p className="text-sm text-muted-foreground">
           {t("auth.no_account")}{" "}
           <Link to="/auth/join" className="text-primary hover:underline">

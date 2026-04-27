@@ -4,10 +4,12 @@ import FacilitatorCard from '~/features/all-users/platform/components/facilitato
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { getFacilitators } from '~/features/all-users/platform/queries';
+import { makeSSRClient } from '~/supa-client';
 import type { Route } from './+types/home-page';
 
-export const loader = async () => {
-  const facilitators = await getFacilitators(6);
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { client } = makeSSRClient(request);
+  const facilitators = await getFacilitators(client, 6);
   return { facilitators };
 };
 

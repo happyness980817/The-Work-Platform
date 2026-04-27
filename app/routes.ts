@@ -47,6 +47,7 @@ export default [
       route("/join", "features/all-users/auth/pages/join-page.tsx"),
     ]),
   ]),
+  route("/auth/logout", "features/all-users/auth/pages/logout-page.tsx"),
   layout("features/all-users/chats/layouts/chat-shell-layout.tsx", [
     layout("features/all-users/chats/layouts/chat-layout.tsx", [
       route("/chats", "features/all-users/chats/pages/chats-index-page.tsx"),
