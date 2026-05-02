@@ -1,6 +1,6 @@
 export interface AppContext {
   isLoggedIn: boolean;
-  role: "client" | "facilitator";
+  role: 'client' | 'facilitator';
   isEditor: boolean;
   name: string;
   userId: string;

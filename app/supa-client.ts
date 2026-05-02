@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js';
 import {
   createBrowserClient,
   createServerClient,
@@ -31,9 +30,9 @@ export type Database = MergeDeep<
   }
 >;
 
-const browserClient = createClient<Database>(
-  'https://almiiyqibrjtzgzmzoix.supabase.co',
-  'sb_publishable_5rHFKQTZuIJRN2TyHU_WhA_ZPoZV878'
+const browserClient = createBrowserClient<Database>(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_PUBLISHABLE_KEY!
 );
 
 export const makeSSRClient = (request: Request) => {
