@@ -1,7 +1,14 @@
-import { useEffect, useState } from "react";
-import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Button } from "~/common/components/ui/button";
-import { Card } from "~/common/components/ui/card";
+import { useEffect, useState } from 'react';
+import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import { toast } from 'sonner';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '~/common/components/ui/accordion';
+import { Button } from '~/common/components/ui/button';
+import { Card } from '~/common/components/ui/card';
 import {
   Item,
   ItemActions,
@@ -9,41 +16,42 @@ import {
   ItemDescription,
   ItemGroup,
   ItemTitle,
-} from "~/common/components/ui/item";
-import { Textarea } from "~/common/components/ui/textarea";
-import { cn } from "~/lib/utils";
+} from '~/common/components/ui/item';
+import { Textarea } from '~/common/components/ui/textarea';
+import { cn } from '~/lib/utils';
+import { EMOTION_CATEGORIES } from './emotions.constants';
 import {
   WORKSHEETS,
   WORKSHEET_LIST,
   type WorksheetType,
-} from "./worksheets.constants";
+} from './worksheets.constants';
 
 interface WorksheetOverlayProps {
   open: boolean;
   onClose: () => void;
 }
 
-type Step = "select" | "fill";
+type Step = 'select' | 'fill' | 'emotions';
 
 const PAGE_COUNT = 6;
 
 export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
-  const [step, setStep] = useState<Step>("select");
+  const [step, setStep] = useState<Step>('select');
   const [worksheetType, setWorksheetType] = useState<WorksheetType | null>(
-    null,
+    null
   );
   const [pageIndex, setPageIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>(() =>
-    Array(PAGE_COUNT).fill(""),
+    Array(PAGE_COUNT).fill('')
   );
 
   // 박스 닫기 = 즉시 휘발 (메모리 state 초기화)
   useEffect(() => {
     if (!open) {
-      setStep("select");
+      setStep('select');
       setWorksheetType(null);
       setPageIndex(0);
-      setAnswers(Array(PAGE_COUNT).fill(""));
+      setAnswers(Array(PAGE_COUNT).fill(''));
     }
   }, [open]);
 
@@ -52,8 +60,12 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
   const handleSelect = (type: WorksheetType) => {
     setWorksheetType(type);
     setPageIndex(0);
-    setAnswers(Array(PAGE_COUNT).fill(""));
-    setStep("fill");
+    setAnswers(Array(PAGE_COUNT).fill(''));
+    setStep('fill');
+  };
+
+  const handleSelectEmotions = () => {
+    setStep('emotions');
   };
 
   const handleAnswerChange = (value: string) => {
@@ -65,14 +77,13 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
   };
 
   const handlePrev = () => setPageIndex((i) => Math.max(0, i - 1));
-  const handleNext = () =>
-    setPageIndex((i) => Math.min(PAGE_COUNT - 1, i + 1));
+  const handleNext = () => setPageIndex((i) => Math.min(PAGE_COUNT - 1, i + 1));
 
   const handleBackToSelect = () => {
-    setStep("select");
+    setStep('select');
     setWorksheetType(null);
     setPageIndex(0);
-    setAnswers(Array(PAGE_COUNT).fill(""));
+    setAnswers(Array(PAGE_COUNT).fill(''));
   };
 
   const handleSaveOrComplete = () => {
@@ -83,7 +94,7 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
   };
 
   const currentMeta =
-    step === "fill" && worksheetType ? WORKSHEETS[worksheetType] : null;
+    step === 'fill' && worksheetType ? WORKSHEETS[worksheetType] : null;
   const currentPage = currentMeta?.pages[pageIndex];
   const isFirstPage = pageIndex === 0;
   const isLastPage = pageIndex === PAGE_COUNT - 1;
@@ -93,9 +104,13 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
       {/* 헤더 */}
       <div className="flex items-center justify-between border-b px-5 py-4 shrink-0">
         <h3 className="font-semibold text-base">
-          {currentMeta ? currentMeta.title : "The Work 워크시트"}
+          {step === 'emotions'
+            ? '감정 목록'
+            : currentMeta
+              ? currentMeta.title
+              : 'The Work 워크시트'}
         </h3>
-        {step === "fill" && (
+        {step !== 'select' && (
           <Button
             variant="ghost"
             size="icon"
@@ -109,21 +124,24 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
 
       {/* 콘텐츠 */}
       <div className="flex-1 overflow-y-auto p-6">
-        {step === "select" ? (
-          <SelectScreen onSelect={handleSelect} />
-        ) : (
-          currentPage && (
-            <FillScreen
-              page={currentPage}
-              value={answers[pageIndex]}
-              onChange={handleAnswerChange}
-            />
-          )
+        {step === 'select' && (
+          <SelectScreen
+            onSelect={handleSelect}
+            onSelectEmotions={handleSelectEmotions}
+          />
         )}
+        {step === 'fill' && currentPage && (
+          <FillScreen
+            page={currentPage}
+            value={answers[pageIndex]}
+            onChange={handleAnswerChange}
+          />
+        )}
+        {step === 'emotions' && <EmotionsScreen />}
       </div>
 
       {/* 페이지네이션 (작성 화면에서만) */}
-      {step === "fill" && (
+      {step === 'fill' && (
         <div className="flex items-center justify-between border-t px-5 py-3 shrink-0 gap-3">
           <div className="flex items-center gap-2">
             {Array.from({ length: PAGE_COUNT }).map((_, i) => (
@@ -132,10 +150,10 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
                 onClick={() => setPageIndex(i)}
                 aria-label={`${i + 1}번 페이지로 이동`}
                 className={cn(
-                  "size-2 rounded-full transition-colors",
+                  'size-2 rounded-full transition-colors',
                   i === pageIndex
-                    ? "bg-primary"
-                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50",
+                    ? 'bg-primary'
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
                 )}
               />
             ))}
@@ -154,7 +172,7 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
             )}
             {isLastPage ? (
               <Button onClick={handleSaveOrComplete} size="sm">
-                저장
+                전송
               </Button>
             ) : (
               <Button
@@ -175,9 +193,10 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
 
 interface SelectScreenProps {
   onSelect: (type: WorksheetType) => void;
+  onSelectEmotions: () => void;
 }
 
-function SelectScreen({ onSelect }: SelectScreenProps) {
+function SelectScreen({ onSelect, onSelectEmotions }: SelectScreenProps) {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm text-muted-foreground">
@@ -199,7 +218,72 @@ function SelectScreen({ onSelect }: SelectScreenProps) {
             </ItemActions>
           </Item>
         ))}
+        <Item variant="outline">
+          <ItemContent>
+            <ItemTitle>감정 목록</ItemTitle>
+            <ItemDescription className="line-clamp-none">
+              The Work 작업 중 감정을 찾기 어려울 때 참고할 수 있는 감정 단어
+              목록입니다. 단어를 클릭하면 복사됩니다.
+            </ItemDescription>
+          </ItemContent>
+          <ItemActions>
+            <Button size="sm" onClick={onSelectEmotions}>
+              사용
+            </Button>
+          </ItemActions>
+        </Item>
       </ItemGroup>
+    </div>
+  );
+}
+
+function EmotionsScreen() {
+  const handleCopy = async (word: string) => {
+    try {
+      await navigator.clipboard.writeText(word);
+      toast.success('복사되었습니다');
+    } catch {
+      toast.error('복사에 실패했습니다');
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-sm text-muted-foreground">
+        단어를 클릭하면 클립보드에 복사됩니다. 작성 중인 양식에 붙여 넣어
+        사용하세요.
+      </p>
+      <Accordion type="multiple" className="w-full">
+        {EMOTION_CATEGORIES.map((category) => (
+          <AccordionItem key={category.key} value={category.key}>
+            <AccordionTrigger className="hover:no-underline">
+              <span className="flex items-baseline gap-2">
+                <span className="font-semibold">{category.label}</span>
+                <span className="text-xs text-muted-foreground">
+                  {category.englishLabel}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  ({category.words.length})
+                </span>
+              </span>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 pt-2">
+                {category.words.map((word, idx) => (
+                  <button
+                    key={`${category.key}-${idx}`}
+                    type="button"
+                    onClick={() => handleCopy(word)}
+                    className="text-sm text-foreground hover:underline underline-offset-4 cursor-pointer transition-colors"
+                  >
+                    {word}
+                  </button>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </div>
   );
 }
@@ -226,9 +310,7 @@ function FillScreen({ page, value, onChange }: FillScreenProps) {
         {page.template && (
           <div>
             <p className="text-xs font-medium text-foreground mb-1">형식</p>
-            <p className="whitespace-pre-line font-mono text-xs">
-              {page.template}
-            </p>
+            <p className="whitespace-pre-line">{page.template}</p>
           </div>
         )}
 

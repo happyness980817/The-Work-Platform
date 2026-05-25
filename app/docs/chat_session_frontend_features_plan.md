@@ -104,33 +104,20 @@ const handleClose = () => {
 
 ### 2.4 선택 화면 (`step === 'select'`)
 
-shadcn **Item** 컴포넌트로 두 워크시트 카드 나열.
+shadcn **Item** 컴포넌트로 **3개의 항목** 나열.
 
-```tsx
-<div className="flex flex-col gap-3">
-  <Item onClick={() => { setWorksheetType('judge-your-neighbor'); setStep('fill'); }}>
-    <ItemTitle>이웃 판단하기 양식</ItemTitle>
-    <ItemDescription>
-      나에게 스트레스를 주는 상황에 대한 판단을 짧고 솔직한 문장으로 적어보는 양식입니다.
-    </ItemDescription>
-    <ItemActions>
-      <Button>사용</Button>
-    </ItemActions>
-  </Item>
+| 항목 | 설명 | 선택 시 |
+|---|---|---|
+| 이웃 판단하기 양식 | 스트레스 상황에 대한 판단을 짧고 솔직하게 적어보는 양식 | 6 페이지 작성 화면 (`step='fill'`) |
+| 생각이 잘 잡히지 않을 때 | 불편함의 원인이 잘 떠오르지 않을 때 6가지 관점에서 끄집어내는 연습 | 6 페이지 작성 화면 (`step='fill'`) |
+| **감정 목록** | The Work Q3/Q4 답변 시 참고하는 **감정 단어 레퍼런스 리스트** | Accordion 화면 (`step='emotions'`) |
 
-  <Item onClick={() => { setWorksheetType('when-story-hard'); setStep('fill'); }}>
-    <ItemTitle>생각이 잘 잡히지 않을 때</ItemTitle>
-    <ItemDescription>
-      불편함의 원인이 잘 떠오르지 않을 때, 6가지 관점(감정/원함/해야 함/필요/판단/다시는)에서 생각을 끄집어내는 연습입니다.
-    </ItemDescription>
-    <ItemActions>
-      <Button>사용</Button>
-    </ItemActions>
-  </Item>
-</div>
+```ts
+type WorksheetType = 'judge-your-neighbor' | 'when-story-hard' | 'emotions-list';
+type Step = 'select' | 'fill' | 'emotions';
 ```
 
-> **퍼실리테이터 화면**에서는 각 Item에 `사용` 외 `내용 확인하기`, `코파일럿으로 전송` 버튼이 추가로 노출 (구체 동작은 백엔드 단계에서 정의).
+> **퍼실리테이터 화면**에서는 각 Item에 `사용` 외 `내용 확인하기`, `코파일럿으로 전송` 버튼이 추가로 노출 (구체 동작은 백엔드 단계에서 정의). 감정 목록은 작성하는 워크시트가 아니라 레퍼런스이므로 퍼실리테이터 추가 동작 불필요.
 
 ### 2.5 작성 화면 (`step === 'fill'`)
 
@@ -205,7 +192,102 @@ const handleChange = (value: string) => {
 
 > 위 안내문들은 컴포넌트 안 상수로 하드코딩 (i18n 미적용). 두 워크시트 각각의 page metadata는 별도 파일(예: `worksheets.constants.ts`)로 분리 추천.
 
-### 2.7 마지막 페이지 — 저장/완료 버튼 (TODO)
+### 2.7 감정 목록 화면 (`step === 'emotions'`)
+
+The Work Q3/Q4 답변 작성 시 단어가 잘 떠오르지 않을 때 참고하는 **레퍼런스 리스트**. 워크시트가 아니므로 작성/저장 X. 단어 클릭 → 클립보드 복사만.
+
+**구조**: shadcn **Accordion** (`type="multiple"`, 다중 펼침 허용)
+
+```
+▶ 분노 (ANGRY)
+▶ 우울 (DEPRESSED)
+▼ 혼란 (CONFUSED)
+   [길을 잃은] [혼란스러운] [방향 감각을 잃은] [어찌할 바를 모르는] ...
+▶ 무력 (HELPLESS)
+▶ 무관심 (INDIFFERENT)
+▶ 두려움 (AFRAID)
+▶ 상처 (HURT)
+▶ 슬픔 (SAD)
+▶ 판단 (JUDGMENTAL)
+```
+
+#### 카테고리 (9개, 부정 감정만)
+
+| Key | 한국어 라벨 |
+|---|---|
+| `angry` | 분노 |
+| `depressed` | 우울 |
+| `confused` | 혼란 |
+| `helpless` | 무력 |
+| `indifferent` | 무관심 |
+| `afraid` | 두려움 |
+| `hurt` | 상처 |
+| `sad` | 슬픔 |
+| `judgmental` | 판단 |
+
+> 단어 분류는 원본 PDF (Emotions_List_Ltr.pdf) 기준 그대로 유지.
+> 한국어 단어 리스트는 사용자가 별도 파일로 제공 예정. 본 plan에는 단어 데이터 포함 X.
+
+#### 단어 표시 — 클릭 = 복사
+
+shadcn **Badge** (또는 `Button variant="ghost" size="sm"`) 스타일로 각 단어를 작은 chip 형태로 표시. 한 카테고리 안에서 `flex flex-wrap gap-2`로 배열.
+
+```tsx
+<Badge
+  variant="outline"
+  className="cursor-pointer hover:bg-accent transition-colors"
+  onClick={() => handleCopyWord(word)}
+>
+  {word}
+</Badge>
+```
+
+```ts
+const handleCopyWord = async (word: string) => {
+  await navigator.clipboard.writeText(word);
+  toast.success("복사되었습니다");
+};
+```
+
+#### Sonner Toast 설정
+
+- shadcn 설치: `npx shadcn@latest add sonner`
+- `root.tsx`의 `<App>` 또는 `<Layout>` 안에 `<Toaster position="bottom-center" richColors />` 한 번만 마운트
+- 컴포넌트에서 `import { toast } from "sonner"` 후 `toast.success("복사되었습니다")`
+
+#### 데이터 파일 분리
+
+감정 단어 리스트는 별도 파일로:
+
+```
+app/features/all-users/chats/components/emotions.constants.ts
+```
+
+```ts
+export interface EmotionCategory {
+  key: string;
+  label: string;      // 한국어 (예: "분노")
+  englishLabel: string; // 원본 (예: "ANGRY") — Accordion 트리거에 부제로 표시
+  words: string[];
+}
+
+export const EMOTION_CATEGORIES: EmotionCategory[] = [
+  { key: 'angry', label: '분노', englishLabel: 'ANGRY', words: [/* 사용자 제공 */] },
+  // ...8개 더
+];
+```
+
+#### 차이점 정리 (작성 화면과 비교)
+
+| | 작성 화면 (fill) | 감정 목록 (emotions) |
+|---|---|---|
+| step | `'fill'` | `'emotions'` |
+| 페이지네이션 | ✅ 6 페이지 | ❌ 없음 (Accordion으로 한 화면) |
+| 답변 state | `answers: string[]` 사용 | ❌ 작성 X |
+| 저장 버튼 | ✅ 마지막 페이지 | ❌ 없음 |
+| 뒤로가기 (선택 화면) | ✅ | ✅ (동일) |
+
+### 2.8 마지막 페이지 — 저장/완료 버튼 (TODO)
 
 - 6번 페이지 하단에 `[저장]` 또는 `[완료]` 버튼 노출.
 - **이번 단계에서는 클릭 시 동작 = TODO 주석**. 백엔드 단계에서 다음 동작 연결:
@@ -234,7 +316,7 @@ const handleSaveOrComplete = async () => {
   - `worksheet_id` uuid PK
   - `session_id` uuid FK → session_rooms
   - `client_id` uuid FK → profiles (작성자)
-  - `type` text — `'judge-your-neighbor' | 'when-story-hard'`
+  - `type` text — `'judge-your-neighbor' | 'when-story-hard'` (감정 목록은 작성 X, 저장 대상 아님)
   - `answers` jsonb — `string[]` 길이 6
   - `created_at` timestamp
 - **RLS**: 본인이 작성자이거나 세션 참여 facilitator만 SELECT 가능. INSERT는 본인만 (client_id = auth.uid()).
@@ -244,15 +326,24 @@ const handleSaveOrComplete = async () => {
 
 ## 사용할 shadcn 컴포넌트
 
-| 컴포넌트     | 용도                                       |
-| ------------ | ------------------------------------------ |
-| `Button`     | 토글, 사용, 페이지네이션 화살표, 닫기, 저장 |
-| `Card`       | 오버레이 박스 컨테이너                     |
-| `Item`       | 선택 화면의 워크시트 카드 2개              |
-| `Textarea`   | 작성 input                                 |
-| `Carousel`   | (선택) 페이지네이션 UI — 직접 구현이 단순하면 그 쪽 |
+| 컴포넌트     | 용도                                              |
+| ------------ | ------------------------------------------------- |
+| `Button`     | 토글, 사용, 페이지네이션 화살표, 닫기, 저장       |
+| `Card`       | 오버레이 박스 컨테이너                            |
+| `Item`       | 선택 화면의 워크시트 카드 3개                     |
+| `Textarea`   | 작성 input                                        |
+| `Accordion`  | 감정 목록 (9개 카테고리)                          |
+| `Badge`      | 감정 목록 단어 chip (클릭 시 복사)                |
+| `Sonner` (toast) | 복사 알림 — `root.tsx`에 `<Toaster position="bottom-center" />` |
 
-아이콘: lucide-react `ChevronUpIcon`, `ChevronLeftIcon`, `ChevronRightIcon`, `XIcon`.
+설치 필요:
+```bash
+npx shadcn@latest add accordion
+npx shadcn@latest add sonner
+npx shadcn@latest add badge   # 이미 있을 수도 있음 — 확인 후 설치
+```
+
+아이콘: lucide-react `ChevronUpIcon`, `ChevronDownIcon`, `ChevronLeftIcon`, `ChevronRightIcon`, `ArrowLeftIcon`.
 
 ---
 
@@ -260,8 +351,9 @@ const handleSaveOrComplete = async () => {
 
 1. **Part 1**: AI 코파일럿 패널 접기/펴기 토글 추가 (facilitator 보일 때만)
 2. **Part 2.1–2.2**: 토글 버튼 + 오버레이 박스 뼈대 (열고/닫기만)
-3. **Part 2.3**: 선택 화면 (shadcn Item 2개)
+3. **Part 2.3**: 선택 화면 (shadcn Item 3개 — 워크시트 2 + 감정 목록 1)
 4. **Part 2.4–2.5**: 작성 화면 + textarea + 페이지네이션 + state 보존
 5. **Part 2.6**: 두 워크시트 안내문 상수 분리 (`worksheets.constants.ts`)
-6. **Part 2.7**: 저장/완료 버튼 자리 + TODO 주석
-7. **퍼실리테이터**: 선택 화면에 추가 버튼 자리만 표시 (`사용`/`내용 확인하기`/`코파일럿으로 전송`) — 동작은 백엔드 단계
+6. **Part 2.7**: 감정 목록 화면 — Accordion + Badge 클릭 복사 + Sonner toast (단어 데이터는 별도 파일 `emotions.constants.ts`로 분리, 사용자 제공)
+7. **Part 2.8**: 저장/완료 버튼 자리 + TODO 주석
+8. **퍼실리테이터**: 선택 화면에 추가 버튼 자리만 표시 (`사용`/`내용 확인하기`/`코파일럿으로 전송`) — 동작은 백엔드 단계

@@ -9,6 +9,7 @@ import {
 import './lib/i18n';
 import type { Route } from './+types/root';
 import './app.css';
+import { Toaster } from './common/components/ui/sonner';
 import type { AppContext } from './types';
 import { makeSSRClient } from './supa-client';
 import { getUserById } from './features/all-users/users/queries';
@@ -51,6 +52,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
         {children}
+        <Toaster position="bottom-center" />
         <ScrollRestoration />
         <Scripts />
       </body>
