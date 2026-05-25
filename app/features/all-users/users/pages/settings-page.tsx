@@ -66,10 +66,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
   if (intent === 'avatar') {
     const avatar = formData.get('avatar');
     if (avatar && avatar instanceof File) {
-      if (avatar.size > 2 * 1024 * 1024 || !avatar.type.startsWith('image/')) {
+      if (avatar.size > 5 * 1024 * 1024 || !avatar.type.startsWith('image/')) {
         return {
           formErrors: {
-            avatar: ['이미지 파일만 업로드 가능하며, 2MB 이하여야 합니다.'],
+            avatar: ['이미지 파일만 업로드 가능하며, 5MB 이하여야 합니다.'],
           },
         };
       }

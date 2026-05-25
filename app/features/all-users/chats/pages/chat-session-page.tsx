@@ -21,10 +21,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/common/components/ui/dropdown-menu";
-import { EllipsisVertical, LogOutIcon, PlayIcon, PlusIcon, SendIcon, StopCircleIcon, TimerIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, EllipsisVertical, LogOutIcon, PlayIcon, PlusIcon, SendIcon, StopCircleIcon, TimerIcon } from "lucide-react";
 import { MessageBubble } from "../components/messages-bubble";
+import { WorksheetOverlay } from "../components/worksheet-overlay";
 import { AiSuggestionCard } from "../../../facilitators/ai/components/ai-suggestion-card";
 import type { ChatContext } from "../layouts/chat-layout";
+import { cn } from "~/lib/utils";
 
 const mockClient = {
   name: "Jane Smith",
@@ -125,6 +127,7 @@ export default function ChatSessionPage() {
   const [messageInput, setMessageInput] = useState("");
   const [isInSession, setIsInSession] = useState(false);
   const [leaveOpen, setLeaveOpen] = useState(false);
+  const [isWorksheetOpen, setIsWorksheetOpen] = useState(false);
   const isFacilitator = appContext.role === "facilitator";
 
   return (
@@ -175,7 +178,24 @@ export default function ChatSessionPage() {
         </div>
       </div>
 
-      <ScrollArea className="flex-1 min-h-0">
+      <div className="relative flex-1 flex flex-col min-h-0">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setIsWorksheetOpen((prev) => !prev)}
+          aria-label={isWorksheetOpen ? "워크시트 닫기" : "워크시트 열기"}
+          className={cn(
+            "absolute top-3 right-4 z-30 rounded-full size-9 shadow-sm",
+          )}
+        >
+          {isWorksheetOpen ? (
+            <ChevronUpIcon className="size-4" />
+          ) : (
+            <ChevronDownIcon className="size-4" />
+          )}
+        </Button>
+
+        <ScrollArea className="flex-1 min-h-0">
         <div className="p-6 space-y-6 flex flex-col">
           <div className="flex justify-center">
             <Badge variant="secondary" className="text-muted-foreground">
@@ -226,6 +246,12 @@ export default function ChatSessionPage() {
         </div>
       </ScrollArea>
 
+        <WorksheetOverlay
+          open={isWorksheetOpen}
+          onClose={() => setIsWorksheetOpen(false)}
+        />
+      </div>
+
       <div className="shrink-0 bg-background p-4 space-y-3">
         {isFacilitator && (
           <AiSuggestionCard
@@ -259,6 +285,7 @@ export default function ChatSessionPage() {
           </div>
         )}
       </div>
+
       <AlertDialog open={leaveOpen} onOpenChange={setLeaveOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>

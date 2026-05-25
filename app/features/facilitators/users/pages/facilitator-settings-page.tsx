@@ -133,9 +133,7 @@ export default function FacilitatorSettingsPage({
 
           {/* 비밀번호 변경 */}
           <Form className="flex flex-col gap-5 border-t pt-8" method="post">
-            <h3 className="text-lg font-semibold">
-              {t('settings.change_password_desc')}
-            </h3>
+            <h3 className="text-lg font-semibold">비밀번호 변경하기</h3>
             <PasswordInputPair
               label={t('settings.current_password')}
               description=""
@@ -222,7 +220,7 @@ export default function FacilitatorSettingsPage({
             <div className="flex flex-col gap-1 text-xs text-muted-foreground">
               <span>Recommended size: 128×128</span>
               <span>Allowed formats: SVG, PNG, JPG</span>
-              <span>Max file size: 2MB</span>
+              <span>Max file size: 5MB</span>
             </div>
             <input type="hidden" name="intent" value="avatar" />
             <Button type="submit" className="w-full">
