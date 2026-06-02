@@ -106,7 +106,11 @@ export default function FacilitatorProfilePage({
             <HoverCard>
               <HoverCardTrigger asChild>
                 <span className="cursor-not-allowed">
-                  <Button size="sm" className="opacity-50">
+                  <Button
+                    variant={'secondary'}
+                    size="sm"
+                    className="opacity-50"
+                  >
                     <CalendarIcon className="size-4 mr-1.5" />
                     {t('facilitator.booking.title')}
                   </Button>

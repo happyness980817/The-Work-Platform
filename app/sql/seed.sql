@@ -1,28 +1,28 @@
 -- =============================================================
 -- seed.sql
--- Supabase SQL Editor ì— ë¶™ì—¬ë„£ê³  ì‹¤í–‰í•˜ì„¸ìš”.
--- profiles.profile_id â†’ auth.users FK ë¥¼ ìš°íšŒí•˜ê¸° ìœ„í•´
--- session_replication_role = 'replica' ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.
--- ìœ ì € ë³¸ì¸ í”„ë¡œí•„(93b65d21-...) ì€ ì´ë¯¸ ì¡´ì¬í•˜ë¯€ë¡œ ê±´ë“œë¦¬ì§€ ì•ŠìŠµë‹ˆë‹¤.
+-- Supabase SQL Editor ??ë¶™ì—¬?£ê³  ?¤í–‰?˜ì„¸??
+-- profiles.profile_id ??auth.users FK ë¥??°íšŒ?˜ê¸° ?„í•´
+-- session_replication_role = 'replica' ë¥??¬ìš©?©ë‹ˆ??
+-- ? ì? ë³¸ì¸ ?„ë¡œ??93b65d21-...) ?€ ?´ë? ì¡´ì¬?˜ë?ë¡?ê±´ë“œë¦¬ì? ?ŠìŠµ?ˆë‹¤.
 -- =============================================================
 
--- â”€â”€ 0. ê¸°ì¡´ seed ë°ì´í„° ì´ˆê¸°í™” (ì¬ì‹¤í–‰ ì•ˆì „) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-DELETE FROM public.dm_messages      WHERE message_id::text LIKE 'dd0000%';
-DELETE FROM public.dm_room_members  WHERE member_id::text  LIKE 'd00000%';
-DELETE FROM public.dm_rooms         WHERE room_id::text    LIKE 'b00000%';
-DELETE FROM public.session_messages WHERE message_id::text LIKE 'e00000%';
-DELETE FROM public.session_rooms    WHERE session_id::text LIKE 'a00000%';
+-- ?€?€ 0. ê¸°ì¡´ seed ?°ì´??ì´ˆê¸°??(?¬ì‹¤???ˆì „) ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
+DELETE FROM public.dm_messages      WHERE dm_message_id BETWEEN 1 AND 20;
+DELETE FROM public.dm_room_members  WHERE dm_room_id BETWEEN 1 AND 20;
+DELETE FROM public.dm_rooms         WHERE dm_room_id BETWEEN 1 AND 20;
+DELETE FROM public.session_messages WHERE session_message_id BETWEEN 1 AND 20;
+DELETE FROM public.session_rooms    WHERE session_room_id BETWEEN 1 AND 20;
 DELETE FROM public.facilitator_profiles WHERE profile_id::text LIKE 'f10000%';
 DELETE FROM public.client_profiles      WHERE profile_id::text LIKE 'c10000%';
 DELETE FROM public.profiles
   WHERE profile_id::text LIKE 'f10000%'
      OR profile_id::text LIKE 'c10000%';
 
--- â”€â”€ 1. profiles (auth.users FK ìš°íšŒ) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ?€?€ 1. profiles (auth.users FK ?°íšŒ) ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 SET session_replication_role = 'replica';
 
 INSERT INTO public.profiles (profile_id, role, name, avatar, is_editor, created_at, updated_at) VALUES
--- facilitators (facilitators.ts ê¸°ì¤€)
+-- facilitators (facilitators.ts ê¸°ì?)
 ('f1000001-0000-0000-0000-000000000001', 'facilitator', 'Sarah Jenkins',
  'https://lh3.googleusercontent.com/aida-public/AB6AXuBXh6AuGuTwRu_SVMeV_O2NOB3mGLJxzoF9XCWWWe5WN8vX2IQao-efhpJ6weRRdkSzqpB_w848n6wlL5_KU_8Q7nxy_1Gtaw4s-HeiUOBj7O2r8V1nqDNoxZOb9j5VLSBOEv1eXZVu84bjfLHSt1RyDc5N4SCVBhvFvDu-sm1Yug1y9qIb2px-nRNtFFUSE6UJ9HdAUGfs8d9yf6o60NUr7b7ekhpcPWit0x20EtmcdaJLOAPLJH5-4soyAyypJGNKx8loua8gAFk',
  false, NOW(), NOW()),
@@ -50,38 +50,38 @@ INSERT INTO public.profiles (profile_id, role, name, avatar, is_editor, created_
 
 SET session_replication_role = 'origin';
 
--- â”€â”€ 2. facilitator_profiles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ?€?€ 2. facilitator_profiles ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 INSERT INTO public.facilitator_profiles (profile_id, bio, introduction, languages, availability, is_certified) VALUES
 ('93b65d21-f2ef-41db-8bc3-8e345d07471d',
  'Specializing in self-inquiry and inner transformation through The Work.',
  'I guide clients through Byron Katie''s four questions to find peace with any situation.',
- '["lang.ko", "lang.en"]', 'Weekdays 9amâ€“6pm KST', true),
+ '["lang.ko", "lang.en"]', 'Weekdays 9am??pm KST', true),
 ('f1000001-0000-0000-0000-000000000001',
  'Specializing in relationship conflicts and self-worth inquiries. I help clients apply The Work to dissolve painful beliefs about family dynamics.',
  'I help individuals untangle stressful thoughts using The Work. My sessions are direct, compassionate, and focused on finding your own truth.',
- '["lang.ko", "lang.en"]', 'Mon/Wed/Fri 10amâ€“5pm', true),
+ '["lang.ko", "lang.en"]', 'Mon/Wed/Fri 10am??pm', true),
 ('f1000002-0000-0000-0000-000000000002',
  'Deep experience with workplace stress and career transitions. Let''s question the thoughts that keep you stuck in professional anxiety.',
  'Deep experience with workplace stress and career transitions. Let''s question the thoughts that keep you stuck in professional anxiety.',
- '["lang.zh", "lang.en"]', 'Tue/Thu 9amâ€“6pm', true),
+ '["lang.zh", "lang.en"]', 'Tue/Thu 9am??pm', true),
 ('f1000003-0000-0000-0000-000000000003',
  'Gentle guidance for healing past traumas. I offer a safe space to do The Work on deep-seated beliefs and finding forgiveness.',
  'Gentle guidance for healing past traumas. I offer a safe space to do The Work on deep-seated beliefs and finding forgiveness.',
- '["lang.en", "lang.es"]', 'Weekdays 1pmâ€“8pm EST', true),
+ '["lang.en", "lang.es"]', 'Weekdays 1pm??pm EST', true),
 ('f1000004-0000-0000-0000-000000000004',
  'Focusing on addiction and recovery. The Work is a powerful tool for sobriety and understanding the mind''s cravings.',
  'Focusing on addiction and recovery. The Work is a powerful tool for sobriety and understanding the mind''s cravings.',
- '["lang.en"]', 'Monâ€“Sat 8amâ€“4pm', false),
+ '["lang.en"]', 'Mon?“Sat 8am??pm', false),
 ('f1000005-0000-0000-0000-000000000005',
  'Expert in marriage and partnership inquiries. Discover the love that is already present by questioning your judgments.',
  'Expert in marriage and partnership inquiries. Discover the love that is already present by questioning your judgments.',
- '["lang.hi", "lang.en"]', 'Weekdays 11amâ€“7pm IST', true),
+ '["lang.hi", "lang.en"]', 'Weekdays 11am??pm IST', true),
 ('f1000006-0000-0000-0000-000000000006',
  'Specializing in anxiety and body image issues. Learn to love what is, including yourself and your body.',
  'Specializing in anxiety and body image issues. Learn to love what is, including yourself and your body.',
- '["lang.en"]', 'Wed/Fri/Sat 10amâ€“6pm', false);
+ '["lang.en"]', 'Wed/Fri/Sat 10am??pm', false);
 
--- â”€â”€ 3. client_profiles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ?€?€ 3. client_profiles ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 INSERT INTO public.client_profiles (profile_id, bio) VALUES
 ('c1000001-0000-0000-0000-000000000001', 'Working through anxiety related to family relationships.'),
 ('c1000002-0000-0000-0000-000000000002', 'Seeking clarity on career stress and burnout.'),
@@ -89,104 +89,75 @@ INSERT INTO public.client_profiles (profile_id, bio) VALUES
 ('c1000004-0000-0000-0000-000000000004', 'Interested in healing relationship patterns.'),
 ('c1000005-0000-0000-0000-000000000005', 'Looking to release chronic worry and overthinking.');
 
--- â”€â”€ 4. session_rooms â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-INSERT INTO public.session_rooms (session_id, room_code, openai_conversation_id, client_id, facilitator_id, session_number, is_active, started_at, ended_at, created_at) VALUES
-('a0000001-0000-0000-0000-000000000001', 'ROOM-0001', NULL,
- 'c1000001-0000-0000-0000-000000000001', '93b65d21-f2ef-41db-8bc3-8e345d07471d',
- 1, false, NOW() - INTERVAL '5 days', NOW() - INTERVAL '5 days' + INTERVAL '1 hour', NOW() - INTERVAL '5 days'),
-('a0000002-0000-0000-0000-000000000002', 'ROOM-0002', NULL,
- 'c1000002-0000-0000-0000-000000000002', 'f1000001-0000-0000-0000-000000000001',
- 1, false, NOW() - INTERVAL '4 days', NOW() - INTERVAL '4 days' + INTERVAL '90 minutes', NOW() - INTERVAL '4 days'),
-('a0000003-0000-0000-0000-000000000003', 'ROOM-0003', NULL,
- 'c1000003-0000-0000-0000-000000000003', 'f1000002-0000-0000-0000-000000000002',
- 2, false, NOW() - INTERVAL '3 days', NOW() - INTERVAL '3 days' + INTERVAL '1 hour', NOW() - INTERVAL '3 days'),
-('a0000004-0000-0000-0000-000000000004', 'ROOM-0004', NULL,
- 'c1000004-0000-0000-0000-000000000004', 'f1000003-0000-0000-0000-000000000003',
- 1, true, NOW() - INTERVAL '1 hour', NULL, NOW() - INTERVAL '1 hour'),
-('a0000005-0000-0000-0000-000000000005', 'ROOM-0005', NULL,
- 'c1000005-0000-0000-0000-000000000005', 'f1000004-0000-0000-0000-000000000004',
- 3, false, NOW() - INTERVAL '1 day', NOW() - INTERVAL '1 day' + INTERVAL '75 minutes', NOW() - INTERVAL '1 day');
+-- ?€?€ 4. session_rooms ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
+INSERT INTO public.session_rooms
+  (session_room_id, openai_conversation_id, client_id, facilitator_id, session_number, is_active, started_at, ended_at, created_at)
+OVERRIDING SYSTEM VALUE
+VALUES
+(1, NULL, 'c1000001-0000-0000-0000-000000000001', '93b65d21-f2ef-41db-8bc3-8e345d07471d', 1, false, NOW() - INTERVAL '5 days', NOW() - INTERVAL '5 days' + INTERVAL '1 hour', NOW() - INTERVAL '5 days'),
+(2, NULL, 'c1000002-0000-0000-0000-000000000002', 'f1000001-0000-0000-0000-000000000001', 1, false, NOW() - INTERVAL '4 days', NOW() - INTERVAL '4 days' + INTERVAL '90 minutes', NOW() - INTERVAL '4 days'),
+(3, NULL, 'c1000003-0000-0000-0000-000000000003', 'f1000002-0000-0000-0000-000000000002', 2, false, NOW() - INTERVAL '3 days', NOW() - INTERVAL '3 days' + INTERVAL '1 hour', NOW() - INTERVAL '3 days'),
+(4, NULL, 'c1000004-0000-0000-0000-000000000004', 'f1000003-0000-0000-0000-000000000003', 1, true, NOW() - INTERVAL '1 hour', NULL, NOW() - INTERVAL '1 hour'),
+(5, NULL, 'c1000005-0000-0000-0000-000000000005', 'f1000004-0000-0000-0000-000000000004', 3, false, NOW() - INTERVAL '1 day', NOW() - INTERVAL '1 day' + INTERVAL '75 minutes', NOW() - INTERVAL '1 day');
 
--- â”€â”€ 5. session_messages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-INSERT INTO public.session_messages (message_id, session_id, sender_id, sender_type, content, created_at) VALUES
--- ROOM-0001
-('e0000001-0000-0000-0000-000000000001', 'a0000001-0000-0000-0000-000000000001',
- 'c1000001-0000-0000-0000-000000000001', 'client',
- 'I feel so angry at my mother. She never listens to me.', NOW() - INTERVAL '5 days'),
-('e0000002-0000-0000-0000-000000000002', 'a0000001-0000-0000-0000-000000000001',
- '93b65d21-f2ef-41db-8bc3-8e345d07471d', 'facilitator',
- 'Is it true that she never listens to you?', NOW() - INTERVAL '5 days' + INTERVAL '2 minutes'),
-('e0000003-0000-0000-0000-000000000003', 'a0000001-0000-0000-0000-000000000001',
- 'c1000001-0000-0000-0000-000000000001', 'client',
- 'Well... sometimes she does, but mostly no.', NOW() - INTERVAL '5 days' + INTERVAL '4 minutes'),
--- ROOM-0002
-('e0000004-0000-0000-0000-000000000004', 'a0000002-0000-0000-0000-000000000002',
- 'c1000002-0000-0000-0000-000000000002', 'client',
- 'My boss thinks I am incompetent. It is ruining my confidence.', NOW() - INTERVAL '4 days'),
-('e0000005-0000-0000-0000-000000000005', 'a0000002-0000-0000-0000-000000000002',
- 'f1000001-0000-0000-0000-000000000001', 'facilitator',
- 'Can you absolutely know that your boss thinks you are incompetent?', NOW() - INTERVAL '4 days' + INTERVAL '2 minutes'),
-('e0000006-0000-0000-0000-000000000006', 'a0000002-0000-0000-0000-000000000002',
- 'c1000002-0000-0000-0000-000000000002', 'client',
- 'No, I cannot know for sure. I am just assuming.', NOW() - INTERVAL '4 days' + INTERVAL '5 minutes'),
--- ROOM-0003
-('e0000007-0000-0000-0000-000000000007', 'a0000003-0000-0000-0000-000000000003',
- 'c1000003-0000-0000-0000-000000000003', 'client',
- 'I should not have left my last job. I regret it every day.', NOW() - INTERVAL '3 days'),
-('e0000008-0000-0000-0000-000000000008', 'a0000003-0000-0000-0000-000000000003',
- 'f1000002-0000-0000-0000-000000000002', 'facilitator',
- 'How do you react when you believe the thought "I should not have left my job"?', NOW() - INTERVAL '3 days' + INTERVAL '3 minutes'),
--- ROOM-0004 (active)
-('e0000009-0000-0000-0000-000000000009', 'a0000004-0000-0000-0000-000000000004',
- 'c1000004-0000-0000-0000-000000000004', 'client',
- 'My partner does not appreciate anything I do.', NOW() - INTERVAL '50 minutes'),
-('e0000010-0000-0000-0000-000000000010', 'a0000004-0000-0000-0000-000000000004',
- 'f1000003-0000-0000-0000-000000000003', 'facilitator',
- 'Who would you be without the thought that your partner does not appreciate you?', NOW() - INTERVAL '45 minutes'),
--- ROOM-0005
-('e0000011-0000-0000-0000-000000000011', 'a0000005-0000-0000-0000-000000000005',
- 'c1000005-0000-0000-0000-000000000005', 'client',
- 'I am not good enough. I have always believed this.', NOW() - INTERVAL '1 day'),
-('e0000012-0000-0000-0000-000000000012', 'a0000005-0000-0000-0000-000000000005',
- 'f1000004-0000-0000-0000-000000000004', 'facilitator',
- 'Turn it around â€” "I am good enough." Can you find three genuine examples?', NOW() - INTERVAL '1 day' + INTERVAL '3 minutes');
+-- ?€?€ 5. session_messages ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
+INSERT INTO public.session_messages
+  (session_message_id, session_room_id, sender_id, sender_type, content, created_at)
+OVERRIDING SYSTEM VALUE
+VALUES
+(1, 1, 'c1000001-0000-0000-0000-000000000001', 'client', 'I feel so angry at my mother. She never listens to me.', NOW() - INTERVAL '5 days'),
+(2, 1, '93b65d21-f2ef-41db-8bc3-8e345d07471d', 'facilitator', 'Is it true that she never listens to you?', NOW() - INTERVAL '5 days' + INTERVAL '2 minutes'),
+(3, 1, 'c1000001-0000-0000-0000-000000000001', 'client', 'Well... sometimes she does, but mostly no.', NOW() - INTERVAL '5 days' + INTERVAL '4 minutes'),
+(4, 2, 'c1000002-0000-0000-0000-000000000002', 'client', 'My boss thinks I am incompetent. It is ruining my confidence.', NOW() - INTERVAL '4 days'),
+(5, 2, 'f1000001-0000-0000-0000-000000000001', 'facilitator', 'Can you absolutely know that your boss thinks you are incompetent?', NOW() - INTERVAL '4 days' + INTERVAL '2 minutes'),
+(6, 2, 'c1000002-0000-0000-0000-000000000002', 'client', 'No, I cannot know for sure. I am just assuming.', NOW() - INTERVAL '4 days' + INTERVAL '5 minutes'),
+(7, 3, 'c1000003-0000-0000-0000-000000000003', 'client', 'I should not have left my last job. I regret it every day.', NOW() - INTERVAL '3 days'),
+(8, 3, 'f1000002-0000-0000-0000-000000000002', 'facilitator', 'How do you react when you believe the thought "I should not have left my job"?', NOW() - INTERVAL '3 days' + INTERVAL '3 minutes'),
+(9, 4, 'c1000004-0000-0000-0000-000000000004', 'client', 'My partner does not appreciate anything I do.', NOW() - INTERVAL '50 minutes'),
+(10, 4, 'f1000003-0000-0000-0000-000000000003', 'facilitator', 'Who would you be without the thought that your partner does not appreciate you?', NOW() - INTERVAL '45 minutes'),
+(11, 5, 'c1000005-0000-0000-0000-000000000005', 'client', 'I am not good enough. I have always believed this.', NOW() - INTERVAL '1 day'),
+(12, 5, 'f1000004-0000-0000-0000-000000000004', 'facilitator', 'Turn it around - "I am good enough." Can you find three genuine examples?', NOW() - INTERVAL '1 day' + INTERVAL '3 minutes');
 
--- â”€â”€ 6. dm_rooms â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-INSERT INTO public.dm_rooms (room_id, created_at) VALUES
-('b0000001-0000-0000-0000-000000000001', NOW() - INTERVAL '6 days'),
-('b0000002-0000-0000-0000-000000000002', NOW() - INTERVAL '5 days'),
-('b0000003-0000-0000-0000-000000000003', NOW() - INTERVAL '4 days'),
-('b0000004-0000-0000-0000-000000000004', NOW() - INTERVAL '3 days'),
-('b0000005-0000-0000-0000-000000000005', NOW() - INTERVAL '2 days');
+-- 6. dm_rooms / dm_room_members (wemake style 1:1 rooms)
+INSERT INTO public.dm_rooms (dm_room_id, created_at)
+OVERRIDING SYSTEM VALUE
+VALUES
+(1, NOW() - INTERVAL '6 days'),
+(2, NOW() - INTERVAL '5 days'),
+(3, NOW() - INTERVAL '4 days'),
+(4, NOW() - INTERVAL '3 days'),
+(5, NOW() - INTERVAL '2 days');
 
--- â”€â”€ 7. dm_room_members â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-INSERT INTO public.dm_room_members (member_id, room_id, profile_id, joined_at) VALUES
-('d0000001-0000-0000-0000-000000000001', 'b0000001-0000-0000-0000-000000000001', '93b65d21-f2ef-41db-8bc3-8e345d07471d', NOW() - INTERVAL '6 days'),
-('d0000002-0000-0000-0000-000000000002', 'b0000001-0000-0000-0000-000000000001', 'c1000001-0000-0000-0000-000000000001', NOW() - INTERVAL '6 days'),
-('d0000003-0000-0000-0000-000000000003', 'b0000002-0000-0000-0000-000000000002', 'f1000001-0000-0000-0000-000000000001', NOW() - INTERVAL '5 days'),
-('d0000004-0000-0000-0000-000000000004', 'b0000002-0000-0000-0000-000000000002', 'c1000002-0000-0000-0000-000000000002', NOW() - INTERVAL '5 days'),
-('d0000005-0000-0000-0000-000000000005', 'b0000003-0000-0000-0000-000000000003', 'f1000002-0000-0000-0000-000000000002', NOW() - INTERVAL '4 days'),
-('d0000006-0000-0000-0000-000000000006', 'b0000003-0000-0000-0000-000000000003', 'c1000003-0000-0000-0000-000000000003', NOW() - INTERVAL '4 days'),
-('d0000007-0000-0000-0000-000000000007', 'b0000004-0000-0000-0000-000000000004', 'f1000003-0000-0000-0000-000000000003', NOW() - INTERVAL '3 days'),
-('d0000008-0000-0000-0000-000000000008', 'b0000004-0000-0000-0000-000000000004', 'c1000004-0000-0000-0000-000000000004', NOW() - INTERVAL '3 days'),
-('d0000009-0000-0000-0000-000000000009', 'b0000005-0000-0000-0000-000000000005', 'f1000004-0000-0000-0000-000000000004', NOW() - INTERVAL '2 days'),
-('d000000a-0000-0000-0000-000000000010', 'b0000005-0000-0000-0000-000000000005', 'c1000005-0000-0000-0000-000000000005', NOW() - INTERVAL '2 days');
+INSERT INTO public.dm_room_members (dm_room_id, profile_id, created_at) VALUES
+(1, '93b65d21-f2ef-41db-8bc3-8e345d07471d', NOW() - INTERVAL '6 days'),
+(1, 'c1000001-0000-0000-0000-000000000001', NOW() - INTERVAL '6 days'),
+(2, 'f1000001-0000-0000-0000-000000000001', NOW() - INTERVAL '5 days'),
+(2, 'c1000002-0000-0000-0000-000000000002', NOW() - INTERVAL '5 days'),
+(3, 'f1000002-0000-0000-0000-000000000002', NOW() - INTERVAL '4 days'),
+(3, 'c1000003-0000-0000-0000-000000000003', NOW() - INTERVAL '4 days'),
+(4, 'f1000003-0000-0000-0000-000000000003', NOW() - INTERVAL '3 days'),
+(4, 'c1000004-0000-0000-0000-000000000004', NOW() - INTERVAL '3 days'),
+(5, 'f1000004-0000-0000-0000-000000000004', NOW() - INTERVAL '2 days'),
+(5, 'c1000005-0000-0000-0000-000000000005', NOW() - INTERVAL '2 days');
 
--- â”€â”€ 8. dm_messages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-INSERT INTO public.dm_messages (message_id, room_id, sender_id, content, created_at) VALUES
--- room 1
-('dd000001-0000-0000-0000-000000000001', 'b0000001-0000-0000-0000-000000000001', '93b65d21-f2ef-41db-8bc3-8e345d07471d', 'Hi Alice, how are you feeling after our last session?', NOW() - INTERVAL '6 days' + INTERVAL '5 minutes'),
-('dd000002-0000-0000-0000-000000000002', 'b0000001-0000-0000-0000-000000000001', 'c1000001-0000-0000-0000-000000000001', 'Much better, thank you. I have been journaling every day.', NOW() - INTERVAL '6 days' + INTERVAL '10 minutes'),
-('dd000003-0000-0000-0000-000000000003', 'b0000001-0000-0000-0000-000000000001', '93b65d21-f2ef-41db-8bc3-8e345d07471d', 'That is wonderful. See you next week.', NOW() - INTERVAL '6 days' + INTERVAL '12 minutes'),
--- room 2
-('dd000004-0000-0000-0000-000000000004', 'b0000002-0000-0000-0000-000000000002', 'f1000001-0000-0000-0000-000000000001', 'Hello Bob. Just checking in before our session tomorrow.', NOW() - INTERVAL '5 days' + INTERVAL '3 minutes'),
-('dd000005-0000-0000-0000-000000000005', 'b0000002-0000-0000-0000-000000000002', 'c1000002-0000-0000-0000-000000000002', 'Thanks Sarah, I have my worksheet ready.', NOW() - INTERVAL '5 days' + INTERVAL '8 minutes'),
--- room 3
-('dd000006-0000-0000-0000-000000000006', 'b0000003-0000-0000-0000-000000000003', 'c1000003-0000-0000-0000-000000000003', 'Is it possible to reschedule to Friday?', NOW() - INTERVAL '4 days' + INTERVAL '2 minutes'),
-('dd000007-0000-0000-0000-000000000007', 'b0000003-0000-0000-0000-000000000003', 'f1000002-0000-0000-0000-000000000002', 'Of course, Friday at 2pm works for me.', NOW() - INTERVAL '4 days' + INTERVAL '15 minutes'),
--- room 4
-('dd000008-0000-0000-0000-000000000008', 'b0000004-0000-0000-0000-000000000004', 'f1000003-0000-0000-0000-000000000003', 'Great session today, Dan. You showed real courage.', NOW() - INTERVAL '3 days' + INTERVAL '5 minutes'),
-('dd000009-0000-0000-0000-000000000009', 'b0000004-0000-0000-0000-000000000004', 'c1000004-0000-0000-0000-000000000004', 'Thank you Elena. The turnaround really shifted something for me.', NOW() - INTERVAL '3 days' + INTERVAL '20 minutes'),
--- room 5
-('dd00000a-0000-0000-0000-000000000010', 'b0000005-0000-0000-0000-000000000005', 'c1000005-0000-0000-0000-000000000005', 'I want to work on the belief "I am not lovable" next time.', NOW() - INTERVAL '2 days' + INTERVAL '4 minutes'),
-('dd00000b-0000-0000-0000-000000000011', 'b0000005-0000-0000-0000-000000000005', 'f1000004-0000-0000-0000-000000000004', 'Perfect. That is powerful work. I will prepare some questions.', NOW() - INTERVAL '2 days' + INTERVAL '9 minutes');
+-- 7. dm_messages
+INSERT INTO public.dm_messages
+  (dm_message_id, dm_room_id, sender_id, content, created_at)
+OVERRIDING SYSTEM VALUE
+VALUES
+(1, 1, '93b65d21-f2ef-41db-8bc3-8e345d07471d', 'Hi Alice, how are you feeling after our last session?', NOW() - INTERVAL '6 days' + INTERVAL '5 minutes'),
+(2, 1, 'c1000001-0000-0000-0000-000000000001', 'Much better, thank you. I have been journaling every day.', NOW() - INTERVAL '6 days' + INTERVAL '10 minutes'),
+(3, 1, '93b65d21-f2ef-41db-8bc3-8e345d07471d', 'That is wonderful. See you next week.', NOW() - INTERVAL '6 days' + INTERVAL '12 minutes'),
+(4, 2, 'f1000001-0000-0000-0000-000000000001', 'Hello Bob. Just checking in before our session tomorrow.', NOW() - INTERVAL '5 days' + INTERVAL '3 minutes'),
+(5, 2, 'c1000002-0000-0000-0000-000000000002', 'Thanks Sarah, I have my worksheet ready.', NOW() - INTERVAL '5 days' + INTERVAL '8 minutes'),
+(6, 3, 'c1000003-0000-0000-0000-000000000003', 'Is it possible to reschedule to Friday?', NOW() - INTERVAL '4 days' + INTERVAL '2 minutes'),
+(7, 3, 'f1000002-0000-0000-0000-000000000002', 'Of course, Friday at 2pm works for me.', NOW() - INTERVAL '4 days' + INTERVAL '15 minutes'),
+(8, 4, 'f1000003-0000-0000-0000-000000000003', 'Great session today, Dan. You showed real courage.', NOW() - INTERVAL '3 days' + INTERVAL '5 minutes'),
+(9, 4, 'c1000004-0000-0000-0000-000000000004', 'Thank you Elena. The turnaround really shifted something for me.', NOW() - INTERVAL '3 days' + INTERVAL '20 minutes'),
+(10, 5, 'c1000005-0000-0000-0000-000000000005', 'I want to work on the belief "I am not lovable" next time.', NOW() - INTERVAL '2 days' + INTERVAL '4 minutes'),
+(11, 5, 'f1000004-0000-0000-0000-000000000004', 'Perfect. That is powerful work. I will prepare some questions.', NOW() - INTERVAL '2 days' + INTERVAL '9 minutes');
+
+SELECT setval(pg_get_serial_sequence('public.session_rooms', 'session_room_id'), (SELECT MAX(session_room_id) FROM public.session_rooms));
+SELECT setval(pg_get_serial_sequence('public.session_messages', 'session_message_id'), (SELECT MAX(session_message_id) FROM public.session_messages));
+SELECT setval(pg_get_serial_sequence('public.dm_rooms', 'dm_room_id'), (SELECT MAX(dm_room_id) FROM public.dm_rooms));
+SELECT setval(pg_get_serial_sequence('public.dm_messages', 'dm_message_id'), (SELECT MAX(dm_message_id) FROM public.dm_messages));

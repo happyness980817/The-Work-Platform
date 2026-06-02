@@ -29,13 +29,18 @@ import {
 interface WorksheetOverlayProps {
   open: boolean;
   onClose: () => void;
+  isFacilitator?: boolean;
 }
 
 type Step = 'select' | 'fill' | 'emotions';
 
 const PAGE_COUNT = 6;
 
-export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
+export function WorksheetOverlay({
+  open,
+  onClose,
+  isFacilitator = false,
+}: WorksheetOverlayProps) {
   const [step, setStep] = useState<Step>('select');
   const [worksheetType, setWorksheetType] = useState<WorksheetType | null>(
     null
@@ -128,6 +133,7 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
           <SelectScreen
             onSelect={handleSelect}
             onSelectEmotions={handleSelectEmotions}
+            isFacilitator={isFacilitator}
           />
         )}
         {step === 'fill' && currentPage && (
@@ -135,6 +141,7 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
             page={currentPage}
             value={answers[pageIndex]}
             onChange={handleAnswerChange}
+            isFacilitator={isFacilitator}
           />
         )}
         {step === 'emotions' && <EmotionsScreen />}
@@ -172,7 +179,7 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
             )}
             {isLastPage ? (
               <Button onClick={handleSaveOrComplete} size="sm">
-                전송
+                {isFacilitator ? '코파일럿 전송' : '전송'}
               </Button>
             ) : (
               <Button
@@ -194,13 +201,21 @@ export function WorksheetOverlay({ open, onClose }: WorksheetOverlayProps) {
 interface SelectScreenProps {
   onSelect: (type: WorksheetType) => void;
   onSelectEmotions: () => void;
+  isFacilitator: boolean;
 }
 
-function SelectScreen({ onSelect, onSelectEmotions }: SelectScreenProps) {
+function SelectScreen({
+  onSelect,
+  onSelectEmotions,
+  isFacilitator,
+}: SelectScreenProps) {
+  const worksheetButtonLabel = isFacilitator ? '조회' : '사용';
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm text-muted-foreground">
-        시작할 양식을 선택해주세요.
+        {isFacilitator
+          ? '조회할 양식을 선택해주세요.'
+          : '시작할 양식을 선택해주세요.'}
       </p>
       <ItemGroup className="gap-3">
         {WORKSHEET_LIST.map((worksheet) => (
@@ -213,7 +228,7 @@ function SelectScreen({ onSelect, onSelectEmotions }: SelectScreenProps) {
             </ItemContent>
             <ItemActions>
               <Button size="sm" onClick={() => onSelect(worksheet.type)}>
-                사용
+                {worksheetButtonLabel}
               </Button>
             </ItemActions>
           </Item>
@@ -297,9 +312,15 @@ interface FillScreenProps {
   };
   value: string;
   onChange: (value: string) => void;
+  isFacilitator: boolean;
 }
 
-function FillScreen({ page, value, onChange }: FillScreenProps) {
+function FillScreen({
+  page,
+  value,
+  onChange,
+  isFacilitator,
+}: FillScreenProps) {
   return (
     <div className="flex flex-col gap-4">
       <h4 className="text-lg font-semibold">{page.subtitle}</h4>
@@ -322,12 +343,26 @@ function FillScreen({ page, value, onChange }: FillScreenProps) {
         )}
       </div>
 
-      <Textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="여기에 작성해주세요..."
-        className="min-h-[200px] resize-y"
-      />
+      {isFacilitator ? (
+        <div className="rounded-md border bg-background p-4 min-h-[200px]">
+          {value ? (
+            <p className="whitespace-pre-line text-sm leading-relaxed">
+              {value}
+            </p>
+          ) : (
+            <p className="text-sm text-muted-foreground italic">
+              내담자가 아직 작성하지 않았습니다.
+            </p>
+          )}
+        </div>
+      ) : (
+        <Textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="여기에 작성해주세요..."
+          className="min-h-[200px] resize-y"
+        />
+      )}
     </div>
   );
 }

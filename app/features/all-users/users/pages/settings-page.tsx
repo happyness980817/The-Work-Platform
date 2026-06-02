@@ -41,7 +41,6 @@ const facilitatorFormSchema = z.object({
   name: z.string().min(1).max(100),
   bio: z.string().max(500).optional().default(''),
   introduction: z.string().max(2000).optional().default(''),
-  languages: z.string().optional().default(''),
 });
 
 const passwordFormSchema = z
@@ -117,18 +116,23 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
   // 프로필 수정 (client / facilitator)
   if (user.role === 'facilitator') {
-    const { success, error, data } = facilitatorFormSchema.safeParse(
-      Object.fromEntries(formData)
-    );
+    const { success, error, data } = facilitatorFormSchema.safeParse({
+      name: formData.get('name'),
+      bio: formData.get('bio'),
+      introduction: formData.get('introduction'),
+    });
     if (!success) {
       return { formErrors: z.flattenError(error).fieldErrors };
     }
-    const languagesArray = data.languages
-      ? data.languages
-          .split(',')
-          .map((l) => l.trim())
+    const languagesArray = Array.from(
+      new Set(
+        formData
+          .getAll('languages')
+          .flatMap((value) => String(value).split(','))
+          .map((language) => language.trim())
           .filter(Boolean)
-      : [];
+      )
+    );
     await updateUser(client, { id: userId, name: data.name });
     await updateFacilitatorProfile(client, {
       id: userId,

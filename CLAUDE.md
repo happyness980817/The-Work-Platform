@@ -21,7 +21,7 @@ Byron Katie의 "The Work"(네 가지 질문) 기반 텔레테라피 플랫폼. A
 - **프론트엔드**: React + shadcn/ui + Tailwind CSS
 - **라우팅**: React Router (framework mode)
 - **DB**: Supabase (Postgres) + Drizzle ORM (스키마)
-- **AI**: OpenAI `openai` Node SDK — Responses API, 기본 모델 `gpt-5.2`, 서버에서만 호출
+- **AI**: OpenAI `openai` Node SDK — Responses API, 기본 모델 `gpt-5.4-nano`, 서버에서만 호출
 - **검증**: Zod (URL 파라미터 등)
 - **날짜**: Luxon
 - **i18n**: react-i18next — 모든 사용자 노출 문자열은 `t()` 사용, `ko.json`/`en.json` 양쪽에 키 추가
@@ -74,7 +74,7 @@ Byron Katie의 "The Work"(네 가지 질문) 기반 텔레테라피 플랫폼. A
 ```ts
 interface AppContext {
   isLoggedIn: boolean;
-  role: "client" | "facilitator";
+  role: 'client' | 'facilitator';
   isAdmin: boolean;
   name: string;
   username: string;

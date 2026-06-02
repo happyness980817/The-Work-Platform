@@ -5,34 +5,34 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from 'react-router';
-import './lib/i18n';
-import type { Route } from './+types/root';
-import './app.css';
-import { Toaster } from './common/components/ui/sonner';
-import type { AppContext } from './types';
-import { makeSSRClient } from './supa-client';
-import { getUserById } from './features/all-users/users/queries';
+} from "react-router";
+import "./lib/i18n";
+import type { Route } from "./+types/root";
+import "./app.css";
+import { Toaster } from "./common/components/ui/sonner";
+import type { AppContext } from "./types";
+import { makeSSRClient } from "./supa-client";
+import { getUserById } from "./features/all-users/users/queries";
 
 // const PRETENDARD =
 // 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css';
 const NOTOSANSKR =
-  'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap';
+  "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap";
 
 export const links: Route.LinksFunction = () => [
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous',
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous",
   },
   {
-    rel: 'stylesheet',
+    rel: "stylesheet",
     href: NOTOSANSKR,
   },
   {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
 
@@ -76,26 +76,26 @@ export default function App({ loaderData }: Route.ComponentProps) {
   const isLoggedIn = loaderData.user !== null;
   const appContext: AppContext = {
     isLoggedIn,
-    role: loaderData.profile?.role ?? 'client',
+    role: loaderData.profile?.role ?? "client",
     isEditor: loaderData.profile?.is_editor ?? false,
-    name: loaderData.profile?.name ?? '',
-    userId: loaderData.user?.id ?? '',
-    avatar: loaderData.profile?.avatar ?? '',
+    name: loaderData.profile?.name ?? "",
+    userId: loaderData.user?.id ?? "",
+    avatar: loaderData.profile?.avatar ?? "",
   };
 
   return <Outlet context={appContext} />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = 'Oops!';
-  let details = 'An unexpected error occurred.';
+  let message = "Oops!";
+  let details = "An unexpected error occurred.";
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? '404' : 'Error';
+    message = error.status === 404 ? "404" : "Error";
     details =
       error.status === 404
-        ? 'The requested page could not be found.'
+        ? "The requested page could not be found."
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
