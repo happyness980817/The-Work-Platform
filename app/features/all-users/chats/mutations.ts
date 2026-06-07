@@ -19,49 +19,14 @@
 //     throw new Error('You cannot create a DM room with yourself');
 //   }
 //
-//   // 2. Match wemake's flow: ask the DB if these two users already share a
-//   // 1:1 room. The RPC must only return a room with exactly these 2 members.
-//   const { data: existing, error: roomLookupError } = await client
-//     .rpc('get_room', {
-//       from_user_id: selfId,
-//       to_user_id: otherId,
-//     })
-//     .maybeSingle();
+//   // 2. Let the DB do the existing-room lookup and member row creation. This
+//   // keeps dm_rooms/dm_room_members direct INSERT closed by RLS.
+//   const { data: dmRoomId, error } = await client.rpc('get_or_create_dm_room', {
+//     other_user_id: otherId,
+//   });
 //
-//   if (roomLookupError) throw roomLookupError;
-//   if (existing?.dm_room_id) return existing.dm_room_id;
-//
-//   // 3. No existing room: create the room first. Like wemake, the DB identity
-//   // column creates the id; no app-side UUID is needed.
-//   const { data: room, error: createRoomError } = await client
-//     .from('dm_rooms')
-//     .insert({})
-//     .select('dm_room_id')
-//     .single();
-//
-//   if (createRoomError) throw createRoomError;
-//
-//   // 4. Insert members sequentially, not as one batch. The planned RLS policy
-//   // allows the second insert because the current user is already a member.
-//   const { error: selfMemberError } = await client
-//     .from('dm_room_members')
-//     .insert({
-//       dm_room_id: room.dm_room_id,
-//       profile_id: selfId,
-//     });
-//
-//   if (selfMemberError) throw selfMemberError;
-//
-//   const { error: otherMemberError } = await client
-//     .from('dm_room_members')
-//     .insert({
-//       dm_room_id: room.dm_room_id,
-//       profile_id: otherId,
-//     });
-//
-//   if (otherMemberError) throw otherMemberError;
-//
-//   return room.dm_room_id;
+//   if (error) throw error;
+//   return dmRoomId;
 // };
 
 // export const sendDmMessage = async (

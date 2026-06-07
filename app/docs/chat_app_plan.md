@@ -15,7 +15,7 @@
 
 ## 확정 결정
 
-- DM은 wemake 방식: `dm_rooms` + `dm_room_members` + `dm_messages`, 기존 1:1 방 조회는 `get_room` RPC.
+- DM은 wemake 방식: `dm_rooms` + `dm_room_members` + `dm_messages`. 방 생성은 `get_or_create_dm_room` RPC, 기존 1:1 방 조회는 `get_room` RPC.
 - DM room id와 session room id는 wemake처럼 DB가 만드는 `bigint identity`를 사용한다.
 - 컬럼 이름은 충돌을 줄이기 위해 `dm_room_id`, `dm_message_id`, `session_room_id`, `session_message_id`로 분리한다.
 - `room_code`와 앱 코드의 `crypto.randomUUID()`는 사용하지 않는다.
@@ -56,10 +56,9 @@
 
 - `getOrCreateDmRoom(client, { otherId })`
   - `auth.uid()`로 self id 결정.
-  - `get_room(from_user_id: selfId, to_user_id: otherId)` RPC 조회.
-  - 기존 방이 있으면 `dm_room_id` 반환.
-  - 없으면 `dm_rooms` 생성 후 `dm_room_members`에 self/other 2 rows 추가.
-  - 생성된 `dm_room_id` 반환.
+  - `get_or_create_dm_room(other_user_id: otherId)` RPC 호출.
+  - RPC가 기존 방 조회, 새 방 생성, self/other 멤버 row 생성을 처리한다.
+  - 반환된 `dm_room_id`를 사용한다.
 - `sendDmMessage(client, { dmRoomId, content })`
   - sender는 `auth.uid()`로 결정.
   - `dm_room_members` 기준으로 sender가 방 멤버인지 확인 후 insert.

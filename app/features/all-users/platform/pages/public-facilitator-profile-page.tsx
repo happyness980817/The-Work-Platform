@@ -1,20 +1,20 @@
-import { Link } from 'react-router';
-import { useTranslation } from 'react-i18next';
-import type { Route } from './+types/public-facilitator-profile-page';
+import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
+import type { Route } from "./+types/public-facilitator-profile-page";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '~/common/components/ui/avatar';
-import { Badge } from '~/common/components/ui/badge';
-import { Button } from '~/common/components/ui/button';
+} from "~/common/components/ui/avatar";
+import { Badge } from "~/common/components/ui/badge";
+import { Button } from "~/common/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from '~/common/components/ui/card';
-import { Separator } from '~/common/components/ui/separator';
+} from "~/common/components/ui/card";
+import { Separator } from "~/common/components/ui/separator";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,22 +22,22 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '~/common/components/ui/breadcrumb';
-import { GlobeIcon, CalendarIcon, MessageCircleIcon } from 'lucide-react';
+} from "~/common/components/ui/breadcrumb";
+import { GlobeIcon, CalendarIcon, MailIcon } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from '~/common/components/ui/hover-card';
-import { getFacilitatorById } from '../queries';
-import { makeSSRClient } from '~/supa-client';
+} from "~/common/components/ui/hover-card";
+import { getFacilitatorById } from "../queries";
+import { makeSSRClient } from "~/supa-client";
 
 export const meta: Route.MetaFunction = ({ data }) => {
   return [
     {
-      title: `${data?.facilitator?.name ?? 'Facilitator'} | The Work Platform`,
+      title: `${data?.facilitator?.name ?? "Facilitator"} | The Work Platform`,
     },
-    { name: 'description', content: `Facilitator profile` },
+    { name: "description", content: `Facilitator profile` },
   ];
 };
 
@@ -53,8 +53,8 @@ export default function FacilitatorProfilePage({
   const { t } = useTranslation();
   const { facilitator } = loaderData;
   const name = facilitator.name;
-  const bio = facilitator.bio ?? '';
-  const introduction = facilitator.introduction ?? '';
+  const bio = facilitator.bio ?? "";
+  const introduction = facilitator.introduction ?? "";
   const languages = facilitator.languages;
   return (
     <div className="flex flex-col max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 gap-8">
@@ -62,7 +62,7 @@ export default function FacilitatorProfilePage({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to="/facilitators">{t('facilitators.title')}</Link>
+              <Link to="/facilitators">{t("facilitators.title")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -76,7 +76,7 @@ export default function FacilitatorProfilePage({
       <div className="flex flex-col sm:flex-row gap-6 items-start">
         <Avatar className="size-28 border-4 border-background shadow-lg">
           <AvatarImage
-            src={facilitator.avatar || ''}
+            src={facilitator.avatar || ""}
             alt={name}
             className="object-cover"
           />
@@ -87,7 +87,7 @@ export default function FacilitatorProfilePage({
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <h1 className="text-2xl font-bold">{name}</h1>
             <Badge variant="default" className="w-fit text-xs">
-              {t('facilitator.certified')}
+              {t("facilitator.certified")}
             </Badge>
           </div>
 
@@ -98,7 +98,7 @@ export default function FacilitatorProfilePage({
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <GlobeIcon className="size-3.5" />
-              {languages.map((l) => t(l)).join(', ')}
+              {languages.map((l) => t(l)).join(", ")}
             </span>
           </div>
 
@@ -107,12 +107,12 @@ export default function FacilitatorProfilePage({
               <HoverCardTrigger asChild>
                 <span className="cursor-not-allowed">
                   <Button
-                    variant={'secondary'}
+                    variant={"secondary"}
                     size="sm"
                     className="opacity-50"
                   >
                     <CalendarIcon className="size-4 mr-1.5" />
-                    {t('facilitator.booking.title')}
+                    {t("facilitator.booking.title")}
                   </Button>
                 </span>
               </HoverCardTrigger>
@@ -122,7 +122,7 @@ export default function FacilitatorProfilePage({
             </HoverCard>
             <Button variant="outline" size="sm" asChild>
               <Link to={`/chats/dms/${facilitator.profile_id}`}>
-                <MessageCircleIcon className="size-4 mr-1.5" />
+                <MailIcon className="size-4 mr-1.5" />
                 DM
               </Link>
             </Button>
@@ -135,7 +135,7 @@ export default function FacilitatorProfilePage({
       {/* Introduction */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">{t('profile.introduction')}</CardTitle>
+          <CardTitle className="text-lg">{t("profile.introduction")}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground leading-relaxed">
