@@ -8,6 +8,8 @@ Byron Katie 의 '네 가지 질문' 기법을 활용한 비대면 상담사 - �
 
 About The Work - https://thework.com/
 
+https://product.kyobobook.co.kr/detail/S000213660344
+
 ## Routes
 
 ```
