@@ -2,7 +2,7 @@
 
 ## 사업 개요
 
-Byron Katie 의 "네 가지 질문" ("The Work") 기법을 활용한 비대면 상담사 - 내담자 매칭 플랫폼
+Byron Katie 의 "네 가지 질문" (*"The Work"*) 기법을 활용한 비대면 상담사 - 내담자 매칭 플랫폼
 
 상담사는 텍스트 생성에 OpenAI 모델 기반 AI Agent 를 활용
 
