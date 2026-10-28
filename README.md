@@ -7,6 +7,10 @@ Byron Katie 의 "네 가지 질문" (*"The Work"*) 기법을 활용한 비대면
 상담사는 텍스트 생성에 OpenAI 모델 기반 AI Agent 를 활용
 
 
+## 사업계획서
+
+사업계획서 링크: https://docs.google.com/document/d/1VZ9bDWjd5722RPoI0aGe0nAuIFg85Zq5lkq197A_Up8/edit?usp=drivesdk
+
 ## About *"The Work"* : 
 
 https://thework.com/ <br>
